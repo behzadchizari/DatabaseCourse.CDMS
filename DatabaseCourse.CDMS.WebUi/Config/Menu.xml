@@ -1,0 +1,35 @@
+﻿<MenuItemList>
+  <Menu>
+    <MenuTitle>خانه</MenuTitle>
+    <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
+    <MenuUrl>/Home/Index</MenuUrl>
+    <MenuIcon>home</MenuIcon>
+    <Target>SELF</Target>
+    <BgColor>NULL</BgColor>
+    <RoleList>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Admin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>TechOfficer</RoleName>
+      </Role>
+      <Role>
+        <RoleName>EmployeeManager</RoleName>
+      </Role>
+      <Role>
+        <RoleName>FinManager</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
+    </RoleList>
+    <ChildMenuList>
+    </ChildMenuList>
+  </Menu>
+</MenuItemList>

@@ -53,6 +53,26 @@
     <Compile Include="UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseCourse.CDMS.Business\DatabaseCourse.CDMS.Business.csproj">
+      <Project>{c9a81c1f-363c-4159-baa7-0f58bfe1f837}</Project>
+      <Name>DatabaseCourse.CDMS.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseCourse.CDMS.DataAccess\DatabaseCourse.CDMS.DataAccess.csproj">
+      <Project>{a559f380-1676-43ba-9941-2f59eb5a80aa}</Project>
+      <Name>DatabaseCourse.CDMS.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseCourse.CDMS.WebUi\DatabaseCourse.CDMS.WebUi.csproj">
+      <Project>{1ff3e11b-2296-4bd4-820f-0a4a70275bfe}</Project>
+      <Name>DatabaseCourse.CDMS.WebUi</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\Security.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

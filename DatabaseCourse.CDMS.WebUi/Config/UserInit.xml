@@ -1,0 +1,11 @@
+﻿<UserList>
+  <User>
+    <UserName>SuperAdmin</UserName>
+    <Password>1234</Password>
+    <RoleList>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+  </User>
+</UserList>

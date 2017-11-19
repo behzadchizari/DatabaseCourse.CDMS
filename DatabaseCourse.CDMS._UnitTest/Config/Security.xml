@@ -1,0 +1,6 @@
+﻿<SecurityGroup type="Permission">
+  <Url><![CDATA[ControllerName/action]]></Url>
+  <RoleGroup>
+    <Role>SuperAdmin</Role>
+  </RoleGroup>
+</SecurityGroup>
