@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseCourse.CDMS.WebUi",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseCourse.CDMS._UnitTest", "DatabaseCourse.CDMS._UnitTest\DatabaseCourse.CDMS._UnitTest.csproj", "{3F93F8EA-F342-4FF6-927A-9AD41AB13EDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseCourse.Common", "DatabaseCourse.Common\DatabaseCourse.Common.csproj", "{81D74F81-FFB1-4F17-8666-B27074F86D59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3F93F8EA-F342-4FF6-927A-9AD41AB13EDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F93F8EA-F342-4FF6-927A-9AD41AB13EDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F93F8EA-F342-4FF6-927A-9AD41AB13EDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81D74F81-FFB1-4F17-8666-B27074F86D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D74F81-FFB1-4F17-8666-B27074F86D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D74F81-FFB1-4F17-8666-B27074F86D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D74F81-FFB1-4F17-8666-B27074F86D59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

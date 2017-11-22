@@ -13,7 +13,9 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var fil = filterContext;
+            if (CheckPermission(filterContext) == null)
+            {
+            }
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -25,6 +27,39 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         protected override void OnException(ExceptionContext filterContext)
         {
             var fil = filterContext;
+        }
+
+        #endregion
+
+        #region Helper
+
+        private Exception CheckPermission(ActionExecutingContext filterContext)
+        {
+            try
+            {
+                var hasAccess = false;
+                var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
+                var actionName = filterContext.ActionDescriptor.ActionName;
+                //Get Security Config by Controller/Action
+                var security = SecutiryConfig.GetConfigByPageName($@"/{controllerName}/{actionName}");
+                if (security != null)
+                {
+                    //check user from this app 
+                    foreach (var userRole in security.UserRoleList)
+                    {
+                        //check role of user with page permission   
+                    }
+                }
+                else
+                {
+                    return new Exception("404 - صفحه یافت نشد!");
+                }
+                return hasAccess ? null : new Exception("شما اجازه دسترسی به این صفحه را ندارید");
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
         }
 
         #endregion

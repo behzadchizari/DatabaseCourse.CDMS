@@ -169,7 +169,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Classes\Enum\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseCourse.Common\DatabaseCourse.Common.csproj">
+      <Project>{81D74F81-FFB1-4F17-8666-B27074F86D59}</Project>
+      <Name>DatabaseCourse.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

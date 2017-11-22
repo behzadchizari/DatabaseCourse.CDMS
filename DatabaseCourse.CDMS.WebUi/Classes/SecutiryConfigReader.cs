@@ -3,52 +3,115 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
+using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
     public class SecutiryConfig
     {
-        public enum SecurityType
+        #region Properties
+
+        public string PageName { get; set; }
+        public string PageAddress { get; set; }
+        public string PageDescription { get; set; }
+        public string PageHelp { get; set; }
+        public List<string> UserRoles { get; set; }
+        public List<UserRoleEnum> UserRoleList
         {
-            Permission = 10
+            get
+            {
+                try
+                {
+                    var result = new List<UserRoleEnum>();
+                    if (UserRoles != null)
+                    {
+                        foreach (var item in UserRoles)
+                        {
+                            result.Add(EnumUtility.ConvertStringToEnum(item, UserRoleEnum.Null));
+                        }
+                    }
+                    return result;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
         }
 
-        private static string Url { get; set; }
-        private static List<string> RoleGroups { get; set; }
+        #endregion
 
+        #region Method
 
-
-
-        public static List<SecutiryConfig> GetAllSecurityByType(SecurityType type)
+        /// <summary>
+        /// Retrurn All Pages With UserRoles Wich has Access to Page
+        /// </summary>
+        /// <returns></returns>
+        public static List<SecutiryConfig> GetAllConfig()
         {
             var result = new List<SecutiryConfig>();
             try
             {
-                var baseDir = ThisApp.BaseDirectory;
-                var tp = type.ToString();
-                XElement xelement = XElement.Load($"{baseDir}Config\\Security.xml");
-                //var elements = xelement.Descendants("Security");
-                var elements = from sec in xelement.Elements("Security")
-                                where (string)sec.Element("SecurityGroup").Attribute("type") == tp
-                               select sec;
-
-                foreach (var item in elements)
+                XDocument xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");
+                var pageTages = xml.Descendants("PageList").Descendants("Page");
+                foreach (var pageTag in pageTages)
                 {
-                    if (true)
+                    var userRoleResult = new List<string>();
+                    var userRoleTags = pageTag.Descendants("UserRoles").Descendants("Role");
+                    foreach (var userRoleTag in userRoleTags)
                     {
-                        result.Add(new SecutiryConfig()
-                        {
-                        });
-
+                        userRoleResult.Add(userRoleTag.Descendants("RoleName").Select(item => item?.Value).FirstOrDefault());
                     }
+                    result.Add(new SecutiryConfig()
+                    {
+                        PageAddress = pageTag.Descendants("PageAddress").Select(item => item?.Value).FirstOrDefault(),
+                        PageDescription = pageTag.Descendants("PageDescription").Select(item => item?.Value).FirstOrDefault(),
+                        PageHelp = pageTag.Descendants("PageHelp").Select(item => item?.Value).FirstOrDefault(),
+                        PageName = pageTag.Descendants("PageName").Select(item => item?.Value).FirstOrDefault(),
+                        UserRoles = userRoleResult
+                    });
                 }
+                return result;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                result = new List<SecutiryConfig>();
-
+                return null;
             }
-            return result;
         }
+
+
+        public static SecutiryConfig GetConfigByPageName(string pageAddress)
+        {
+
+            var result = new SecutiryConfig();
+            try
+            {
+                var xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");
+                var pageTag = xml.Descendants("PageList").Descendants("Page").FirstOrDefault(x => x.Descendants("PageAddress").Select(item => item?.Value).FirstOrDefault() == pageAddress);
+                var userRoleTags = pageTag?.Descendants("UserRoles")?.Descendants("Role");
+                if (userRoleTags != null)
+                {
+                    var userRoleResult = userRoleTags.Select(userRoleTag => userRoleTag.Descendants("RoleName").Select(item => item?.Value).FirstOrDefault()).ToList();
+                    result = new SecutiryConfig()
+                    {
+                        PageAddress = pageTag.Descendants("PageAddress").Select(item => item?.Value).FirstOrDefault(),
+                        PageDescription = pageTag.Descendants("PageDescription").Select(item => item?.Value).FirstOrDefault(),
+                        PageHelp = pageTag.Descendants("PageHelp").Select(item => item?.Value).FirstOrDefault(),
+                        PageName = pageTag.Descendants("PageName").Select(item => item?.Value).FirstOrDefault(),
+                        UserRoles = userRoleResult
+                    };
+                }
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
     }
 }
