@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Model\CDMSEntities.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\User.cs" />
@@ -60,6 +61,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseCourse.Common\DatabaseCourse.Common.csproj">
+      <Project>{81d74f81-ffb1-4f17-8666-b27074f86d59}</Project>
+      <Name>DatabaseCourse.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

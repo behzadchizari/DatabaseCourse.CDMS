@@ -42,6 +42,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseCourse.CDMS.DataAccess\DatabaseCourse.CDMS.DataAccess.csproj">
+      <Project>{a559f380-1676-43ba-9941-2f59eb5a80aa}</Project>
+      <Name>DatabaseCourse.CDMS.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DatabaseCourse.Common\DatabaseCourse.Common.csproj">
+      <Project>{81d74f81-ffb1-4f17-8666-b27074f86d59}</Project>
+      <Name>DatabaseCourse.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

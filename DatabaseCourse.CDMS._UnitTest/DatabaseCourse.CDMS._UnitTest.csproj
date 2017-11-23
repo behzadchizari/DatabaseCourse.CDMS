@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3F93F8EA-F342-4FF6-927A-9AD41AB13EDA}</ProjectGuid>
+    <ProjectGuid>{1B3F9DD6-F60F-4DAA-A343-1EDB5E9B50FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DatabaseCourse.CDMS._UnitTest</RootNamespace>
@@ -35,16 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,37 +50,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DatabaseCourse.CDMS.Business\DatabaseCourse.CDMS.Business.csproj">
-      <Project>{c9a81c1f-363c-4159-baa7-0f58bfe1f837}</Project>
-      <Name>DatabaseCourse.CDMS.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DatabaseCourse.CDMS.DataAccess\DatabaseCourse.CDMS.DataAccess.csproj">
-      <Project>{a559f380-1676-43ba-9941-2f59eb5a80aa}</Project>
-      <Name>DatabaseCourse.CDMS.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DatabaseCourse.CDMS.WebUi\DatabaseCourse.CDMS.WebUi.csproj">
-      <Project>{1ff3e11b-2296-4bd4-820f-0a4a70275bfe}</Project>
-      <Name>DatabaseCourse.CDMS.WebUi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DatabaseCourse.Common\DatabaseCourse.Common.csproj">
-      <Project>{81D74F81-FFB1-4F17-8666-B27074F86D59}</Project>
-      <Name>DatabaseCourse.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-<<<<<<< HEAD
-    <Content Include="Config\Security.xml" />
-=======
-    <None Include="App.config" />
-    <None Include="packages.config" />
->>>>>>> origin/master
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

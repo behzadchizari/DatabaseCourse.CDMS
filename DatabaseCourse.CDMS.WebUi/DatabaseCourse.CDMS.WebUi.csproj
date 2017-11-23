@@ -173,6 +173,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseCourse.CDMS.Business\DatabaseCourse.CDMS.Business.csproj">
+      <Project>{c9a81c1f-363c-4159-baa7-0f58bfe1f837}</Project>
+      <Name>DatabaseCourse.CDMS.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DatabaseCourse.Common\DatabaseCourse.Common.csproj">
       <Project>{81D74F81-FFB1-4F17-8666-B27074F86D59}</Project>
       <Name>DatabaseCourse.Common</Name>
