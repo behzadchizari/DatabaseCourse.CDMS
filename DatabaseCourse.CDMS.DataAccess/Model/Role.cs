@@ -20,6 +20,12 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         [StringLength(50)]
         public string Title { get; set; }
 
+        [StringLength(100)]
+        public string DisplayName { get; set; }
+
+        [StringLength(500)]
+        public string Description { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
     }
