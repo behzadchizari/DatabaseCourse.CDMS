@@ -18,7 +18,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            var f= modelBuilder.Entity<Role>().Property(u => u.Title).HasColumnName("title");
+            System.Data.Entity.Database.SetInitializer(new DatabaseInitializer());
         }
     }
 }
