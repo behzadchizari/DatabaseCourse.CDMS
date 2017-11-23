@@ -13,12 +13,12 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         }
 
         public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            var f= modelBuilder.Entity<Role>().Property(u => u.Title).HasColumnName("title");
         }
     }
 }
