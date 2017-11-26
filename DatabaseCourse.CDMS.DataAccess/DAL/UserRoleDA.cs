@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseCourse.CDMS.DataAccess.Context;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
 
@@ -11,29 +12,44 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
     // ReSharper disable once InconsistentNaming
     public class UserRoleDA : IEntity<UserRole>
     {
-        public UserRole GetById(int id)
+        private CDMSEntities _context = new CDMSEntities();
+
+        public IQueryable<UserRole> GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context?.UserRole?.AsNoTracking().Where(x => x.Id == id) ?? null;
         }
 
-        public List<UserRole> GetAll()
+        public IQueryable<UserRole> GetAll()
         {
-            throw new NotImplementedException();
-        }
+            return _context?.UserRole?.AsNoTracking().Select(x => x) ?? null;
 
-        public int Add(UserRole role)
+        }
+        public int Add(UserRole entity)
         {
-            throw new NotImplementedException();
+            _context?.UserRole?.Add(entity);
+            _context?.SaveChanges();
+            return entity?.Id ?? 0;
         }
 
         public int Update(UserRole entity)
         {
-            throw new NotImplementedException();
+            var newEntity = _context?.UserRole?.FirstOrDefault(x => x.Id == entity.Id);
+            if (newEntity == null)
+                throw new Exception("Exception Occured on Updating UserRole. UserRole not Found");
+            newEntity.Role_Id = entity?.Role_Id;
+            newEntity.User_Id = entity?.User_Id;
+            _context.SaveChanges();
+            return newEntity?.Id ?? 0;
         }
 
-        public int Delete(UserRole role)
+        public int Delete(UserRole entity)
         {
-            throw new NotImplementedException();
+            var id = entity?.Id ?? 0;
+            if (id == 0) return id;
+            _context?.UserRole?.Remove(entity);
+            _context?.SaveChanges();
+            return id;
         }
+
     }
 }

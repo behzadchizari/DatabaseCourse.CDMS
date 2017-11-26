@@ -15,14 +15,14 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
     {
         private CDMSEntities _context = new CDMSEntities();
 
-        public Role GetById(int id)
+        public IQueryable<Role> GetById(int id)
         {
-            return _context?.Role?.FirstOrDefault(x => x.Id == id) ?? null;
+            return _context?.Role?.Where(x => x.Id == id) ?? null;
         }
 
-        public List<Role> GetAll()
+        public IQueryable<Role> GetAll()
         {
-            return _context?.Role?.ToList();
+            return _context?.Role?.Select(x=>x) ?? null;
         }
 
         public int Add(Role role)
@@ -53,7 +53,8 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
         public int Delete(Role role)
         {
             var id = role?.Id ?? 0;
-            _context.Role.Remove(role ?? throw new Exception("Exception Occured on Deleting Role. Role not Found"));
+            if (id == 0) return id;
+            _context.Role.Remove(role);
             _context.SaveChanges();
             return id;
         }

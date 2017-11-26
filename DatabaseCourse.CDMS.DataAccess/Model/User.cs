@@ -26,7 +26,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         public int? CreationDate { get; set; }
 
-        public int? LastModifyDate { get; set; }
+        public DateTime? LastModifyDate { get; set; }
 
         public int? LastModifyUser { get; set; }
 

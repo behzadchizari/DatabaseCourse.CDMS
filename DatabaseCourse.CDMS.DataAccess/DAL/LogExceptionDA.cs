@@ -15,11 +15,11 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
     {
         private CDMSEntities _context = new CDMSEntities();
 
-        public LogException GetById(int id)
+        public IQueryable<LogException> GetById(int id)
         {
             try
             {
-                return _context?.LogException?.FirstOrDefault(x => x.Id == id)?? null;
+                return _context?.LogException?.Where(x => x.Id == id) ?? null;
             }
             catch (Exception e)
             {
@@ -27,11 +27,11 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             }
         }
 
-        public List<LogException> GetAll()
+        public IQueryable<LogException> GetAll()
         {
             try
             {
-                return  _context?.LogException?.ToList()??null;
+                return _context?.LogException?.Select(x=>x) ?? null;
             }
             catch (Exception e)
             {
