@@ -15,6 +15,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
             UserRole = new HashSet<UserRole>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [StringLength(50)]
@@ -22,7 +23,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         [StringLength(100)]
         public string DisplayName { get; set; }
-        
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
     }

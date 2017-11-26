@@ -51,8 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseInitializer.cs" />
-    <Compile Include="Model\CDMSEntities.cs" />
+    <Compile Include="Context\DatabaseInitializer.cs" />
+    <Compile Include="DAL\LogExceptionDA.cs" />
+    <Compile Include="DAL\RoleDA.cs" />
+    <Compile Include="DAL\UserDA.cs" />
+    <Compile Include="Context\CDMSEntities.cs" />
+    <Compile Include="DAL\UserRoleDA.cs" />
+    <Compile Include="Model\LogException.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserRole.cs" />
@@ -68,6 +73,7 @@
       <Name>DatabaseCourse.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

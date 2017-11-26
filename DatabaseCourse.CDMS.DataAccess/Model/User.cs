@@ -12,6 +12,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            LogException = new HashSet<LogException>();
             UserRole = new HashSet<UserRole>();
         }
 
@@ -28,6 +29,9 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         public int? LastModifyDate { get; set; }
 
         public int? LastModifyUser { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LogException> LogException { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }

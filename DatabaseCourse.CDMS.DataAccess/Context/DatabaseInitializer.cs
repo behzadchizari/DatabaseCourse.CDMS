@@ -1,14 +1,12 @@
-﻿using DatabaseCourse.CDMS.DataAccess.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseCourse.Common.Utility.EnumUtility;
+using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
-namespace DatabaseCourse.CDMS.DataAccess
+namespace DatabaseCourse.CDMS.DataAccess.Context
 {
     internal class DatabaseInitializer : DropCreateDatabaseAlways<CDMSEntities>
     {

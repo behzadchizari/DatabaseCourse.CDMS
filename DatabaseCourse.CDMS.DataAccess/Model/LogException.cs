@@ -6,16 +6,21 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("UserRole")]
-    public class UserRole
+    [Table("LogException")]
+    public class LogException
     {
         public int Id { get; set; }
 
+        [StringLength(500)]
+        public string Type { get; set; }
+
+        public string Message { get; set; }
+
+        public string StackTrace { get; set; }
+
+        public DateTime? DateTime { get; set; }
+
         public int? User_Id { get; set; }
-
-        public int? Role_Id { get; set; }
-
-        public virtual Role Role { get; set; }
 
         public virtual User User { get; set; }
     }
