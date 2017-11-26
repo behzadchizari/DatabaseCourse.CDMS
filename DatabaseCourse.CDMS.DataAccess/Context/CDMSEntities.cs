@@ -6,7 +6,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Context
     public partial class CDMSEntities : DbContext
     {
         public CDMSEntities()
-            : base("name=CDMSEntities1")
+            : base("name=CDMSEntities")
         {
         }
 

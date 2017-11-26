@@ -21,7 +21,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             throw new NotImplementedException();
         }
 
-        public int Add(UserRole entity)
+        public int Add(UserRole role)
         {
             throw new NotImplementedException();
         }
@@ -31,7 +31,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             throw new NotImplementedException();
         }
 
-        public int Delete(UserRole entity)
+        public int Delete(UserRole role)
         {
             throw new NotImplementedException();
         }

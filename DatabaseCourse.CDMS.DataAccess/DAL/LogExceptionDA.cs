@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseCourse.CDMS.DataAccess.Context;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
 
@@ -12,19 +13,45 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
     public class LogExceptionDA:IEntity<LogException>
 
     {
+        private CDMSEntities _context = new CDMSEntities();
+
         public LogException GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _context?.LogException?.FirstOrDefault(x => x.Id == id)?? null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public List<LogException> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return  _context?.LogException?.ToList()??null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
-        public int Add(LogException entity)
+        public int Add(LogException role)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context?.LogException?.Add(role);
+                _context?.SaveChanges();
+                return role.Id;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            
         }
 
         public int Update(LogException entity)
@@ -32,7 +59,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             throw new NotImplementedException();
         }
 
-        public int Delete(LogException entity)
+        public int Delete(LogException role)
         {
             throw new NotImplementedException();
         }

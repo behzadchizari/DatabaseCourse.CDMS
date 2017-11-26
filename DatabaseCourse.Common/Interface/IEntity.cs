@@ -6,8 +6,8 @@ namespace DatabaseCourse.Common.Interface
     {
         T GetById(int id);
         List<T> GetAll();
-        int Add(T entity);
+        int Add(T role);
         int Update(T entity);
-        int Delete(T entity);
+        int Delete(T role);
     }
 }
