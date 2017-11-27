@@ -24,11 +24,11 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                         {
                             EnumItem item = new EnumItem();
                             item.Name = mi.Name;
-                            item.Value = (int)Enum.Parse(type, mi.Name);
-                            item.Description = ((EnumDescription)attribs[0]).Text;
+                            item.Value = (int) Enum.Parse(type, mi.Name);
+                            item.Description = ((EnumDescription) attribs[0]).Text;
                             if (attribs_parent != null && attribs_parent.Length != 0)
                             {
-                                item.ParentValue = ((EnumParentValue)attribs_parent[0]).Value;
+                                item.ParentValue = ((EnumParentValue) attribs_parent[0]).Value;
                             }
 
                             result.Add(item);
@@ -44,6 +44,7 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                 return new EnumCollection();
             }
         }
+
         public static string GetEnumDescription(Enum en)
         {
             Type type = en.GetType();
@@ -54,11 +55,12 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                 object[] attrs = memInfo[0].GetCustomAttributes(typeof(EnumDescription), false);
                 if (attrs != null && attrs.Length != 0)
                 {
-                    return ((EnumDescription)attrs[0]).Text;
+                    return ((EnumDescription) attrs[0]).Text;
                 }
             }
             return en.ToString();
         }
+
         public static int GetEnumValue(Enum en)
         {
             try
@@ -70,6 +72,7 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                 return 0;
             }
         }
+
         public static T ConvertStringToEnum<T>(string inputStr, T defaultValue)
         {
             try
@@ -89,7 +92,7 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                     var name = nameList[i];
                     var value = valueList.GetValue(i);
                     if (inputStr.ToLower() == name.ToLower())
-                        return (T)Enum.Parse(type, name);
+                        return (T) Enum.Parse(type, name);
                 }
 
                 return defaultValue;
@@ -97,6 +100,18 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
             catch (Exception ex)
             {
                 return defaultValue;
+            }
+        }
+
+        public static T GetEnumByTitle<T>(string title)
+        {
+            try
+            {
+                return (T)System.Enum.Parse(typeof(T), title);
+            }
+            catch (Exception)
+            {
+                return default(T);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         [StringLength(1024)]
         public string Password { get; set; }
 
-        public int? CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
 
         public DateTime? LastModifyDate { get; set; }
 

@@ -11,9 +11,9 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     {
         public int Id { get; set; }
 
-        public int? User_Id { get; set; }
+        public int User_Id { get; set; }
 
-        public int? Role_Id { get; set; }
+        public int Role_Id { get; set; }
 
         public virtual Role Role { get; set; }
 

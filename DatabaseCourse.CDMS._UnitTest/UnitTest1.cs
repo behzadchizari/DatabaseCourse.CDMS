@@ -12,8 +12,28 @@ namespace DatabaseCourse.CDMS._UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            CDMSEntities ent = new CDMSEntities();
-            var d = ent.Role.ToList();
+            var snvlsk = new Derived();
+        }
+    }
+
+    public class Derived : Base<int>
+    {
+        
+    }
+
+    public class Base<TK,TU>
+    {
+        public Base()
+        {
+            type = this.GetType();
+        }
+
+        public Type type { get; set; }
+
+
+        public T Get(object obj)
+        {
+            var ob= this.GetType().c;
         }
     }
 }
