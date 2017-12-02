@@ -8,29 +8,47 @@ using System.Threading.Tasks;
 using DatabaseCourse.CDMS.DataAccess.Context;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
+using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.DataAccess.DAL
 {
     // ReSharper disable once InconsistentNaming
-    public class UserDA : IEntity<User>
+    public class UserDA
     {
         private CDMSEntities _context = new CDMSEntities();
 
         public IQueryable<User> GetById(int id)
         {
-            return _context?.User?.AsNoTracking().Where(x => x.Id == id);
+            return _context?.User?.Where(x => x.Id == id);
         }
 
         public IQueryable<User> GetAll()
         {
-            return _context?.User?.AsNoTracking().Select(x => x);
+            return _context?.User?.Select(x => x);
         }
 
-        public int Add(User entity)
+        public int Add(User entity, List<UserRoleEnum> userRoleList)
         {
+            entity.CreationDate = DateTime.Now;
+            entity.LastModifyDate = DateTime.Now;
             _context?.User?.Add(entity);
             _context?.SaveChanges();
-            return entity?.Id ?? 0;
+            var addedId = entity?.Id ?? 0;
+            if (addedId != 0)
+            {
+                var userRoleDA = new UserRoleDA();
+                foreach (var item in userRoleList)
+                {
+                    userRoleDA.Add(new UserRole
+                    {
+                        Role_Id = EnumUtility.GetEnumValue(item),
+                        User_Id = addedId
+                    });
+                }
+            }
+            else addedId = 0;
+            return addedId;
         }
 
         public int Update(User entity)

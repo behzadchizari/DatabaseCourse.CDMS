@@ -7,13 +7,13 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     using System.Data.Entity.Spatial;
 
     [Table("UserRole")]
-    public class UserRole
+    public partial class UserRole
     {
         public int Id { get; set; }
 
-        public int User_Id { get; set; }
+        public int? User_Id { get; set; }
 
-        public int Role_Id { get; set; }
+        public int? Role_Id { get; set; }
 
         public virtual Role Role { get; set; }
 

@@ -22,7 +22,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Context
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.UserRole)
                 .WithOptional(e => e.Role)
-                .HasForeignKey(e => e.User_Id);
+                .HasForeignKey(e => e.Role_Id);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.LogException)

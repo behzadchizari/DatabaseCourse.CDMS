@@ -59,6 +59,7 @@
     <Compile Include="DAL\UserRoleDA.cs" />
     <Compile Include="Model\LogException.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\sysdiagrams.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

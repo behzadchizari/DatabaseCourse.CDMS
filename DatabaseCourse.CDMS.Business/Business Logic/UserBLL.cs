@@ -1,36 +1,31 @@
-﻿using System;
+﻿using DatabaseCourse.CDMS.Business.Business_Model;
+using DatabaseCourse.CDMS.DataAccess.DAL;
+using DatabaseCourse.CDMS.DataAccess.Model;
+using DatabaseCourse.Common.Classes;
+using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility;
+using DatabaseCourse.Common.Utility.EnumUtility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DatabaseCourse.CDMS.DataAccess.DAL;
-using DatabaseCourse.CDMS.DataAccess.Model;
-using DatabaseCourse.Common.Enums;
-using DatabaseCourse.Common.Utility;
-using DatabaseCourse.Common.Utility.EnumUtility;
 
-namespace DatabaseCourse.CDMS.Business.Business_Model
+namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
-    public class UserInfo
+    public class UserBLL
     {
         #region Properties
 
-        public int Id { get; set; }
+        private CurrentUser _currentUser = null;
 
-        public string Username { get; set; }
+        #endregion
 
-        public string Password { get; set; }
-
-        public DateTime? CreationDate { get; set; }
-
-        public DateTime? LastModifyDate { get; set; }
-
-        public int? LastModifyUser { get; set; }
-
-        public List<UserRoleEnum> UserRoles { get; set; }
-
-        public List<RoleInfo> Roles { get; set; }
-
+        #region ctor
+        public UserBLL(CurrentUser currentUser)
+        {
+            _currentUser = currentUser;
+        }
         #endregion
 
         #region Methods
@@ -56,7 +51,8 @@ namespace DatabaseCourse.CDMS.Business.Business_Model
         public UserInfo GetUserInfoByUserNameAndPassword(string username, string password)
         {
             var da = new UserDA();
-            var user = da.GetAll().FirstOrDefault(x => x.Username == username && x.Password == password);
+            var encPass = Cryptography.Crypto.Encrypt(password);
+            var user = da.GetAll().FirstOrDefault(x => x.Username == username && x.Password == encPass);
             return ConvertToBusinessModel(user);
         }
 
@@ -83,19 +79,14 @@ namespace DatabaseCourse.CDMS.Business.Business_Model
             Exception exData = null;
             try
             {
-                if(user.UserRoles.Count == 0)
-                    return new Exception("Cannot Add New User - Role List is Empty");
+                user.Password = Cryptography.Crypto.Encrypt(user.Password);
+                if (user.UserRoles.Count == 0)
+                    return new Exception("Cannot Add New User - No Rule is Selected.");
                 var daModel = ConvertToDataAccessModel(user);
                 var da = new UserDA();
-                var addedId = da.Add(daModel);
+                var addedId = da.Add(daModel, user.UserRoles);
                 if (addedId == 0)
-                    return new Exception("Cannot Add New User - Internal Error");
-                var urda = new UserRoleDA();
-                urda.Add(new UserRole()
-                {
-                    Role_Id = EnumUtility.GetEnumValue(UserRoles[0]),
-                    User_Id = addedId
-                });
+                    return new Exception("Cannot Add New User - Internal Error.");
             }
             catch (Exception e)
             {
@@ -103,6 +94,29 @@ namespace DatabaseCourse.CDMS.Business.Business_Model
             }
             return exData;
         }
+
+        public Exception UpdateExistingUserInfor(UserInfo user)
+        {
+            Exception exData = null;
+            try
+            {
+                var da = new UserDA();
+                var update = da.Update(UserBLL.ConvertToDataAccessModel(user));
+                if (update == 0)
+                    return new Exception("Cannot Add New User - Internal Error.");
+            }
+            catch (Exception ex)
+            {
+                exData = new Exception(ExceptionUtility.GetAllInnerException(ex));
+            }
+            return exData;
+        }
+
+        public Exception RemoveUser(UserInfo user)
+        {
+            var da = new 
+        }
+        public Exception RemoveUser(int id) { }
 
         #endregion
 
@@ -142,7 +156,5 @@ namespace DatabaseCourse.CDMS.Business.Business_Model
         }
 
         #endregion
-
-
     }
 }

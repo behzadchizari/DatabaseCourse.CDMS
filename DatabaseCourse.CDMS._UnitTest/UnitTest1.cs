@@ -3,6 +3,9 @@ using System.Linq;
 using DatabaseCourse.CDMS.DataAccess.Context;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DatabaseCourse.Common.Utility;
+using DatabaseCourse.CDMS.DataAccess.DAL;
+using System.Collections.Generic;
 
 namespace DatabaseCourse.CDMS._UnitTest
 {
@@ -12,28 +15,25 @@ namespace DatabaseCourse.CDMS._UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            var snvlsk = new Derived();
+            var da = new UserDA();
+            da.Add(new User
+            {
+                LastModifyDate = DateTime.Now,
+                CreationDate = DateTime.Now,
+                LastModifyUser = null,
+                Password = "123",
+                Username = "admin",
+
+            }, new List<Common.Enums.UserRoleEnum> { Common.Enums.UserRoleEnum.Admin });
+
+
+            var rda = new UserDA();
+            var b = rda.GetById(1).FirstOrDefault();
+            b.Username = "admin22";
+            var a = rda.Update(b);
+
+
         }
     }
-
-    public class Derived : Base<int>
-    {
-        
-    }
-
-    public class Base<TK,TU>
-    {
-        public Base()
-        {
-            type = this.GetType();
-        }
-
-        public Type type { get; set; }
-
-
-        public T Get(object obj)
-        {
-            var ob= this.GetType().c;
-        }
-    }
+    
 }

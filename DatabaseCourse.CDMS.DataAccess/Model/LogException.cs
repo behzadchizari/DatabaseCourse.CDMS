@@ -7,7 +7,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     using System.Data.Entity.Spatial;
 
     [Table("LogException")]
-    public class LogException
+    public partial class LogException
     {
         public int Id { get; set; }
 

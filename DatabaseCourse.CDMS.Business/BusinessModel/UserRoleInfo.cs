@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
+using DatabaseCourse.Common.Utility;
+using DatabaseCourse.CDMS.Business.Business_Logic;
 
 namespace DatabaseCourse.CDMS.Business.Business_Model
 {
@@ -33,19 +35,20 @@ namespace DatabaseCourse.CDMS.Business.Business_Model
             }
         }
 
-        public virtual UserInfo User{
+        public virtual UserInfo User
+        {
             get
             {
                 var userDa = new UserDA();
                 if (RoleId == null) return null;
                 var userInfo = userDa.GetById(RoleIdInt).FirstOrDefault();
-                return UserInfo.ConvertToBusinessModel(userInfo);
+                return UserBLL.ConvertToBusinessModel(userInfo);
             }
         }
         #endregion
 
         #region Business Methods
-        
+
 
         #endregion
 
@@ -58,8 +61,8 @@ namespace DatabaseCourse.CDMS.Business.Business_Model
                 return new UserRole()
                 {
                     Id = userRoleInfo.Id,
-                    Role_Id = userRoleInfo.RoleId,
-                    User_Id = userRoleInfo.UserId
+                    Role_Id = TypeUtility.ConvertToInt(userRoleInfo.RoleId),
+                    User_Id = TypeUtility.ConvertToInt(userRoleInfo.UserId)
                 };
             }
             return null;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseCourse.Common.Classes;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 {
     public static class ThisApp
     {
+        public  static CurrentUser CurrentUser{ get; set; }
+
         public static string BaseDirectory
         {
             get

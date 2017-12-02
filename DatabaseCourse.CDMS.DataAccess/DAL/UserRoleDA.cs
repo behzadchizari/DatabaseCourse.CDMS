@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using DatabaseCourse.CDMS.DataAccess.Context;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
+using DatabaseCourse.Common.Utility;
 
 namespace DatabaseCourse.CDMS.DataAccess.DAL
 {
     // ReSharper disable once InconsistentNaming
-    public class UserRoleDA : IEntity<UserRole>
+    public class UserRoleDA
     {
         private CDMSEntities _context = new CDMSEntities();
 
@@ -36,8 +37,8 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             var newEntity = _context?.UserRole?.FirstOrDefault(x => x.Id == entity.Id);
             if (newEntity == null)
                 throw new Exception("Exception Occured on Updating UserRole. UserRole not Found");
-            newEntity.Role_Id = entity?.Role_Id;
-            newEntity.User_Id = entity?.User_Id;
+            newEntity.Role_Id =TypeUtility.ConvertToInt( entity?.Role_Id);
+            newEntity.User_Id = TypeUtility.ConvertToInt(entity?.User_Id);
             _context.SaveChanges();
             return newEntity?.Id ?? 0;
         }
