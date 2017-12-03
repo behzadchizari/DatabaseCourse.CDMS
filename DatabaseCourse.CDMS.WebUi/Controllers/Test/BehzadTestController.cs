@@ -23,9 +23,9 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
             var userBll = new UserBLL(ThisApp.CurrentUser);
             var e = userBll.AddNewUserInfo(new UserInfo()
             {
-                Username = "Admin",
-                Password = "123",
-                UserRoles = new List<Common.Enums.UserRoleEnum> { UserRoleEnum.Admin },
+                Username = "Admin5",
+                Password = "1234",
+                UserRoles = new List<Common.Enums.UserRoleEnum> { UserRoleEnum.Admin, UserRoleEnum.CEO },
 
             });
             if (e != null)
@@ -44,7 +44,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
             if (e != null)
                 ViewBag.IsOk = ExceptionUtility.GetAllInnerException(e);
             else
-                ViewBag.IsOk = "Ok";
+            { ViewBag.IsOk = "Ok"; }
             return View("Index");
         }
         // GET: BehzadTest
@@ -53,7 +53,16 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
             var userBll = new UserBLL(ThisApp.CurrentUser);
             var e = userBll.GetUserInfoByUserNameAndPassword(u, p);
             if (e != null)
-                ViewBag.IsOk = e.Username;
+            {
+                ViewBag.IsOk = "";
+                foreach (var item in e.UserRoles)
+                {
+                    ViewBag.IsOk += item + " ";
+                }
+                ViewBag.IsOk += e.Username;
+                var er = e.UserRoles;
+
+            }
             else
                 ViewBag.IsOk = "NOk";
             return View("Index");

@@ -114,11 +114,39 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         public Exception RemoveUser(UserInfo user)
         {
-            throw new NotImplementedException();
+            var da = new UserDA();
+            try
+            {
+                if (user == null)
+                    return new Exception("User not Found.");
+                var deletedId = da.Delete(ConvertToDataAccessModel(user));
+                if (deletedId <= 0)
+                    return new Exception("Cannot Delete User. Internal Error");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
         }
+
         public Exception RemoveUser(int id)
         {
-            throw new NotImplementedException();
+            var da = new UserDA();
+            try
+            {
+                var user = da.GetById(id).FirstOrDefault();
+                if (user == null)
+                    return new Exception("User not Found.");
+                var deletedId = da.Delete(user);
+                if(deletedId <= 0)
+                    return new Exception("Cannot Delete User. Internal Error");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex;
+            }
         }
 
         #endregion

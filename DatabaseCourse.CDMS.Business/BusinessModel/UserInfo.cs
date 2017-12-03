@@ -13,6 +13,10 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
     public class UserInfo
     {
+        #region Private
+        private List<UserRoleEnum> _userRoles = null;
+        #endregion
+
         #region Properties
 
         public int Id { get; set; }
@@ -27,9 +31,24 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 
         public int? LastModifyUser { get; set; }
 
-        public List<UserRoleEnum> UserRoles { get; set; }
-
-        public List<RoleInfo> Roles { get; set; }
+        public List<UserRoleEnum> UserRoles
+        {
+            set
+            { _userRoles = value; }
+            get
+            {
+                if (Id != 0)
+                {
+                    var EnumList = EnumUtility.List(typeof(UserRoleEnum));
+                    var userRoleDa = new UserRoleDA();
+                    var userRoles = userRoleDa.GetByUserId(this.Id);
+                    var result = new List<UserRoleEnum>();
+                    foreach (var item in userRoles) result.Add((UserRoleEnum)item.Role_Id);
+                    return result;
+                }
+                return _userRoles;
+            }
+        }
 
         #endregion
 

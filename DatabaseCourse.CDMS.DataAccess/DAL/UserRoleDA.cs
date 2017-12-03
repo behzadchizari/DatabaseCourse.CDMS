@@ -25,6 +25,13 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.UserRole?.AsNoTracking().Select(x => x) ?? null;
 
         }
+
+        public IQueryable<UserRole> GetByUserId(int id)
+        {
+            return _context?.UserRole?.Where(x=>x.User_Id == id) ?? null;
+
+        }
+
         public int Add(UserRole entity)
         {
             _context?.UserRole?.Add(entity);

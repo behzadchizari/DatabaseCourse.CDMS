@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace DatabaseCourse.Common.Utility.EnumUtility
@@ -24,11 +25,11 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                         {
                             EnumItem item = new EnumItem();
                             item.Name = mi.Name;
-                            item.Value = (int) Enum.Parse(type, mi.Name);
-                            item.Description = ((EnumDescription) attribs[0]).Text;
+                            item.Value = (int)Enum.Parse(type, mi.Name);
+                            item.Description = ((EnumDescription)attribs[0]).Text;
                             if (attribs_parent != null && attribs_parent.Length != 0)
                             {
-                                item.ParentValue = ((EnumParentValue) attribs_parent[0]).Value;
+                                item.ParentValue = ((EnumParentValue)attribs_parent[0]).Value;
                             }
 
                             result.Add(item);
@@ -55,7 +56,7 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
                 object[] attrs = memInfo[0].GetCustomAttributes(typeof(EnumDescription), false);
                 if (attrs != null && attrs.Length != 0)
                 {
-                    return ((EnumDescription) attrs[0]).Text;
+                    return ((EnumDescription)attrs[0]).Text;
                 }
             }
             return en.ToString();
@@ -73,6 +74,19 @@ namespace DatabaseCourse.Common.Utility.EnumUtility
             }
         }
 
+        public static T ConvertIntToEnum<T>(int input, T defaultValue)
+        {
+            try
+            {
+                var enumName = List(typeof(T)).FirstOrDefault(e=>e.Value==input).Name;
+                return ConvertStringToEnum<T>(enumName, defaultValue);
+
+            }
+            catch (Exception)
+            {
+                return defaultValue;
+            }
+        }
         public static T ConvertStringToEnum<T>(string inputStr, T defaultValue)
         {
             try
