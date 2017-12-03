@@ -7,9 +7,9 @@ using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
 using DatabaseCourse.Common.Utility;
-using DatabaseCourse.CDMS.Business.Business_Logic;
+using DatabaseCourse.CDMS.Business.BusinessLogic;
 
-namespace DatabaseCourse.CDMS.Business.Business_Model
+namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
     public class UserRoleInfo
     {

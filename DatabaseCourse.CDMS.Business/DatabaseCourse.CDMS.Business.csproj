@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business Logic\UserBLL.cs" />
+    <Compile Include="BusinessLogic\UserBLL.cs" />
     <Compile Include="BusinessModel\LogExceptionInfo.cs" />
     <Compile Include="BusinessModel\RoleInfo.cs" />
     <Compile Include="BusinessModel\UserInfo.cs" />

@@ -8,7 +8,7 @@ using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.DataAccess.Context
 {
-    internal class DatabaseInitializer : DropCreateDatabaseAlways<CDMSEntities>
+    internal class DatabaseInitializer : DropCreateDatabaseIfModelChanges<CDMSEntities>
     {
 
         private static List<Role> GetRoleFromEnum()

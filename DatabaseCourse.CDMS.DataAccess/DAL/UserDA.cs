@@ -25,7 +25,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
 
         public IQueryable<User> GetAll()
         {
-            return _context?.User?.Select(x => x);
+            return _context?.User?.AsQueryable();
         }
 
         public int Add(User entity, List<UserRoleEnum> userRoleList)
@@ -56,10 +56,10 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             var newEntity = _context?.User?.FirstOrDefault(x => x.Id == entity.Id);
             if (newEntity == null)
                 throw new Exception("Exception Occured on Updating User. User not Found");
-            newEntity.Username = entity?.Username;
+            newEntity.Username = entity?.Username?? newEntity.Username;
             newEntity.LastModifyDate = DateTime.Now;
-            newEntity.Password = entity?.Password;
-            newEntity.LastModifyUser = entity?.LastModifyUser;
+            newEntity.Password = entity?.Password ?? newEntity.Password;
+            newEntity.LastModifyUser = entity?.LastModifyUser;//ToDo
             _context.SaveChanges();
             return newEntity?.Id ?? 0;
         }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DatabaseCourse.CDMS.DataAccess.Model;
 
-namespace DatabaseCourse.CDMS.Business.Business_Model
+namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
     public class LogExceptionInfo
     {

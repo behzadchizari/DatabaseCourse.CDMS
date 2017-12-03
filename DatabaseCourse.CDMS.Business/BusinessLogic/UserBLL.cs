@@ -1,4 +1,4 @@
-﻿using DatabaseCourse.CDMS.Business.Business_Model;
+﻿using DatabaseCourse.CDMS.Business.BusinessModel;
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
@@ -51,7 +51,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         public UserInfo GetUserInfoByUserNameAndPassword(string username, string password)
         {
             var da = new UserDA();
-            var encPass = Cryptography.Crypto.Encrypt(password);
+            var encPass = password;
             var user = da.GetAll().FirstOrDefault(x => x.Username == username && x.Password == encPass);
             return ConvertToBusinessModel(user);
         }
@@ -79,7 +79,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             Exception exData = null;
             try
             {
-                user.Password = Cryptography.Crypto.Encrypt(user.Password);
+                user.Password = user.Password;
                 if (user.UserRoles.Count == 0)
                     return new Exception("Cannot Add New User - No Rule is Selected.");
                 var daModel = ConvertToDataAccessModel(user);
@@ -114,9 +114,12 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         public Exception RemoveUser(UserInfo user)
         {
-            var da = new 
+            throw new NotImplementedException();
         }
-        public Exception RemoveUser(int id) { }
+        public Exception RemoveUser(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

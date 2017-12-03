@@ -9,7 +9,7 @@ using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility;
 using DatabaseCourse.Common.Utility.EnumUtility;
 
-namespace DatabaseCourse.CDMS.Business.Business_Model
+namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
     public class UserInfo
     {

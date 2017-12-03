@@ -1,5 +1,5 @@
-﻿using DatabaseCourse.CDMS.Business.Business_Logic;
-using DatabaseCourse.CDMS.Business.Business_Model;
+﻿using DatabaseCourse.CDMS.Business.BusinessLogic;
+using DatabaseCourse.CDMS.Business.BusinessModel;
 using DatabaseCourse.CDMS.WebUi.Classes;
 using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility;
@@ -16,6 +16,10 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
         // GET: BehzadTest
         public ActionResult Index()
         {
+            return View();
+        }
+        public ActionResult Add()
+        {
             var userBll = new UserBLL(ThisApp.CurrentUser);
             var e = userBll.AddNewUserInfo(new UserInfo()
             {
@@ -28,7 +32,33 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
                 ViewBag.IsOk = ExceptionUtility.GetAllInnerException(e);
             else
                 ViewBag.IsOk = "Ok";
-            return View();
+            return View("Index");
         }
+        // GET: BehzadTest
+        public ActionResult Update()
+        {
+            var userBll = new UserBLL(ThisApp.CurrentUser);
+            var us = userBll.GetUserInfoById(1);
+            us.Username = "Admin2";
+            var e = userBll.UpdateExistingUserInfor(us);
+            if (e != null)
+                ViewBag.IsOk = ExceptionUtility.GetAllInnerException(e);
+            else
+                ViewBag.IsOk = "Ok";
+            return View("Index");
+        }
+        // GET: BehzadTest
+        public ActionResult Login(string p,string u)
+        {
+            var userBll = new UserBLL(ThisApp.CurrentUser);
+            var e = userBll.GetUserInfoByUserNameAndPassword(u, p);
+            if (e != null)
+                ViewBag.IsOk = e.Username;
+            else
+                ViewBag.IsOk = "NOk";
+            return View("Index");
+        }
+
+
     }
 }
