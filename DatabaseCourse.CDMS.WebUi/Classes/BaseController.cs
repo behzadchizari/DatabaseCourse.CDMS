@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
+using DatabaseCourse.Common.Enums;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
@@ -11,16 +12,32 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
     {
         #region Abstract Methods
 
+        protected abstract void SetSessionAndViewBag();
+
+        #endregion
+        #region Override Methods
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (CheckPermission(filterContext) == null)
+            var hasAccess = CheckPermission(filterContext);
+            switch (hasAccess)
             {
+                case true:
+                    ThisApp.AccessDenied = null;
+                    break;
+                case false:
+                    ThisApp.AccessDenied = new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.");
+                    break;
+                case null:
+                    ThisApp.AccessDenied = new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.", new Exception("مورد امنیتی برای صفحه‌ی مورد نظر یافت نشد."));
+                    break;
             }
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var fil = filterContext;
+            SetSessionAndViewBag();
 
         }
 
@@ -33,7 +50,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 
         #region Helper
 
-        private Exception CheckPermission(ActionExecutingContext filterContext)
+        private bool? CheckPermission(ActionExecutingContext filterContext)
         {
             try
             {
@@ -44,21 +61,24 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                 var security = SecutiryConfig.GetConfigByPageName($@"/{controllerName}/{actionName}");
                 if (security != null)
                 {
+                    ThisApp.PageTitle = security.PageName;
+
                     //check user from this app 
                     foreach (var userRole in security.UserRoleList)
                     {
                         //check role of user with page permission   
+                        if (ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest) return true;
                     }
                 }
                 else
                 {
-                    return new Exception("404 - صفحه یافت نشد!");
+                    return null;
                 }
-                return hasAccess ? null : new Exception("شما اجازه دسترسی به این صفحه را ندارید");
+                return hasAccess;
             }
             catch (Exception ex)
             {
-                return ex;
+                return false;
             }
         }
 

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
 {
-    public class BehzadTestController : Controller
+    public class BehzadTestController : BaseController
     {
         // GET: BehzadTest
         public ActionResult Index()

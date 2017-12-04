@@ -9,6 +9,10 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 {
     public static class ThisApp
     {
+        public static string PageTitle { get; set; }
+
+        public static Exception AccessDenied { get; set; }
+
         public  static CurrentUser CurrentUser{ get; set; }
 
         public static string BaseDirectory

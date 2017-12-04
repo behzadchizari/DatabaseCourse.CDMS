@@ -6,6 +6,8 @@ namespace DatabaseCourse.Common.Enums
     {
         [EnumDescription("")]
         Null = 0,
+        [EnumDescription("کاربر لاگین نشده")]
+        Guest = 5,
         [EnumDescription("راهبر ارشد سیستم")]
         SuperAdmin = 10,
         [EnumDescription("راهبر سیستم")]
