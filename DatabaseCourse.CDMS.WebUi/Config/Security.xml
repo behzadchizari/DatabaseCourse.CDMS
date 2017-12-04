@@ -30,7 +30,7 @@
   <Page>
     <PageName>ورود</PageName>
     <PageAddress><![CDATA[/Login/Index]]></PageAddress>
-    <PageDescription>ورود</PageDescription>
+    <PageDescription>ورود به سامانه</PageDescription>
     <PageHelp></PageHelp>
     <UserRoles>
       <Role>
@@ -39,6 +39,28 @@
     </UserRoles>
   </Page>
 
+  <Page>
+    <PageName>ورود</PageName>
+    <PageAddress><![CDATA[/Login/Login]]></PageAddress>
+    <PageDescription></PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>Guest</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <Page>
+    <PageName>ورود</PageName>
+    <PageAddress><![CDATA[/Login/Logout]]></PageAddress>
+    <PageDescription>شما از سیسیتم خارج شدید</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>All</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
 
 
 

@@ -12,45 +12,37 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
     {
         #region Abstract Methods
 
-        protected abstract void SetSessionAndViewBag();
+        protected abstract void SetSessionAndViewBags();
+        protected abstract void LoadSessionAndViewBags();
+        protected abstract Exception InnerSecurityCheck();
+
 
         #endregion
+
         #region Override Methods
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var hasAccess = CheckPermission(filterContext);
-            switch (hasAccess)
-            {
-                case true:
-                    ThisApp.AccessDenied = null;
-                    break;
-                case false:
-                    ThisApp.AccessDenied = new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.");
-                    break;
-                case null:
-                    ThisApp.AccessDenied = new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.", new Exception("مورد امنیتی برای صفحه‌ی مورد نظر یافت نشد."));
-                    break;
-            }
+            LoadSessionAndViewBags();
+            ThisApp.AccessDenied = CheckPermission(filterContext);
+            ThisApp.InnerAccessDenied = InnerSecurityCheck();
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var fil = filterContext;
-            SetSessionAndViewBag();
-
+            SetSessionAndViewBags();
         }
 
         protected override void OnException(ExceptionContext filterContext)
         {
-            var fil = filterContext;
+
         }
 
         #endregion
 
         #region Helper
 
-        private bool? CheckPermission(ActionExecutingContext filterContext)
+        private Exception CheckPermission(ActionExecutingContext filterContext)
         {
             try
             {
@@ -62,23 +54,28 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                 if (security != null)
                 {
                     ThisApp.PageTitle = security.PageName;
+                    ThisApp.PageDesctiption= security.PageDescription;
 
                     //check user from this app 
                     foreach (var userRole in security.UserRoleList)
                     {
                         //check role of user with page permission   
-                        if (ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest) return true;
+                        if ((ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest ) || userRole == UserRoleEnum.All) return null;
+                        var loginedUser = ThisApp.CurrentUser;
+                        if (loginedUser == null) continue;
+                        hasAccess = loginedUser.UserRoles.Any(x => x == userRole || x == UserRoleEnum.SuperAdmin);
+                        if (hasAccess) return null;
                     }
                 }
                 else
                 {
-                    return null;
+                    return new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.", new Exception("مورد امنیتی برای صفحه‌ی مورد نظر یافت نشد.")); ;
                 }
-                return hasAccess;
+                return hasAccess ? null : new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.");
             }
             catch (Exception ex)
             {
-                return false;
+                return ex;
             }
         }
 

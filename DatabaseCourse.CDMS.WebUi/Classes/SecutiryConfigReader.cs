@@ -84,7 +84,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         public static SecutiryConfig GetConfigByPageName(string pageAddress)
         {
 
-            var result = new SecutiryConfig();
+            SecutiryConfig result = null;
             try
             {
                 var xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");

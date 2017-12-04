@@ -8,6 +8,7 @@ using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility;
 using DatabaseCourse.Common.Utility.EnumUtility;
+using DatabaseCourse.CDMS.Business.BusinessLogic;
 
 namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
@@ -30,6 +31,17 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public DateTime? LastModifyDate { get; set; }
 
         public int? LastModifyUser { get; set; }
+
+        public UserInfo LastModifyUserData
+        {
+            get
+            {
+                if (LastModifyUser == null) return null;
+                var da = new UserDA();
+                return UserBLL.ConvertToBusinessModel(da.GetById(TypeUtility.ConvertToInt(LastModifyUser)).FirstOrDefault());
+            }
+        }
+
 
         public List<UserRoleEnum> UserRoles
         {

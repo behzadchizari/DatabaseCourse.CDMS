@@ -3,44 +3,121 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.WebParts;
 using DatabaseCourse.CDMS.Business.BusinessLogic;
 using DatabaseCourse.CDMS.WebUi.Classes;
+using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers
 {
     public class LoginController : BaseController
     {
-        // GET: Login
+        #region Variables
+
+        private int _loginUserId;
+
+        #endregion
+
+        #region Action Methods
         public ActionResult Index()
         {
             return View();
         }
-
-
-        public JsonResult PressLogin(string userName,string password)
+        
+        public JsonResult Login(string userName, string password)
         {
-            var json = new JsonResult();
+            var json = new JsonResult {JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+           
             try
             {
-                var userBll = new UserBLL(ThisApp.CurrentUser);
-                var user = userBll.GetUserInfoByUserNameAndPassword(userName, password);
-                if (user == null)
+                if (ThisApp.AccessDenied != null ||
+                    ThisApp.InnerAccessDenied != null)
                 {
                     json.Data = new
                     {
-                        Status = ""
+                        Status = JsonResultStatus.AccessDenied,
+                        Description = ExceptionUtility.GetAllInnerException(ThisApp.AccessDenied ?? ThisApp.InnerAccessDenied)
                     };
+                    return json;
+                }
+                if (ThisApp.CurrentUser != null)
+                {
+                    json.Data = new
+                    {
+                        Status = JsonResultStatus.AlreadyLogedIn,
+                        Description = EnumUtility.GetEnumDescription(JsonResultStatus.AlreadyLogedIn)
+                    };
+                    return json;
+                }
+                var userBll = new UserBLL(ThisApp.CurrentUser);
+                var user = userBll.GetUserInfoByUserNameAndPassword(userName, password);
+                if (user != null)
+                {
+                    _loginUserId = user.Id;
+                    json.Data = new
+                    {
+                        Status = JsonResultStatus.Ok
+                    };
+                    //RedirectToAction("Index", "Default");
+                    Redirect("/DefaultIndex/");
                 }
                 else
                 {
+                    json.Data = new
+                    {
+                        Status = JsonResultStatus.UserNotFound,
+                        Description = "کاربر یافت نشد."
+                    };
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                json.Data = new
+                {
+                    Status = JsonResultStatus.Exception,
+                    Description = ExceptionUtility.GetAllInnerException(ex)
+                };
             }
             return json;
         }
+
+        public ActionResult logout()
+        {
+            Session["UserId"] = null;
+            return View("Index");
+        }
+
+        #endregion
+
+        #region Abstract Methods
+
+
+        protected override void SetSessionAndViewBags()
+        {
+            Session["UserId"] = _loginUserId;
+        }
+
+        protected override void LoadSessionAndViewBags()
+        {
+
+        }
+
+        protected override Exception InnerSecurityCheck()
+        {
+            return null;
+        }
+
+        #endregion
+
+        #region Helper
+
+        private void MakeDefault()
+        {
+            _loginUserId = 0;
+        }
+
+        #endregion
     }
 }

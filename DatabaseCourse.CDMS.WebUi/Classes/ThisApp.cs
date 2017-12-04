@@ -1,4 +1,5 @@
-﻿using DatabaseCourse.Common.Classes;
+﻿using DatabaseCourse.CDMS.Business.BusinessLogic;
+using DatabaseCourse.Common.Classes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,11 +10,43 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 {
     public static class ThisApp
     {
+        #region Variables
+
+        private static CurrentUser _currentuser;
+
+        #endregion
+
+        #region Properties
+
+
         public static string PageTitle { get; set; }
+        public static string PageDesctiption { get; set; }
 
         public static Exception AccessDenied { get; set; }
+        public static Exception InnerAccessDenied { get; set; }
 
-        public  static CurrentUser CurrentUser{ get; set; }
+        public static CurrentUser CurrentUser
+        {
+            get
+            {
+                var sessionUserId = HttpContext.Current.Session["UserId"];
+                if (sessionUserId == null) return null;
+                int userId = 0 ;
+                if (!int.TryParse(sessionUserId.ToString(), out userId)) return null;
+                var userBll = new UserBLL(null);
+                var user = userBll.GetUserInfoById(userId);
+                if (user == null) return null;
+                return new CurrentUser()
+                {
+                    Id = user.Id,
+                    CreationDate = user.CreationDate,
+                    LastModifyDate = user.LastModifyDate,
+                    LastModifyUser = user.LastModifyUser,
+                    UserRoles = user.UserRoles,
+                    Username = user.Username,
+                };
+            }
+        }
 
         public static string BaseDirectory
         {
@@ -30,6 +63,11 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 
             }
         }
+
+
+        #endregion
+
+        #region Methods
 
 
         /// <summary>
@@ -60,9 +98,19 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         public static object GetConfiguration(string configName)
         {
             var appConfig = "";
-            try{appConfig = ConfigurationManager.AppSettings[configName];}
-            catch (Exception){}
+            try { appConfig = ConfigurationManager.AppSettings[configName]; }
+            catch (Exception) { }
             return appConfig;
         }
+
+        #endregion
+
+        #region Helper
+
+
+
+        #endregion
+
+
     }
 }

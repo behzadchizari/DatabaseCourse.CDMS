@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -150,6 +151,7 @@
     <Compile Include="Classes\DataTransfer.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
     <Compile Include="Classes\ThisApp.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\Test\BehzadTestController.cs" />
     <Compile Include="Global.asax.cs">

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Classes\CurrentUser.cs" />
     <Compile Include="Classes\DataTransfer.cs" />
+    <Compile Include="Enums\JsonResultStatus.cs" />
     <Compile Include="Enums\UserRoleEnum.cs" />
     <Compile Include="Interface\IConvertModel.cs" />
     <Compile Include="Interface\IDataTransfer.cs" />

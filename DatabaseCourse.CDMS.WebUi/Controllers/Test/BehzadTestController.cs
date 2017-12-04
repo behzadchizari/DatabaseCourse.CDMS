@@ -69,5 +69,17 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
         }
 
 
+        protected override void SetSessionAndViewBags()
+        {
+        }
+
+        protected override void LoadSessionAndViewBags()
+        {
+        }
+
+        protected override Exception InnerSecurityCheck()
+        {
+            return null;
+        }
     }
 }
