@@ -3,15 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DatabaseCourse.CDMS.WebUi.Classes;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers
 {
-    public class DefaultController : Controller
+    public class DefaultController : BaseController
     {
         // GET: Default
         public ActionResult Index()
         {
             return View();
+        }
+
+        protected override void SetSessionAndViewBags()
+        {
+
+        }
+
+        protected override void LoadSessionAndViewBags()
+        {
+
+        }
+
+        protected override Exception InnerSecurityCheck()
+        {
+            return null;
         }
     }
 }

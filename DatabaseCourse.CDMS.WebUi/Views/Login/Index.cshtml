@@ -1,13 +1,31 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility.EnumUtility
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>@ThisApp.PageTitle 
-<small>@ThisApp.PageDesctiption</small>
-</h2>
 
 
 
+@{
+    if (ThisApp.AccessDenied == null && ThisApp.InnerAccessDenied == null)
+    {
 
+        
+        <h2>@ThisApp.PageTitle 
+            <small>@ThisApp.PageDesctiption</small>
+        </h2>
+
+        <p>ورود</p>
+
+
+    }
+    else
+    {
+        if (ThisApp.AccessDeniedType == AccessDeniedType.NotLogined)
+        { Response.Redirect("/Login/index"); }
+        <p>خطای سیستم : @EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
+    }
+}

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
@@ -46,7 +47,6 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         {
             try
             {
-                var hasAccess = false;
                 var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
                 var actionName = filterContext.ActionDescriptor.ActionName;
                 //Get Security Config by Controller/Action
@@ -54,24 +54,36 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                 if (security != null)
                 {
                     ThisApp.PageTitle = security.PageName;
-                    ThisApp.PageDesctiption= security.PageDescription;
+                    ThisApp.PageDesctiption = security.PageDescription;
+
+                    var loginedUser = ThisApp.CurrentUser;
 
                     //check user from this app 
                     foreach (var userRole in security.UserRoleList)
                     {
                         //check role of user with page permission   
-                        if ((ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest ) || userRole == UserRoleEnum.All) return null;
-                        var loginedUser = ThisApp.CurrentUser;
-                        if (loginedUser == null) continue;
-                        hasAccess = loginedUser.UserRoles.Any(x => x == userRole || x == UserRoleEnum.SuperAdmin);
-                        if (hasAccess) return null;
+                        if ((ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest) || userRole == UserRoleEnum.All)
+                        {
+                            ThisApp.AccessDeniedType = AccessDeniedType.Null;
+                            return null;
+                        }
+                        if (loginedUser == null)
+                        {
+                            ThisApp.AccessDeniedType = AccessDeniedType.NotLogined;
+                            return new Exception(EnumUtility.GetEnumDescription(AccessDeniedType.NotLogined));
+                        }
+                        if (!loginedUser.UserRoles.Any(x => x == userRole || x == UserRoleEnum.SuperAdmin)) continue;
+                        ThisApp.AccessDeniedType = AccessDeniedType.Null;
+                        return null;
                     }
                 }
                 else
                 {
+                    ThisApp.AccessDeniedType = AccessDeniedType.NoSecurityConfig;
                     return new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.", new Exception("مورد امنیتی برای صفحه‌ی مورد نظر یافت نشد.")); ;
                 }
-                return hasAccess ? null : new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.");
+                ThisApp.AccessDeniedType = AccessDeniedType.NoAccessToPage;
+                return new Exception("دسترسی به این صفحه امکان پذیر نمیباشد.");
             }
             catch (Exception ex)
             {

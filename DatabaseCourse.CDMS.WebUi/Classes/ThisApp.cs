@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using DatabaseCourse.Common.Enums;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
@@ -12,19 +13,15 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
     {
         #region Variables
 
-        private static CurrentUser _currentuser;
-
         #endregion
 
         #region Properties
 
-
         public static string PageTitle { get; set; }
         public static string PageDesctiption { get; set; }
-
         public static Exception AccessDenied { get; set; }
         public static Exception InnerAccessDenied { get; set; }
-
+        public static AccessDeniedType AccessDeniedType { get; set; }
         public static CurrentUser CurrentUser
         {
             get
@@ -47,7 +44,6 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                 };
             }
         }
-
         public static string BaseDirectory
         {
             get
@@ -63,7 +59,6 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 
             }
         }
-
 
         #endregion
 
