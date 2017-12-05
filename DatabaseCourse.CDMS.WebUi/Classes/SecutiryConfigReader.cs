@@ -53,17 +53,12 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             var result = new List<SecutiryConfig>();
             try
             {
-                XDocument xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");
+                var xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");
                 var pageTages = xml.Descendants("PageList").Descendants("Page");
-                foreach (var pageTag in pageTages)
-                {
-                    var userRoleResult = new List<string>();
-                    var userRoleTags = pageTag.Descendants("UserRoles").Descendants("Role");
-                    foreach (var userRoleTag in userRoleTags)
-                    {
-                        userRoleResult.Add(userRoleTag.Descendants("RoleName").Select(item => item?.Value).FirstOrDefault());
-                    }
-                    result.Add(new SecutiryConfig()
+                result.AddRange(from pageTag in pageTages
+                    let userRoleTags = pageTag.Descendants("UserRoles").Descendants("Role")
+                    let userRoleResult = userRoleTags.Select(userRoleTag => userRoleTag.Descendants("RoleName").Select(item => item?.Value).FirstOrDefault()).ToList()
+                    select new SecutiryConfig()
                     {
                         PageAddress = pageTag.Descendants("PageAddress").Select(item => item?.Value).FirstOrDefault(),
                         PageDescription = pageTag.Descendants("PageDescription").Select(item => item?.Value).FirstOrDefault(),
@@ -71,7 +66,6 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                         PageName = pageTag.Descendants("PageName").Select(item => item?.Value).FirstOrDefault(),
                         UserRoles = userRoleResult
                     });
-                }
                 return result;
             }
             catch (Exception)
@@ -83,17 +77,15 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 
         public static SecutiryConfig GetConfigByPageName(string pageAddress)
         {
-
-            SecutiryConfig result = null;
             try
             {
                 var xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");
                 var pageTag = xml.Descendants("PageList").Descendants("Page").FirstOrDefault(x => x.Descendants("PageAddress").Select(item => item?.Value).FirstOrDefault() == pageAddress);
                 var userRoleTags = pageTag?.Descendants("UserRoles")?.Descendants("Role");
-                if (userRoleTags != null)
+                if (userRoleTags == null) return null;
                 {
                     var userRoleResult = userRoleTags.Select(userRoleTag => userRoleTag.Descendants("RoleName").Select(item => item?.Value).FirstOrDefault()).ToList();
-                    result = new SecutiryConfig()
+                    return new SecutiryConfig()
                     {
                         PageAddress = pageTag.Descendants("PageAddress").Select(item => item?.Value).FirstOrDefault(),
                         PageDescription = pageTag.Descendants("PageDescription").Select(item => item?.Value).FirstOrDefault(),
@@ -102,8 +94,6 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                         UserRoles = userRoleResult
                     };
                 }
-
-                return result;
             }
             catch (Exception)
             {
