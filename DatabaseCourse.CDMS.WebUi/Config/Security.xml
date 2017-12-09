@@ -48,6 +48,21 @@
       </Role>
     </UserRoles>
   </Page>
+  <!-- User -->
+  <Page>
+    <PageName>مدیریت کاربران</PageName>
+    <PageAddress><![CDATA[/User/Index]]></PageAddress>
+    <PageDescription>لیست کاربران سامانه</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Admin</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
   <!-- Bezad Test -->
   <Page>
     <PageName>صفحه تست بهزاد</PageName>

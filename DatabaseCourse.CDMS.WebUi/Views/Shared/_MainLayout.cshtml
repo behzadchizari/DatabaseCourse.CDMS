@@ -68,36 +68,35 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu" style="padding-top:90px;">
                         @{if (ThisApp.MenuItems != null)
-                            {
-                                foreach (var item in ThisApp.MenuItems)
-                                {
-                                    <li title="@item.MenuDescription">
-                                        @{
-                                            var hasSubItem = item.ChildMenuList != null;
-                                            <a class="@Html.Raw((item.MenuTitle == ThisApp.PageTitle) ? "active" : "")" href="../@item.MenuUrl">
-                                                <i class="fa fa-@item.MenuIcon fa-fw"></i> @item.MenuTitle @Html.Raw((hasSubItem) ? @"<span class='fa arrow'>" : "")
-                                            </a>
-                                            @{
-                                                if (hasSubItem)
-                                                {
-                                                    <ul class="nav nav-second-level">
-                                                        @{
-                                                            foreach (var sub in item.ChildMenuList)
-                                                            {
-                                                                <li title="@sub.MenuDescription">
-                                                                    <a class="@Html.Raw((item.MenuTitle == ThisApp.PageTitle) ? "active" : "")" href="@sub.MenuUrl">@sub.MenuTitle</a>
-                                                                </li>
-                                                            }
-                                                        }
-                                                    </ul>
-                                                            }
-                                            }
-                                        }
-                                    </li>
-                                                                }
-                                                            }
+                          {
+                              foreach (var item in ThisApp.MenuItems)
+                              {
+                                  <li title="@item.MenuDescription">
+                                      @{
+                                          var hasSubItem = item.ChildMenuList.Count > 0;
+                                          <a class="@Html.Raw((item.MenuTitle == ThisApp.PageTitle) ? "active" : "")" href="../@item.MenuUrl">
+                                              <i class="fa fa-@item.MenuIcon fa-fw"></i> @item.MenuTitle @Html.Raw((hasSubItem) ? @"<span class='fa arrow'>" : "")
+                                          </a>
+                                          if (hasSubItem)
+                                          {
+                                              <ul class="nav nav-second-level">
+                                                  @{
+                                                      foreach (var sub in item.ChildMenuList)
+                                                      {
+                                                          <li title="@sub.MenuDescription">
+                                                              <a class="@Html.Raw((item.MenuTitle == ThisApp.PageTitle) ? "active" : "")" href="@sub.MenuUrl">@sub.MenuTitle</a>
+                                                          </li>
+                                                      }
+                                                  }
+                                              </ul>
+                                          }
+                                      }
+                                  </li>
+                              }
+                          }
                         }
                     </ul>
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

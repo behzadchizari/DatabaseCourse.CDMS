@@ -54,8 +54,8 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             try
             {
                 var xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Security.xml");
-                var pageTages = xml.Descendants("PageList").Descendants("Page");
-                result.AddRange(from pageTag in pageTages
+                var pageTags = xml.Descendants("PageList").Descendants("Page");
+                result.AddRange(from pageTag in pageTags
                     let userRoleTags = pageTag.Descendants("UserRoles").Descendants("Role")
                     let userRoleResult = userRoleTags.Select(userRoleTag => userRoleTag.Descendants("RoleName").Select(item => item?.Value).FirstOrDefault()).ToList()
                     select new SecutiryConfig()

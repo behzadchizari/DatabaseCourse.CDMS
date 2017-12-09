@@ -24,7 +24,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         #endregion
 
         #region Methods
-      
+
         private static List<MenuConfig> ReadConfigFile()
         {
             var allConfig = new List<MenuConfig>();
@@ -33,43 +33,32 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             {
                 var xml = XDocument.Load($@"{ThisApp.BaseDirectory}\Config\Menu.xml");
                 var MenuTags = xml.Descendants("MenuItemList").Descendants("Menu");
-                
-                foreach (var item in MenuTags)
-                {
-                    var userRoleTags = item?.Descendants("RoleList")?.Descendants("Role");
-                    var userRoleResult = userRoleTags.Select(userRoleTag => userRoleTag.Descendants("RoleName").Select(x => x?.Value).FirstOrDefault()).ToList();
-                    var userRoleEnumList = new List<UserRoleEnum>();
-                    foreach (var role in userRoleResult)
-                    {
-                        userRoleEnumList.Add(EnumUtility.GetEnumByTitle<UserRoleEnum>(role));
-                    }
-                    allConfig.Add(new MenuConfig()
-                    {
-                        MenuId = item.Descendants("MenuId").Select(x => x?.Value).FirstOrDefault(),
-                        MenuDescription = item.Descendants("MenuDescription").Select(x => x?.Value).FirstOrDefault(),
-                        MenuIcon = item.Descendants("MenuIcon").Select(x => x?.Value).FirstOrDefault(),
-                        MenuTitle = item.Descendants("MenuTitle").Select(x => x?.Value).FirstOrDefault(),
-                        MenuUrl = item.Descendants("MenuUrl").Select(x => x?.Value).FirstOrDefault(),
-                        RoleList = userRoleEnumList,
-                        ParentId = item.Descendants("ParentId").Select(x => x?.Value).FirstOrDefault(),
-                    });
-                }
+
+                allConfig.AddRange(from item in MenuTags
+                                   let userRoleTags = item?.Descendants("RoleList")?.Descendants("Role")
+                                   let userRoleResult = userRoleTags?.Select(userRoleTag => userRoleTag.Descendants("RoleName").Select(x => x?.Value).FirstOrDefault()).ToList()
+                                   let userRoleEnumList = userRoleResult?.Select(EnumUtility.GetEnumByTitle<UserRoleEnum>).ToList()
+                                   where item != null
+                                   select new MenuConfig()
+                                   {
+                                       MenuId = item.Descendants("MenuId").Select(x => x?.Value).FirstOrDefault(),
+                                       MenuDescription = item.Descendants("MenuDescription").Select(x => x?.Value).FirstOrDefault(),
+                                       MenuIcon = item.Descendants("MenuIcon").Select(x => x?.Value).FirstOrDefault(),
+                                       MenuTitle = item.Descendants("MenuTitle").Select(x => x?.Value).FirstOrDefault(),
+                                       MenuUrl = item.Descendants("MenuUrl").Select(x => x?.Value).FirstOrDefault(),
+                                       RoleList = userRoleEnumList,
+                                       ParentId = item.Descendants("ParentId").Select(x => x?.Value).FirstOrDefault(),
+                                   });
 
 
                 foreach (var item in allConfig)
                 {
-                    if (!string.IsNullOrEmpty(item.ParentId))
-                    {
-                        var parent = allConfig.FirstOrDefault(x=>x.MenuId == item.ParentId);
-                        parent.ChildMenuList.Add(item);
-                    }
+                    if (string.IsNullOrEmpty(item.ParentId)) continue;
+                    var parent = allConfig.FirstOrDefault(x => x.MenuId == item.ParentId);
+                    parent?.ChildMenuList.Add(item);
                 }
 
-                foreach  (var item in allConfig)
-                {
-                    if (string.IsNullOrEmpty(item.ParentId))
-                        result.Add(item);
-                }
+                result.AddRange(allConfig.Where(item => string.IsNullOrEmpty(item.ParentId)));
             }
             catch (Exception)
             {
@@ -92,21 +81,15 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                         result.Add(item);
                         continue;
                     }
-                    foreach (var role in userRoles)
-                    {
-                        if(item.RoleList.Any(x => x == role))
-                        {
-                            result.Add(item);
-                        }
-                    }
+                    result.AddRange(from role in userRoles where item.RoleList.Any(x => x == role) select item);
                 }
+                return result.Distinct().ToList();
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return result.Distinct().ToList();
         }
 
         #endregion
