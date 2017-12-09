@@ -132,6 +132,90 @@
     <Content Include="Config\UserRole.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\font-awesome\font-awesome.min.css" />
+    <Content Include="Content\css\plugins\dataTables.bootstrap.css" />
+    <Content Include="Content\css\plugins\metisMenu\metisMenu.css" />
+    <Content Include="Content\css\plugins\metisMenu\metisMenu.min.css" />
+    <Content Include="Content\css\plugins\morris.css" />
+    <Content Include="Content\css\plugins\social-buttons.css" />
+    <Content Include="Content\css\plugins\timeline.css" />
+    <Content Include="Content\css\sb-admin-2.css" />
+    <Content Include="Content\extras\image-samples\buttons.png" />
+    <Content Include="Content\extras\image-samples\tables.png" />
+    <Content Include="Content\extras\image-samples\typography.png" />
+    <Content Include="Content\fonts\fontawesome-webfont-v=4.2.0.svg" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\bootstrap\datatables\sort_asc.png" />
+    <Content Include="Content\images\bootstrap\datatables\sort_asc_disabled.png" />
+    <Content Include="Content\images\bootstrap\datatables\sort_both.png" />
+    <Content Include="Content\images\bootstrap\datatables\sort_desc.png" />
+    <Content Include="Content\images\bootstrap\datatables\sort_desc_disabled.png" />
+    <Content Include="Content\js\bootstrap.min.js" />
+    <Content Include="Content\js\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\js\bootstrap\dataTables.bootstrap.min.js" />
+    <Content Include="Content\js\flot\excanvas.min.js" />
+    <Content Include="Content\js\flot\jquery.flot.js" />
+    <Content Include="Content\js\flot\jquery.flot.pie.js" />
+    <Content Include="Content\js\flot\jquery.flot.resize.js" />
+    <Content Include="Content\js\flot\jquery.flot.time.js" />
+    <Content Include="Content\js\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="Content\js\jquery-1.11.0.js" />
+    <Content Include="Content\js\jquery\jquery.dataTables.min.js" />
+    <Content Include="Content\js\jquery\jquery.min.js" />
+    <Content Include="Content\js\metisMenu\metisMenu.min.js" />
+    <Content Include="Content\js\morris\morris.min.js" />
+    <Content Include="Content\js\raphael\raphael.min.js" />
+    <Content Include="Content\js\sb-admin-2.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\blank.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\buttons.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\bootstrap.min.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\font-awesome\font-awesome.min.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\plugins\dataTables.bootstrap.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\plugins\metisMenu\metisMenu.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\plugins\metisMenu\metisMenu.min.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\plugins\morris.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\plugins\social-buttons.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\plugins\timeline.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\css\sb-admin-2.css" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\extras\image-samples\buttons.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\extras\image-samples\tables.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\extras\image-samples\typography.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\flot.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont-v=4.2.0.svg" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\forms.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\grid.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_asc.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_asc_disabled.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_both.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_desc.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_desc_disabled.png" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\index.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\bootstrap.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\bootstrap\dataTables.bootstrap.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\flot\excanvas.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\flot\jquery.flot.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\flot\jquery.flot.pie.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\flot\jquery.flot.resize.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\flot\jquery.flot.time.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\jquery-1.11.0.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\jquery\jquery.dataTables.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\jquery\jquery.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\metisMenu\metisMenu.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\morris\morris.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\raphael\raphael.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\js\sb-admin-2.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\login.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\morris.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\notifications.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\panels-wells.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\tables.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\typography.html" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -139,6 +223,37 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont-.eot" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont-v=4.2.0.eot" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont-v=4.2.0.ttf" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont-v=4.2.0.woff" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\FontAwesome.otf" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular-.eot" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\README.md" />
+    <Content Include="Content\fonts\fontawesome-webfont-.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont-v=4.2.0.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont-v=4.2.0.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont-v=4.2.0.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular-.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\fonts\Byekan.otf" />
+    <Content Include="Content\fonts\Byekan.ttf" />
+    <Content Include="Content\fonts\IRANSANS_0.TTF" />
+    <Content Include="Content\fonts\IRANSANS_BOLD_0.TTF" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -149,6 +264,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\BaseController.cs" />
     <Compile Include="Classes\DataTransfer.cs" />
+    <Compile Include="Classes\MenuConfigReader.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
     <Compile Include="Classes\ThisApp.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -172,9 +288,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\BehzadTest\Index.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

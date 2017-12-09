@@ -1,10 +1,17 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
-
+@using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility.EnumUtility
 @{
-    ViewBag.Title = "Index";
+    if (ThisApp.AccessDenied == null && ThisApp.InnerAccessDenied == null)
+    {
+
+
+
+    }
+    else
+    {
+        if (ThisApp.AccessDeniedType == AccessDeniedType.NotLogined)
+        { Response.Redirect("/Login/Index"); }
+        <p>خطای سیستم : @EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
+    }
 }
-
-<h2>@ThisApp.PageTitle ?? ""</h2>
-
-<p>@ViewBag.IsOk</p>
-   

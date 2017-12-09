@@ -1,7 +1,7 @@
-﻿  <PageList>
+﻿<PageList>
   <!-- Default Controller -->
   <Page>
-    <PageName>صفحه نخست</PageName>
+    <PageName>داشبورد</PageName>
     <PageAddress><![CDATA[/Default/Index]]></PageAddress>
     <PageDescription>صفحه نخست</PageDescription>
     <PageHelp></PageHelp>
@@ -9,20 +9,8 @@
       <Role>
         <RoleName>SuperAdmin</RoleName>
       </Role>
-    </UserRoles>
-  </Page>
-  <!-- Bezad Test -->
-  <Page>
-    <PageName>صفحه تست بهزاد</PageName>
-    <PageAddress><![CDATA[/BehzadTest/Index]]></PageAddress>
-    <PageDescription>صفحه تست</PageDescription>
-    <PageHelp></PageHelp>
-    <UserRoles>
       <Role>
-        <RoleName>SuperAdmin</RoleName>
-      </Role>
-      <Role>
-        <RoleName>CEO</RoleName>
+        <RoleName>Admin</RoleName>
       </Role>
     </UserRoles>
   </Page>
@@ -38,7 +26,6 @@
       </Role>
     </UserRoles>
   </Page>
-
   <Page>
     <PageName>ورود</PageName>
     <PageAddress><![CDATA[/Login/Login]]></PageAddress>
@@ -61,7 +48,19 @@
       </Role>
     </UserRoles>
   </Page>
-
-
-
+  <!-- Bezad Test -->
+  <Page>
+    <PageName>صفحه تست بهزاد</PageName>
+    <PageAddress><![CDATA[/BehzadTest/Index]]></PageAddress>
+    <PageDescription>صفحه تست</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
 </PageList>

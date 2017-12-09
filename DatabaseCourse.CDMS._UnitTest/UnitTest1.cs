@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DatabaseCourse.Common.Utility;
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using System.Collections.Generic;
+using DatabaseCourse.CDMS.WebUi.Classes;
 
 namespace DatabaseCourse.CDMS._UnitTest
 {
@@ -34,6 +35,12 @@ namespace DatabaseCourse.CDMS._UnitTest
 
 
         }
+
+        [TestMethod]
+        public void MenuConfigTest()
+        {
+            var list = MenuConfig.GetMenuByUserRoles(new List<Common.Enums.UserRoleEnum> {Common.Enums.UserRoleEnum.Admin });
+        }
     }
-    
+
 }

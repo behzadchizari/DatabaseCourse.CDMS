@@ -1,0 +1,70 @@
+﻿  <PageList>
+  <!-- Default Controller -->
+  <Page>
+    <PageName>صفحه نخست</PageName>
+    <PageAddress><![CDATA[/Default/Index]]></PageAddress>
+    <PageDescription>صفحه نخست</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Admin</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <!-- Bezad Test -->
+  <Page>
+    <PageName>صفحه تست بهزاد</PageName>
+    <PageAddress><![CDATA[/BehzadTest/Index]]></PageAddress>
+    <PageDescription>صفحه تست</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <!-- Login -->
+  <Page>
+    <PageName>ورود</PageName>
+    <PageAddress><![CDATA[/Login/Index]]></PageAddress>
+    <PageDescription>ورود به سامانه</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>Guest</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+
+  <Page>
+    <PageName>ورود</PageName>
+    <PageAddress><![CDATA[/Login/Login]]></PageAddress>
+    <PageDescription></PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>Guest</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <Page>
+    <PageName>ورود</PageName>
+    <PageAddress><![CDATA[/Login/Logout]]></PageAddress>
+    <PageDescription>شما از سیسیتم خارج شدید</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>All</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+
+
+
+</PageList>

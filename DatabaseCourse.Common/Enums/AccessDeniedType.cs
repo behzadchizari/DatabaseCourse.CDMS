@@ -16,6 +16,8 @@ namespace DatabaseCourse.Common.Enums
         [EnumDescription("مورد امنیتی در فایل کانفیگ موجود نیست")]
         NoSecurityConfig = 20,
         [EnumDescription("دسترسی به صفحه امکانپذیر نیست")]
-        NoAccessToPage = 30
+        NoAccessToPage = 30,
+        [EnumDescription("کاربر لاگین شده")]
+        UserLogined = 40,
     }
 }

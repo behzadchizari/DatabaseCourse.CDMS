@@ -1,35 +1,31 @@
 ﻿<MenuItemList>
   <Menu>
-    <MenuTitle>خانه</MenuTitle>
+    <MenuId>1</MenuId>
+    <MenuTitle>داشبورد</MenuTitle>
     <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
-    <MenuUrl>/Home/Index</MenuUrl>
-    <MenuIcon>home</MenuIcon>
-    <Target>SELF</Target>
-    <BgColor>NULL</BgColor>
+    <MenuUrl><![CDATA[/Default/Index]]></MenuUrl>
+    <MenuIcon>dashboard</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>All</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId></ParentId>
+  </Menu>
+  <Menu>
+    <MenuId>2</MenuId>
+    <MenuTitle>مدیریت کاربران</MenuTitle>
+    <MenuDescription>مدیریت کاربران سیستم</MenuDescription>
+    <MenuUrl><![CDATA[/User/Index]]></MenuUrl>
+    <MenuIcon>users</MenuIcon>
     <RoleList>
       <Role>
         <RoleName>SuperAdmin</RoleName>
       </Role>
       <Role>
-        <RoleName>Supervisor</RoleName>
-      </Role>
-      <Role>
         <RoleName>Admin</RoleName>
       </Role>
-      <Role>
-        <RoleName>TechOfficer</RoleName>
-      </Role>
-      <Role>
-        <RoleName>EmployeeManager</RoleName>
-      </Role>
-      <Role>
-        <RoleName>FinManager</RoleName>
-      </Role>
-      <Role>
-        <RoleName>CEO</RoleName>
-      </Role>
     </RoleList>
-    <ChildMenuList>
-    </ChildMenuList>
+    <ParentId></ParentId>
   </Menu>
 </MenuItemList>

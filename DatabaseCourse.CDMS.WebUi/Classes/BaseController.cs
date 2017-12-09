@@ -57,7 +57,11 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                     ThisApp.PageDesctiption = security.PageDescription;
 
                     var loginedUser = ThisApp.CurrentUser;
-
+                    if (loginedUser != null && controllerName == "Login" && actionName == "Index")
+                    {
+                        ThisApp.AccessDeniedType = AccessDeniedType.UserLogined;
+                        return new Exception(EnumUtility.GetEnumDescription(AccessDeniedType.UserLogined));
+                    }
                     //check user from this app 
                     foreach (var userRole in security.UserRoleList)
                     {

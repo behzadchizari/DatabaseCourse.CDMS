@@ -1,0 +1,70 @@
+﻿<MenuItemList>
+  <!-- Dashboard -->
+  <Menu>
+    <MenuId>1</MenuId>
+    <MenuTitle>داشبورد</MenuTitle>
+    <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
+    <MenuUrl><![CDATA[/Default/Index]]></MenuUrl>
+    <MenuIcon>dashboard</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>All</RoleName>
+      </Role>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId></ParentId>
+  </Menu>
+  <!-- Dashboard -->
+  <Menu>
+    <MenuId>2</MenuId>
+    <MenuTitle>داشبورد2</MenuTitle>
+    <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
+    <MenuUrl><![CDATA[/Default/Index]]></MenuUrl>
+    <MenuIcon>dashboard</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>All</RoleName>
+      </Role>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId>1</ParentId>
+  </Menu>
+  <!-- Dashboard -->
+  <Menu>
+    <MenuId>2</MenuId>
+    <MenuTitle>داشبورد3</MenuTitle>
+    <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
+    <MenuUrl><![CDATA[/Default/Index]]></MenuUrl>
+    <MenuIcon>dashboard</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>All</RoleName>
+      </Role>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId>2</ParentId>
+  </Menu>
+  <!-- Dashboard -->
+  <Menu>
+    <MenuId>2</MenuId>
+    <MenuTitle>خانه</MenuTitle>
+    <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
+    <MenuUrl><![CDATA[/Default/Index]]></MenuUrl>
+    <MenuIcon>dashboard</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>Admin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId></ParentId>
+  </Menu>
+</MenuItemList>

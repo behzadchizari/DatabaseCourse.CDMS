@@ -25,11 +25,11 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         {
             return View();
         }
-        
+
         public JsonResult Login(string userName, string password)
         {
-            var json = new JsonResult {JsonRequestBehavior = JsonRequestBehavior.AllowGet};
-           
+            var json = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
             try
             {
                 if (ThisApp.AccessDenied != null ||
@@ -61,7 +61,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                         Status = JsonResultStatus.Ok
                     };
                     //RedirectToAction("Index", "Default");
-                    Redirect("/DefaultIndex/");
+                    //Redirect("/DefaultIndex/");
                 }
                 else
                 {

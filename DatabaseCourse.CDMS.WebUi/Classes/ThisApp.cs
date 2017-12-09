@@ -28,7 +28,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             {
                 var sessionUserId = HttpContext.Current.Session["UserId"];
                 if (sessionUserId == null) return null;
-                int userId = 0 ;
+                int userId = 0;
                 if (!int.TryParse(sessionUserId.ToString(), out userId)) return null;
                 var userBll = new UserBLL(null);
                 var user = userBll.GetUserInfoById(userId);
@@ -57,6 +57,29 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                     return "";
                 }
 
+            }
+        }
+        public static List<MenuConfig> MenuItems
+        {
+            get
+            {
+                try
+                {
+                    if (CurrentUser != null)
+                    {
+                        if (CurrentUser.UserRoles == null) return null;
+                        return MenuConfig.GetMenuByUserRoles(CurrentUser.UserRoles);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
             }
         }
 
