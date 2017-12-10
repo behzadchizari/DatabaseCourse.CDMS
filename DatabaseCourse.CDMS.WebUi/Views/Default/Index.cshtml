@@ -10,16 +10,3 @@
 }
 
 
-@{
-    if (ThisApp.AccessDenied == null && ThisApp.InnerAccessDenied == null)
-    {
-
-
-    }
-    else
-    {
-        if (ThisApp.AccessDeniedType == AccessDeniedType.NotLogined)
-        { Response.Redirect("/Login/Index"); }
-        <p>@EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
-    }
-}

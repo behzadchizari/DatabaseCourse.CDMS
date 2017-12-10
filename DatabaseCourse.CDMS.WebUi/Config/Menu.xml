@@ -3,7 +3,7 @@
     <MenuId>1</MenuId>
     <MenuTitle>داشبورد</MenuTitle>
     <MenuDescription>رفتن به صفحه پروفایل شخصی کاربر</MenuDescription>
-    <MenuUrl><![CDATA[/Default/Index]]></MenuUrl>
+    <MenuUrl><![CDATA[Default/Index]]></MenuUrl>
     <MenuIcon>dashboard</MenuIcon>
     <RoleList>
       <Role>
@@ -16,7 +16,7 @@
     <MenuId>2</MenuId>
     <MenuTitle>مدیریت کاربران</MenuTitle>
     <MenuDescription>مدیریت کاربران سیستم</MenuDescription>
-    <MenuUrl><![CDATA[/User/Index]]></MenuUrl>
+    <MenuUrl><![CDATA[User/Index]]></MenuUrl>
     <MenuIcon>users</MenuIcon>
     <RoleList>
       <Role>

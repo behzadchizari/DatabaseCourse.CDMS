@@ -49,6 +49,8 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             {
                 var controllerName = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
                 var actionName = filterContext.ActionDescriptor.ActionName;
+                actionName = actionName[0].ToString().ToUpper()  + actionName.Substring(1,actionName.Length-1);
+                controllerName = controllerName[0].ToString().ToUpper()  + controllerName.Substring(1, controllerName.Length-1);
                 //Get Security Config by Controller/Action
                 var security = SecutiryConfig.GetConfigByPageName($@"/{controllerName}/{actionName}");
                 if (security != null)

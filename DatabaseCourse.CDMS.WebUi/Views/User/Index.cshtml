@@ -2,6 +2,7 @@
 @using DatabaseCourse.CDMS.Business.BusinessModel
 @using DatabaseCourse.CDMS.WebUi.Classes
 @using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility
 @using DatabaseCourse.Common.Utility.EnumUtility
 
 @{
@@ -24,16 +25,22 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <div class="col-lg-3 col-md-3" style="padding:10px 0">
+                            <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px ;margin: 10px 0;" />
+                        </div>
+                        <div class="col-lg-9 col-md-9" style="padding: 15px 0;">
+                            <a class="btn btn-default btn-success pull-left" style="padding:10px"><i class="fa fa-plus"></i> افزودن کاربر جدید</a>
+                        </div>
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
                                 <thead>
                                     <tr>
-                                        <th>ردیف</th>
-                                        <th>نام</th>
-                                        <th>نام خانوادگی</th>
-                                        <th>نام کاربری</th>
-                                        <th>تاریخ ایجاد</th>
-                                        <th>عملگر</th>
+                                        <th  class=" text-center">ردیف</th>
+                                        <th  class=" text-center">نام</th>
+                                        <th  class=" text-center">نام خانوادگی</th>
+                                        <th  class=" text-center">نام کاربری</th>
+                                        <th  class=" text-center">تاریخ ایجاد</th>
+                                        <th  class=" text-center">عملگر</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,14 +50,13 @@
                                         {
                                             foreach (var user in userData)
                                             {
-
                                                 <tr class="@Html.Raw(counter % 2 == 0 ? "odd" : "even")">
-                                                    <td>@counter</td>
-                                                    <td>نام</td>
-                                                    <td>نام خانوادگی</td>
-                                                    <td>@user.Username</td>
-                                                    <td>@user.CreationDate</td>
-                                                    <td>
+                                                    <td style="width: 10px;">@counter</td>
+                                                    <td style="width: 90px;">-</td>
+                                                    <td style="width: 90px;">-</td>
+                                                    <td style="width: 100px;">@user.Username</td>
+                                                    <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate??DateTime.MaxValue)</td>
+                                                    <td style="width: 10px;">
                                                         <a class="fa fa-pencil"></a>
                                                     </td>
                                                 </tr>
@@ -69,7 +75,6 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-
                                         }
                                         else
                                         {

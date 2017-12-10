@@ -23,6 +23,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         #region Action Methods
         public ActionResult Index()
         {
+            if (ThisApp.CurrentUser != null)
+                RedirectToAction("Index", "Default");
             return View();
         }
 

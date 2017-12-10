@@ -1,5 +1,6 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
 @using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility.EnumUtility
 @{
     Layout = null;
 
@@ -32,54 +33,70 @@
     <![endif]-->
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <h2 class="text-center" style="margin-top:12%">سامانه مدیریت پروژه‌های عمرانی</h2>
-            <h5 class="text-center" style="color:#808080">شرکت ساختمانی</h5>
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">ورود به سامانه</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form role="form">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control ltr" id="txtUserName" placeholder="نام کاربری" type="text" autofocus />
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control ltr" id="txtPassword" placeholder="رمزعبور" type="password" />
-                                </div>
-                                <p class="text-danger" id="login-error"></p>
-                                <input type="button" id="btnLogin" class="btn btn-lg btn-success btn-block" value="ورود" />
-                            </fieldset>
-                        </form>
+
+    @{
+        if (ThisApp.AccessDenied == null && ThisApp.InnerAccessDenied == null)
+        {
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center" style="margin-top: 12%">سامانه مدیریت پروژه‌های عمرانی</h2>
+                    <h5 class="text-center" style="color: #808080">شرکت ساختمانی</h5>
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="login-panel panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">ورود به سامانه</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form">
+                                        <div class="form-group">
+                                            <input class="form-control ltr" id="txtUserName" placeholder="نام کاربری" type="text" autofocus />
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control ltr" id="txtPassword" placeholder="رمزعبور" type="password" />
+                                        </div>
+                                        <p class="text-danger" id="login-error"></p>
+                                        <input type="button" id="btnLogin" class="btn btn-lg btn-success btn-block" value="ورود" />
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div id="Loading">
+                <div id="loader"></div>
+                <p class="center-block text-center" style="color: antiquewhite; font-size: 20px;padding: 20px">منتظر بمانید</p>
+            </div>
 
+        }
+        else
+        {
+            if (ThisApp.AccessDeniedType == AccessDeniedType.UserLogined)
+            { Response.Redirect("~/Default/Index"); }
+            <p>@EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
+        }
+    }
     <script src="~/Content/js/jquery-1.11.0.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/metisMenu/metisMenu.min.js"></script>
     <script src="~/Content/js/sb-admin-2.js"></script>
     <script>
-        $("#btnLogin").click(function () {
-            $('#login-error').html('');
-            $.ajax({
-                data: { password: $('#txtPassword').val(), userName: $('#txtUserName').val() },
-                url: "/Login/Login",
-                success: function (result) {
-                    if (result.Status === 10 || result.Status === 35) {
-                        window.location.assign("../");
-                    }
-                    else {
-                        $('#login-error').html(result.Description);
-                    }
+    $("#btnLogin").click(function() {
+        ShowLoading();
+        $('#login-error').html('');
+        $.ajax({
+            data: { password: $('#txtPassword').val(), userName: $('#txtUserName').val() },
+            url: "/Login/Login",
+            success: function(result) {
+                if (result.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)) ||
+                    result.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.AlreadyLogedIn))) {
+                    window.location.assign("../");
+                } else {
+                    $('#login-error').html(result.Description);
+                    HideLoading();
                 }
-            });
+            }
         });
+    });
     </script>
 </body>
 </html>

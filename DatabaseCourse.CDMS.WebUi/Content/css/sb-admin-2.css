@@ -7,18 +7,46 @@
     font-family: Byekan;
     src: url('../fonts/Byekan.otf') format('opentype'), url('../fonts/Byekan.ttf') format('truetype');
 }
+
 @font-face {
     font-family: IranSans;
-    src:  url('../fonts/IRANSANS_0.TTF') format('truetype'),url('../fonts/IRANSANS_BOLD_0.TTF') format('truetype');
+    src: url('../fonts/IRANSANS_0.TTF') format('truetype'),url('../fonts/IRANSANS_BOLD_0.TTF') format('truetype');
 }
+
 body {
     background-color: #fff;
     font-family: IranSans;
 }
 
+#Loading {
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 0;
+}
+#loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-right: auto;
+    margin-left: auto;
+    animation: spin 2s linear infinite;
+}
 
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
 
-
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 
 
@@ -237,8 +265,8 @@ body {
     margin-top: 0;
 }
 
-.ltr{
-    direction : ltr !important;
+.ltr {
+    direction: ltr !important;
 }
 
 
