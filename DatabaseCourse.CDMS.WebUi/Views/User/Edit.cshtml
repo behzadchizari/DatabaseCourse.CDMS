@@ -1,0 +1,113 @@
+﻿@using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.Common.Utility.EnumUtility
+@using DatabaseCourse.Common.Enums
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    var userRoleList = EnumUtility.List(typeof(UserRoleEnum));
+    var userRoleEnumList = new List<UserRoleEnum>();
+    foreach (var item in userRoleList)
+    {
+        userRoleEnumList.Add(EnumUtility.GetEnumByTitle<UserRoleEnum>(item.Name));
+    }
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @ThisApp.PageDesctiption
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>نام کاربری</label>
+                                <input class="form-control" id="txtUsername" type="text">
+                                <p class="text-danger" id="Username_Error"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>رمز عبور</label>
+                                <input class="form-control" id="txtPassword" type="password">
+                                <p class="text-danger" id="Password_Error"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>نقش‌های کاربر</label>
+                                @foreach (var item in userRoleEnumList)
+                                {
+                                    if (item == UserRoleEnum.All || item == UserRoleEnum.Guest || item == UserRoleEnum.Null) { continue; }
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="@EnumUtility.GetEnumValue(item)">@EnumUtility.GetEnumDescription(item)
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                            <p class="text-danger" id="Roles_Error"></p>
+                            <a class="btn btn-block btn-primary text-center" id="btnPressOk">اعمال تغییرات</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var FormObject = function () {
+        this.UserName = $('#txtUsername').val();
+        this.Password = $('#txtPassword').val();
+        this.Roles = $('.checkbox input[type="checkbox"]:checked');
+
+        this.ClearErrors = function () {
+            $('#Username_Error').html("");
+            $('#Password_Error').html("");
+            $('#Roles_Error').html("");
+        };
+
+        this.CheckUserName = function () {
+            if (this.UserName === "") {
+                $('#Username_Error').html("لطفا نام کاربری را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+        this.CheckPassword = function () {
+            if (this.Password === "") {
+                $('#Password_Error').html("لطفا رمزعبور را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+
+        this.CheckRoles = function () {
+            if (this.Roles.length === 0) {
+                $('#Roles_Error').html("لطفا حداقل یک نقش انتخاب کنید");
+                return false;
+            }
+            return true;
+        };
+        this.Validate = function () {
+            this.ClearErrors();
+            var res = this.CheckUserName() &&
+                this.CheckPassword() &&
+                this.CheckRoles();
+            return res;
+        }
+    };
+</script>
+<script>
+    $('#btnPressOk').click(function () {
+        debugger;
+        var formObj = new FormObject();
+        if (formObj.Validate()) {
+            $.ajax({
+                data: {},
+                url: "",
+                success: function (result) {
+
+                }
+            });
+        }
+    });
+</script>

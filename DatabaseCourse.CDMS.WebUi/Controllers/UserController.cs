@@ -15,6 +15,11 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             return View();
         }
 
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
         protected override void SetSessionAndViewBags()
         {
         }
