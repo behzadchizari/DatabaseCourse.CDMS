@@ -99,6 +99,7 @@
 <script>
     $('#btnPressOk').click(function () {
         debugger;
+        ShowLoading();
         var formObj = new FormObject();
         if (formObj.Validate()) {
             $.ajax({
@@ -108,6 +109,9 @@
 
                 }
             });
+        }
+        else {
+            HideLoading();
         }
     });
 </script>

@@ -34,10 +34,14 @@
 <body>
 
 
+    <div id="Loading">
+        <div id="loader"></div>
+        <p class="center-block text-center" style="color: antiquewhite; font-size: 20px;padding: 20px">منتظر بمانید</p>
+    </div>
+
     @{
         if (ThisApp.AccessDenied == null && ThisApp.InnerAccessDenied == null)
         {
-
             <div id="wrapper">
                 @{
                     var username = ThisApp.CurrentUser?.Username ?? "";
@@ -128,7 +132,6 @@
                 </div>
                 <!-- /#page-wrapper -->
             </div>
-
                                                                 }
                                                                 else
                                                                 {
