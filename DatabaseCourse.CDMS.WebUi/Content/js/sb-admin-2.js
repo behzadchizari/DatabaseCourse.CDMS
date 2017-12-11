@@ -13,7 +13,6 @@ function HideLoading() {
 }
 
 function FilterTable() {
-    debugger;
     var td, i;
     var input = document.getElementById("input-filter");
     var filter = input.value.toUpperCase();

@@ -1,4 +1,5 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.CDMS.WebUi.Controllers
 @using DatabaseCourse.Common.Utility.EnumUtility
 @using DatabaseCourse.Common.Enums
 @{
@@ -98,15 +99,27 @@
 </script>
 <script>
     $('#btnPressOk').click(function () {
-        debugger;
         ShowLoading();
         var formObj = new FormObject();
         if (formObj.Validate()) {
-            $.ajax({
-                data: {},
-                url: "",
-                success: function (result) {
+            debugger
+            for (var i = 0; i < formObj.Roles.length; i++) {
+                var t = formObj.Roles[i];
+            }
 
+            $.ajax({
+                data: {
+                    'fn': '@Html.Raw(UserController.EditUserFunctionEnum.Add.ToString())',
+                    'userName': formObj.UserName,
+                    'password': formObj.Password,
+                    //'roleStrList': formObj.Roles.toArray()
+                },
+                type:'POST',
+                url: "/User/UserEdit",
+                dataType: 'json',
+                contentType : 'application/json',
+                success: function (result) {
+                    alert("ihi");
                 }
             });
         }
