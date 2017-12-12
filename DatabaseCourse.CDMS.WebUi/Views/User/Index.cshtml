@@ -61,13 +61,13 @@
                                             for (int i = 0; i < roles.Count; i++)
                                             {
                                                 roleTitles += EnumUtility.GetEnumDescription(roles[i]);
-                                                if (i != roles.Count - 1){ roleTitles += "|";}
+                                                if (i != roles.Count - 1){ roleTitles += " | ";}
 
                                             }
                                             <tr class="@Html.Raw(counter % 2 == 0 ? "odd" : "even")">
                                                 <td style="width: 10px;">@counter</td>
-                                                <td style="width: 90px;">-</td>
-                                                <td style="width: 90px;">-</td>
+                                                <td style="width: 90px;">@Html.Raw(user?.FirstName ?? "-")</td>
+                                                <td style="width: 90px;">@Html.Raw(user?.LastName ?? "-")</td>
                                                 <td style="width: 100px;" title="@roleTitles">@user.Username</td>
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 <td style="width: 10px;">

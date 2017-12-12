@@ -24,6 +24,16 @@
                     <div class="col-lg-12">
                         <form role="form">
                             <div class="form-group">
+                                <label>نام </label>
+                                <input class="form-control" id="txtFirstName" type="text">
+                                <p class="text-danger" id="FirstName_Error"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>نام خانوادگی</label>
+                                <input class="form-control" id="txtLastName" type="text">
+                                <p class="text-danger" id="LastName_Error"></p>
+                            </div>
+                            <div class="form-group">
                                 <label>نام کاربری</label>
                                 <input class="form-control" id="txtUsername" type="text">
                                 <p class="text-danger" id="Username_Error"></p>
@@ -70,6 +80,8 @@
         }
         this.UserName = $('#txtUsername').val();
         this.Password = $('#txtPassword').val();
+        this.FirstName = $('#txtFirstName').val();
+        this.LastName = $('#txtLastName').val();
         this.Roles = chkValArray;
 
         this.ClearErrors = function () {
@@ -77,7 +89,21 @@
             $('#Password_Error').html("");
             $('#Roles_Error').html("");
         };
-
+        
+        this.CheckFirstName = function () {
+            if (this.FirstName === "") {
+                $('#FirstName_Error').html("لطفا نام را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+        this.CheckLastName = function () {
+            if (this.LastName === "") {
+                $('#LastName_Error').html("لطفا نام خانوادگی را وارد کنید");
+                return false;
+            }
+            return true;
+        };
         this.CheckUserName = function () {
             if (this.UserName === "") {
                 $('#Username_Error').html("لطفا نام کاربری را وارد کنید");
@@ -104,6 +130,8 @@
             this.ClearErrors();
             var res = this.CheckUserName() &&
                 this.CheckPassword() &&
+                this.CheckFirstName() &&
+                this.CheckLastName() &&
                 this.CheckRoles();
             return res;
         }
@@ -123,6 +151,8 @@
                     fn: @EnumUtility.GetEnumValue(UserController.EditUserFunctionEnum.Add),
                     userUiModel: {
                         Username: formObj.UserName,
+                        FirstName: formObj.FirstName,
+                        LastName: formObj.LastName,
                         Password: formObj.Password,
                         UserRoles: formObj.Roles
                     }

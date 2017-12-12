@@ -10,6 +10,8 @@ namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
     public class UserUiModel
     {
         public string Username { get; set; }
+        public string FirstName{ get; set; }
+        public string LastName{ get; set; }
         public string Password { get; set; }
         public List<UserRoleEnum> UserRoles { get; set; }
 

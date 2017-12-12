@@ -63,7 +63,9 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                     {
                         Username = userUiModel.Username,
                         Password = userUiModel.Password,
-                        UserRoles = userUiModel.UserRoles
+                        UserRoles = userUiModel.UserRoles,
+                        FirstName = userUiModel.FirstName,
+                        LastName = userUiModel.LastName
                     });
                     if (userAdd == null)
                     {

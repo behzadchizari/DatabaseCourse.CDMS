@@ -20,6 +20,10 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         [StringLength(50)]
         public string Username { get; set; }
+        [StringLength(50)]
+        public string FirstName { get; set; }
+        [StringLength(50)]
+        public string LastName { get; set; }
 
         [StringLength(1024)]
         public string Password { get; set; }

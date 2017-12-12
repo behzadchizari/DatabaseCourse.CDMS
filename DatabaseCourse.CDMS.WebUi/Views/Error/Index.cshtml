@@ -1,5 +1,6 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
 @using DatabaseCourse.Common.Utility.EnumUtility
+@using DatabaseCourse.Common.Utility
 
 @{
     Layout = null;
@@ -30,7 +31,15 @@
     <div style="width: 60%; margin-top: 40px;" class="center-block text-center">
         <div class="alert alert-danger">
             <i class="fa fa-5x fa-exclamation-triangle"></i>
-            <p>@EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
+            @if (!string.IsNullOrEmpty(EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType).Trim()))
+            {
+                <p>@EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType).Trim()</p>
+            }
+            else
+            {
+                <p>@Html.Raw(ExceptionUtility.GetAllInnerException(ThisApp.AccessDenied).Trim() ??
+                  ExceptionUtility.GetAllInnerException(ThisApp.AccessDenied).Trim() ?? "")</p>
+            }
         </div>
     </div>
 }

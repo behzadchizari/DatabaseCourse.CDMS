@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseCourse.CDMS.DataAccess.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,8 @@ namespace DatabaseCourse.CDMS.WebUi
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            var UserInit = new UserConfigTransfer(new Classes.UserConfigTransfer());
         }
+
     }
 }

@@ -2,9 +2,22 @@
   <User>
     <UserName>SuperAdmin</UserName>
     <Password>1234</Password>
+    <LastName>راهبر ارشد سامانه</LastName>
+    <FirstName></FirstName>
     <RoleList>
       <Role>
         <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+  </User>
+  <User>
+    <UserName>Admin</UserName>
+    <Password>1234</Password>
+    <LastName>راهبر سامانه</LastName>
+    <FirstName></FirstName>
+    <RoleList>
+      <Role>
+        <RoleName>Admin</RoleName>
       </Role>
     </RoleList>
   </User>
