@@ -68,7 +68,12 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                     foreach (var userRole in security.UserRoleList)
                     {
                         //check role of user with page permission   
-                        if ((ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest) || userRole == UserRoleEnum.All)
+                        if ((ThisApp.CurrentUser == null && userRole == UserRoleEnum.Guest))
+                        {
+                            ThisApp.AccessDeniedType = AccessDeniedType.Null;
+                            return null;
+                        }
+                        if (loginedUser != null && userRole == UserRoleEnum.All)
                         {
                             ThisApp.AccessDeniedType = AccessDeniedType.Null;
                             return null;

@@ -136,8 +136,13 @@
                                                                 else
                                                                 {
                                                                     if (ThisApp.AccessDeniedType == AccessDeniedType.NotLogined)
-                                                                    { Response.Redirect("/Login/Index"); }
-                                                                    <p>@EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
+                                                                    {
+                                                                        Response.Redirect("/Login/Index");
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        Response.Redirect("/Error/Index");
+                                                                    }
                                                                 }
     }
 

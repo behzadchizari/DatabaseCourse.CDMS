@@ -48,6 +48,13 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             return userInfoList;
         }
 
+
+        public UserInfo GetUserInfoByUserName(string username)
+        {
+            var da = new UserDA();
+            var user = da.GetAll().FirstOrDefault(x => x.Username == username);
+            return ConvertToBusinessModel(user);
+        }
         public UserInfo GetUserInfoByUserNameAndPassword(string username, string password)
         {
             var da = new UserDA();

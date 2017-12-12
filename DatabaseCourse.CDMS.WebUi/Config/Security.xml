@@ -7,10 +7,7 @@
     <PageHelp></PageHelp>
     <UserRoles>
       <Role>
-        <RoleName>SuperAdmin</RoleName>
-      </Role>
-      <Role>
-        <RoleName>Admin</RoleName>
+        <RoleName>All</RoleName>
       </Role>
     </UserRoles>
   </Page>
@@ -63,7 +60,7 @@
       </Role>
     </UserRoles>
   </Page>
-  <Page>
+  <!--<Page>
     <PageName>مدیریت کاربران</PageName>
     <PageAddress><![CDATA[/User/Edit]]></PageAddress>
     <PageDescription>ویرایش یا افزودن کاربر</PageDescription>
@@ -76,7 +73,7 @@
         <RoleName>Admin</RoleName>
       </Role>
     </UserRoles>
-  </Page>
+  </Page>-->
   <!-- Bezad Test -->
   <Page>
     <PageName>صفحه تست بهزاد</PageName>

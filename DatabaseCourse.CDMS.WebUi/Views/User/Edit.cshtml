@@ -37,7 +37,7 @@
                                 <label>نقش‌های کاربر</label>
                                 @foreach (var item in userRoleEnumList)
                                 {
-                                    if ((int) item % 10 == 0 && (int)item != 0)
+                                    if ((int)item % 10 == 0 && (int)item != 0)
                                     {
                                         <div class="checkbox">
                                             <label>
@@ -54,6 +54,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <p id="Server_Error">
+            <ul id="Server_Error_List"></ul>
+        </p>
     </div>
 </div>
 <script>
@@ -105,21 +110,37 @@
     };
 </script>
 <script>
-    $('#btnPressOk').click(function () {
+    $('#btnPressOk').click(function() {
         ShowLoading();
         var formObj = new FormObject();
         if (formObj.Validate()) {
             debugger
+            //$('ul#Server_Error_List').remove();
             $.ajax({
                 url: "/User/UserEdit",
                 type: "POST",
                 data: {
                     fn: @EnumUtility.GetEnumValue(UserController.EditUserFunctionEnum.Add),
-                    userName: formObj.UserName,
-                    password: formObj.Password,
-                    list: formObj.Roles
+                    userUiModel: {
+                        Username: formObj.UserName,
+                        Password: formObj.Password,
+                        UserRoles: formObj.Roles
+                    }
                 },
                 success: function (data) {
+                    if(data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
+                    {
+                        window.location.assign("../User/Index");
+                    }
+                    else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception))) {
+                        HideLoading();
+                        debugger
+                        $('ul#Server_Error_List').empty();
+                        var exlist = data.Description;
+                        for (var i = 0; i < exlist.length ; i++) {
+                            $('ul#Server_Error_List').append("<li>" + exlist[i].Message + "</li>");
+                        }
+                    }
                 },
                 error: function (x, e, er) {
                 }

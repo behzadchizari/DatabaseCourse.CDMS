@@ -267,7 +267,9 @@
     <Compile Include="Classes\MenuConfigReader.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
     <Compile Include="Classes\ThisApp.cs" />
+    <Compile Include="Classes\UiModel\UserUiModel.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\Test\BehzadTestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -294,6 +296,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
