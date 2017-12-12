@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Management;
 using System.Web.Mvc;
 using DatabaseCourse.CDMS.WebUi.Classes;
+using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers
@@ -37,14 +38,12 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         }
 
         [HttpPost]
-        public JsonResult UserEdit(string fn, string userName, string password)
-        //public JsonResult UserEdit(string fn, string userName, string password, List<string> roleStrList)
-        //public JsonResult UserEdit(string userName,string password)
+        public JsonResult UserEdit(EditUserFunctionEnum fn, string userName, string password,List<UserRoleEnum> list)
         {
-            var result = new JsonResult(){JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+            var result = new JsonResult();
             try
             {
-                var fnEnum = EnumUtility.GetEnumByTitle<EditUserFunctionEnum>(fn);
+
             }
             catch (Exception e)
             {

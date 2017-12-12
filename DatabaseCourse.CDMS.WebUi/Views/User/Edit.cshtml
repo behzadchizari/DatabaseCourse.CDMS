@@ -37,12 +37,14 @@
                                 <label>نقش‌های کاربر</label>
                                 @foreach (var item in userRoleEnumList)
                                 {
-                                    if (item == UserRoleEnum.All || item == UserRoleEnum.Guest || item == UserRoleEnum.Null) { continue; }
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" value="@EnumUtility.GetEnumValue(item)">@EnumUtility.GetEnumDescription(item)
-                                        </label>
-                                    </div>
+                                    if ((int) item % 10 == 0 && (int)item != 0)
+                                    {
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" value="@EnumUtility.GetEnumValue(item)">@EnumUtility.GetEnumDescription(item)
+                                            </label>
+                                        </div>
+                                    }
                                 }
                             </div>
                             <p class="text-danger" id="Roles_Error"></p>
@@ -56,9 +58,14 @@
 </div>
 <script>
     var FormObject = function () {
+        var chkArray = $('.checkbox input[type="checkbox"]:checked');
+        var chkValArray = {};
+        for (var i = 0; i < chkArray.length; i++) {
+            chkValArray[i] = chkArray[i].value;
+        }
         this.UserName = $('#txtUsername').val();
         this.Password = $('#txtPassword').val();
-        this.Roles = $('.checkbox input[type="checkbox"]:checked');
+        this.Roles = chkValArray;
 
         this.ClearErrors = function () {
             $('#Username_Error').html("");
@@ -103,23 +110,18 @@
         var formObj = new FormObject();
         if (formObj.Validate()) {
             debugger
-            for (var i = 0; i < formObj.Roles.length; i++) {
-                var t = formObj.Roles[i];
-            }
-
             $.ajax({
-                data: {
-                    'fn': '@Html.Raw(UserController.EditUserFunctionEnum.Add.ToString())',
-                    'userName': formObj.UserName,
-                    'password': formObj.Password,
-                    //'roleStrList': formObj.Roles.toArray()
-                },
-                type:'POST',
                 url: "/User/UserEdit",
-                dataType: 'json',
-                contentType : 'application/json',
-                success: function (result) {
-                    alert("ihi");
+                type: "POST",
+                data: {
+                    fn: @EnumUtility.GetEnumValue(UserController.EditUserFunctionEnum.Add),
+                    userName: formObj.UserName,
+                    password: formObj.Password,
+                    list: formObj.Roles
+                },
+                success: function (data) {
+                },
+                error: function (x, e, er) {
                 }
             });
         }

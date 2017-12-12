@@ -4,6 +4,7 @@ namespace DatabaseCourse.Common.Enums
 {
     public enum UserRoleEnum
     {
+        //Use Non-Dividable to 10 for items which you dont want to see in view(User/Edit)
         [EnumDescription("")]
         Null = 0,
         [EnumDescription("کاربر لاگین نشده")]
