@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#Loading').height($(window).height() + 'px');
-    $('#loader').css({ "margin-top": $(window).height()/2-120 + 'px'});
+    $('#Loading').height($('body').height() + 'px');
+    $('#loader').css({ "margin-top": $('body').height()/2-120 + 'px'});
 
 });
 

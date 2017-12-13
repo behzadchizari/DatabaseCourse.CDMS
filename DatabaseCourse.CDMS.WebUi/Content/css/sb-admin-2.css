@@ -18,6 +18,16 @@ body {
     font-family: IranSans;
 }
 
+#Loading {
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+}
 #loader {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #3498db; /* Blue */
@@ -428,14 +438,4 @@ ul.pull-left {
     float: left;
     left: 0;
     right: auto;
-}
-
-#Loading {
-    width: 100%;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 9999;
 }
