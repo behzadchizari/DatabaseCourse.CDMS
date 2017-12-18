@@ -4,7 +4,7 @@
 @using DatabaseCourse.Common.Enums
 @using DatabaseCourse.Common.Utility
 @using DatabaseCourse.Common.Utility.EnumUtility
-
+@using  DatabaseCourse.CDMS.WebUi.Controllers
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -71,8 +71,8 @@
                                                 <td style="width: 100px;" title="@roleTitles">@user.Username</td>
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 <td style="width: 10px;">
-                                                    <a class="fa fa-pencil op-link"></a>&nbsp;|&nbsp;
-                                                    <a class="fa fa-times op-link" style="color: #cf1212;"></a>
+                                                    <a class="fa fa-pencil op-link" href="../User/Edit?id=@user.Id"></a>&nbsp;|&nbsp;
+                                                    <a class="fa fa-times op-link" onclick="DeleteUser(@user.Id);" style="color: #cf1212;"></a>
                                                 </td>
                                             </tr>
                                             counter++;
@@ -90,4 +90,24 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <script>
+            function DeleteUser(userId) {
+                $.ajax({
+                    url: "/User/UserEdit",
+                    type: "POST",
+                    data: {
+                        userUiModel: {
+                            Username: formObj.UserName,
+                            FirstName: formObj.FirstName,
+                            LastName: formObj.LastName,
+                            Password: formObj.Password,
+                            UserRoles: formObj.Roles
+                        },
+                        fn
+                    },
+
+                });
+            }
+        </script>
+
 }

@@ -23,7 +23,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         {
             Null = 0,
             Add = 10,
-            Update = 20
+            Update = 20,
+            Delete = 30,
         }
 
         #endregion
@@ -36,8 +37,9 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit()
+        public ActionResult Edit(int id = 0)
         {
+            ThisApp.Session["UserId"] = id;
             return View();
         }
 
@@ -45,10 +47,12 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         public JsonResult UserEdit(EditUserFunctionEnum fn, UserUiModel userUiModel)
         {
             Session["UserEditResultMessage"] = null;
+            int UserId = (ThisApp.Session["UserId"] != null) ? (int)ThisApp.Session["UserId"]  : 0;
+            userUiModel.Id = UserId;
             var result = new JsonResult();
             try
             {
-                var checkData = userUiModel.ChackModel();
+                var checkData = userUiModel.ChackModel(fn);
                 if (checkData.Count > 0)
                 {
                     result.Data = new
@@ -59,30 +63,103 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                 }
                 else
                 {
-                    var userAdd = UserBll.AddNewUserInfo(new UserInfo()
+                    switch (fn)
                     {
-                        Username = userUiModel.Username,
-                        Password = userUiModel.Password,
-                        UserRoles = userUiModel.UserRoles,
-                        FirstName = userUiModel.FirstName,
-                        LastName = userUiModel.LastName
-                    });
-                    if (userAdd == null)
-                    {
-                        Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت اضافه شد";
-                        result.Data = new
-                        {
-                            Status = JsonResultStatus.Ok,
-                        };
+                        case EditUserFunctionEnum.Delete:
+                            {
+                                var deleteUser = UserBll.RemoveUser(userUiModel.Id);
+                                if (deleteUser == null)
+                                {
+                                    Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت حذف شد.";
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Ok,
+                                    };
+                                }
+                                else
+                                {
+                                    Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} حذف نشد.";
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Exception,
+                                        Description = new List<Exception>() { deleteUser }
+                                    };
+                                }
+                                break;
+                            }
+                        case EditUserFunctionEnum.Add:
+                            {
+                                var userAdd = UserBll.AddNewUserInfo(new UserInfo()
+                                {
+                                    Username = userUiModel.Username,
+                                    Password = userUiModel.Password,
+                                    UserRoles = userUiModel.UserRoles,
+                                    FirstName = userUiModel.FirstName,
+                                    LastName = userUiModel.LastName
+                                });
+                                if (userAdd == null)
+                                {
+                                    Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت اضافه شد";
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Ok,
+                                    };
+                                }
+                                else
+                                {
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Exception,
+                                        Description = new List<Exception>() { userAdd }
+                                    };
+                                }
+                                break;
+                            }
+                        case EditUserFunctionEnum.Update:
+                            {
+                                if(UserId != 0)
+                                {
+                                    var userEdit = UserBll.UpdateExistingUserInfor(new UserInfo()
+                                    {
+                                        Username = userUiModel.Username,
+                                        UserRoles = userUiModel.UserRoles,
+                                        FirstName = userUiModel.FirstName,
+                                        LastName = userUiModel.LastName,
+                                        Id = UserId,
+                                        LastModifyUser = ThisApp.CurrentUser.Id,
+                                    });
+
+                                    if (userEdit == null)
+                                    {
+                                        Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت تغییر یافت";
+                                        result.Data = new
+                                        {
+                                            Status = JsonResultStatus.Ok,
+                                        };
+                                    }
+                                    else
+                                    {
+                                        result.Data = new
+                                        {
+                                            Status = JsonResultStatus.Exception,
+                                            Description = new List<Exception>() { userEdit }
+                                        };
+                                    }
+                                }
+                                else
+                                {
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Exception,
+                                        Description = new List<Exception>() { new Exception("داده‌ای برای نمایش یافت نشد") }
+                                    };
+                                }
+                                break;
+                            }
+                        default:
+                            break;
                     }
-                    else
-                    {
-                        result.Data = new
-                        {
-                            Status = JsonResultStatus.Exception,
-                            Description = new List<Exception>() { userAdd }
-                        };
-                    }
+                    
                 }
             }
             catch (Exception e)

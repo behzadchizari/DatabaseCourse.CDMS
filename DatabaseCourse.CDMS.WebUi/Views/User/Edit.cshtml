@@ -1,5 +1,7 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
 @using DatabaseCourse.CDMS.WebUi.Controllers
+@using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.CDMS.Business.BusinessLogic
 @using DatabaseCourse.Common.Utility.EnumUtility
 @using DatabaseCourse.Common.Enums
 @{
@@ -7,6 +9,14 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
     var userRoleList = EnumUtility.List(typeof(UserRoleEnum));
     var userRoleEnumList = new List<UserRoleEnum>();
+    var DataId = (int)ThisApp.Session["UserId"];
+    var userBll = new UserBLL(ThisApp.CurrentUser);
+    var Data = new UserInfo();
+    Data = null;
+    if (DataId != 0)
+    {
+        Data = userBll.GetUserInfoById(DataId);
+    }
     foreach (var item in userRoleList)
     {
         userRoleEnumList.Add(EnumUtility.GetEnumByTitle<UserRoleEnum>(item.Name));
@@ -25,33 +35,39 @@
                         <form role="form">
                             <div class="form-group">
                                 <label>نام </label>
-                                <input class="form-control" id="txtFirstName" type="text">
+                                <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.FirstName??"")">
                                 <p class="text-danger" id="FirstName_Error"></p>
                             </div>
                             <div class="form-group">
                                 <label>نام خانوادگی</label>
-                                <input class="form-control" id="txtLastName" type="text">
+                                <input class="form-control" id="txtLastName" type="text" value="@Html.Raw(Data?.LastName??"")">
                                 <p class="text-danger" id="LastName_Error"></p>
                             </div>
                             <div class="form-group">
                                 <label>نام کاربری</label>
-                                <input class="form-control" id="txtUsername" type="text">
+                                <input class="form-control" id="txtUsername" type="text" value="@Html.Raw(Data?.Username??"")">
                                 <p class="text-danger" id="Username_Error"></p>
                             </div>
-                            <div class="form-group">
-                                <label>رمز عبور</label>
-                                <input class="form-control" id="txtPassword" type="password">
-                                <p class="text-danger" id="Password_Error"></p>
-                            </div>
+                            @if (DataId == 0 && Data == null)
+                            {
+                                <div class="form-group">
+                                    <label>رمز عبور</label>
+                                    <input class="form-control" id="txtPassword" type="password">
+                                    <p class="text-danger" id="Password_Error"></p>
+                                </div>
+                            }
                             <div class="form-group">
                                 <label>نقش‌های کاربر</label>
                                 @foreach (var item in userRoleEnumList)
                                 {
+                                    var userEditRole = new List<UserRoleEnum>();
+                                    if (DataId != 0 && Data != null)
+                                    { userEditRole.AddRange(Data.UserRoles); }
                                     if ((int)item % 10 == 0 && (int)item != 0)
                                     {
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" value="@EnumUtility.GetEnumValue(item)">@EnumUtility.GetEnumDescription(item)
+                                                <input  @Html.Raw((bool)userEditRole?.Any(y => y == item) ? "checked=\"checked\"" : "") type="checkbox" value="@EnumUtility.GetEnumValue(item)">@EnumUtility.GetEnumDescription(item)
                                             </label>
                                         </div>
                                     }
@@ -89,7 +105,7 @@
             $('#Password_Error').html("");
             $('#Roles_Error').html("");
         };
-        
+
         this.CheckFirstName = function () {
             if (this.FirstName === "") {
                 $('#FirstName_Error').html("لطفا نام را وارد کنید");
@@ -142,13 +158,12 @@
         ShowLoading();
         var formObj = new FormObject();
         if (formObj.Validate()) {
-            debugger
-            //$('ul#Server_Error_List').remove();
             $.ajax({
                 url: "/User/UserEdit",
                 type: "POST",
                 data: {
-                    fn: @EnumUtility.GetEnumValue(UserController.EditUserFunctionEnum.Add),
+                    fn: @Html.Raw((Data== null && DataId == 0)? EnumUtility.GetEnumValue(UserController.EditUserFunctionEnum.Add)
+                       : @EnumUtility.GetEnumValue(UserController.EditUserFunctionEnum.Update)),
                     userUiModel: {
                         Username: formObj.UserName,
                         FirstName: formObj.FirstName,
@@ -161,23 +176,24 @@
                     if(data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
                     {
                         window.location.assign("../User/Index");
-                    }
-                    else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception))) {
-                        HideLoading();
-                        debugger
-                        $('ul#Server_Error_List').empty();
-                        var exlist = data.Description;
-                        for (var i = 0; i < exlist.length ; i++) {
-                            $('ul#Server_Error_List').append("<li>" + exlist[i].Message + "</li>");
-                        }
-                    }
-                },
-                error: function (x, e, er) {
                 }
-            });
+            else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception)))
+            {
+                HideLoading();
+                debugger
+                $('ul#Server_Error_List').empty();
+                var exlist = data.Description;
+                for (var i = 0; i < exlist.length ; i++) {
+                    $('ul#Server_Error_List').append("<li>" + exlist[i].Message + "</li>");
+                }
+            }
+        },
+        error: function (x, e, er) {
         }
-        else {
-            HideLoading();
-        }
+    });
+    }
+    else {
+        HideLoading();
+    }
     });
 </script>

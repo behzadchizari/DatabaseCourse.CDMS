@@ -58,6 +58,8 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
                 throw new Exception("Exception Occured on Updating User. User not Found");
             newEntity.Username = entity?.Username?? newEntity.Username;
             newEntity.LastModifyDate = DateTime.Now;
+            newEntity.LastName = entity?.LastName?? newEntity.LastName;
+            newEntity.FirstName= entity?.FirstName?? newEntity.FirstName;
             newEntity.Password = entity?.Password ?? newEntity.Password;
             newEntity.LastModifyUser = entity?.LastModifyUser;//ToDo
             _context.SaveChanges();

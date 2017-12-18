@@ -83,6 +83,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             }
         }
 
+        public static Dictionary<string, object> Session { get; set; } = new Dictionary<string, object>();
         #endregion
 
         #region Methods

@@ -108,6 +108,22 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             try
             {
                 var da = new UserDA();
+                var roleDA = new UserRoleDA();
+                var roles = roleDA.GetByUserId(user.Id).ToList();
+                foreach (var userRole in user.UserRoles)
+                {
+                    if (roles.Any(x => x.Role_Id == (int)userRole)) continue;
+                    roleDA.Add(new UserRole()
+                    {
+                        Role_Id = (int)userRole,
+                        User_Id = user.Id
+                    });
+                }
+                foreach (var role in roles)
+                {
+                    if (user.UserRoles.Any(x => (int)x == role.Role_Id)) continue;
+                    roleDA.Delete(role);
+                }
                 var update = da.Update(UserBLL.ConvertToDataAccessModel(user));
                 if (update == 0)
                     return new Exception("Cannot Add New User - Internal Error.");
@@ -146,7 +162,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                 if (user == null)
                     return new Exception("User not Found.");
                 var deletedId = da.Delete(user);
-                if(deletedId <= 0)
+                if (deletedId <= 0)
                     return new Exception("Cannot Delete User. Internal Error");
                 return null;
             }

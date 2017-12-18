@@ -39,7 +39,6 @@ namespace DatabaseCourse.CDMS._UnitTest
         [TestMethod]
         public void MenuConfigTest()
         {
-            var list = MenuConfig.GetMenuByUserRoles(new List<Common.Enums.UserRoleEnum> {Common.Enums.UserRoleEnum.Admin });
         }
     }
 

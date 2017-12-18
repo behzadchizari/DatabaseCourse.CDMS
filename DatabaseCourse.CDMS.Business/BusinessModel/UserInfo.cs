@@ -53,7 +53,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
             { _userRoles = value; }
             get
             {
-                if (Id != 0)
+                if (_userRoles == null)
                 {
                     var EnumList = EnumUtility.List(typeof(UserRoleEnum));
                     var userRoleDa = new UserRoleDA();
