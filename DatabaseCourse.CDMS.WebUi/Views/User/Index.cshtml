@@ -4,7 +4,7 @@
 @using DatabaseCourse.Common.Enums
 @using DatabaseCourse.Common.Utility
 @using DatabaseCourse.Common.Utility.EnumUtility
-@using  DatabaseCourse.CDMS.WebUi.Controllers
+@using DatabaseCourse.CDMS.WebUi.Controllers
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -14,32 +14,32 @@
 
 
 @{
-        userData = userBll.GetAllUserInfos();
-        <div class="row">
-            <div class="col-lg-12">
-                @if (Session["UserEditResultMessage"] != null)
-                {
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        @Session["UserEditResultMessage"].ToString()
+    userData = userBll.GetAllUserInfos();
+    <div class="row">
+        <div class="col-lg-12" id="ResultSection">
+            @if (Session["UserEditResultMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissable" id="ResultMessage">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    @Session["UserEditResultMessage"].ToString()
+                </div>
+                Session["UserEditResultMessage"] = null;
+            }
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @ThisApp.PageDesctiption
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="col-lg-3 col-md-3" style="padding: 10px 0">
+                        <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px; margin: 10px 0;" />
                     </div>
-                    Session["UserEditResultMessage"] = null;
-                }
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        @ThisApp.PageDesctiption
+                    <div class="col-lg-9 col-md-9" style="padding: 15px 0;">
+                        <a href="~/User/Edit" class="btn btn-default btn-success pull-left" style="padding: 10px"><i class="fa fa-plus"></i> افزودن کاربر جدید</a>
                     </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="col-lg-3 col-md-3" style="padding: 10px 0">
-                            <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px; margin: 10px 0;"/>
-                        </div>
-                        <div class="col-lg-9 col-md-9" style="padding: 15px 0;">
-                            <a href="~/User/Edit" class="btn btn-default btn-success pull-left" style="padding: 10px"><i class="fa fa-plus"></i> افزودن کاربر جدید</a>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
-                                <thead>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
+                            <thead>
                                 <tr>
                                     <th class="text-center">ردیف</th>
                                     <th class="text-center">نام</th>
@@ -48,8 +48,8 @@
                                     <th class="text-center">تاریخ ایجاد</th>
                                     <th class="text-center">عملگر</th>
                                 </tr>
-                                </thead>
-                                <tbody>
+                            </thead>
+                            <tbody>
                                 @{
                                     var counter = 1;
                                     if (userData.Count > 0)
@@ -61,7 +61,7 @@
                                             for (int i = 0; i < roles.Count; i++)
                                             {
                                                 roleTitles += EnumUtility.GetEnumDescription(roles[i]);
-                                                if (i != roles.Count - 1){ roleTitles += " | ";}
+                                                if (i != roles.Count - 1) { roleTitles += " | "; }
 
                                             }
                                             <tr class="@Html.Raw(counter % 2 == 0 ? "odd" : "even")">
@@ -72,42 +72,50 @@
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 <td style="width: 10px;">
                                                     <a class="fa fa-pencil op-link" href="../User/Edit?id=@user.Id"></a>&nbsp;|&nbsp;
-                                                    <a class="fa fa-times op-link" onclick="DeleteUser(@user.Id);" style="color: #cf1212;"></a>
+                                                    <a class="fa fa-times op-link" onclick="DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
                                                 </td>
                                             </tr>
                                             counter++;
                                         }
                                     }
                                 }
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.table-responsive -->
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- /.panel-body -->
+                    <!-- /.table-responsive -->
                 </div>
-                <!-- /.panel -->
+                <!-- /.panel-body -->
             </div>
-            <!-- /.col-lg-12 -->
+            <!-- /.panel -->
         </div>
-        <script>
-            function DeleteUser(userId) {
-                $.ajax({
-                    url: "/User/UserEdit",
-                    type: "POST",
-                    data: {
-                        userUiModel: {
-                            Username: formObj.UserName,
-                            FirstName: formObj.FirstName,
-                            LastName: formObj.LastName,
-                            Password: formObj.Password,
-                            UserRoles: formObj.Roles
-                        },
-                        fn
+        <!-- /.col-lg-12 -->
+    </div>
+    <script>
+        function DeleteUser(userId) {
+            ShowLoading();
+            $.ajax({
+                url: "/User/UserEdit",
+                type: "POST",
+                data: {
+                    fn: @Html.Raw((int)UserController.EditUserFunctionEnum.Delete),
+                    userUiModel: {
+                        Id: userId,
                     },
+                },
+                success : function (result) {
+                    if(result.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        $('#ResultSection #ResultMessage').removeClass("alert-success");
+                        $('#ResultSection #ResultMessage').addClass("alert-danger");
+                    }
+                },
 
-                });
-            }
-        </script>
+        });
+        }
+    </script>
 
 }
