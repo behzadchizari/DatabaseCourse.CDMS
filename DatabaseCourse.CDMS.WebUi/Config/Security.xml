@@ -74,6 +74,18 @@
       </Role>
     </UserRoles>
   </Page>
+  <!-- Event -->
+  <Page>
+    <PageName>رخدادها</PageName>
+    <PageAddress><![CDATA[/Event/Index]]></PageAddress>
+    <PageDescription>رخدادها</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
   <!-- Bezad Test -->
   <Page>
     <PageName>صفحه تست بهزاد</PageName>

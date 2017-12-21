@@ -271,6 +271,7 @@
     <Compile Include="Classes\UserConfigTransfer.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\Test\BehzadTestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -298,6 +299,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

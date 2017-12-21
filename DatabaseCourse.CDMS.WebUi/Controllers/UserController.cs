@@ -40,6 +40,16 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         public ActionResult Edit(int id = 0)
         {
             ThisApp.Session["UserId"] = id;
+            if(id != 0)
+            {
+                var userInfo = UserBll.GetUserInfoById(id);
+                if(userInfo == null)
+                {
+                    Session["UserEditResultMessage"] = "کاربر یافت نشد.";
+                    return View("Index");
+                }
+
+            }
             return View();
         }
 
@@ -51,7 +61,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             var result = new JsonResult();
             try
             {
-
+                if (ThisApp.AccessDeniedType == AccessDeniedType.NoAccessToPage)
+                { result.Data = ThisApp.AccessDenied.Message ?? ThisApp.InnerAccessDenied.Message ?? ""; return result; }
                 if (fn != EditUserFunctionEnum.Delete)
                 {
                     UserId = (ThisApp.Session["UserId"] != null) ? (int)ThisApp.Session["UserId"] : 0;
@@ -59,7 +70,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
                     var checkData = userUiModel.ChackModel(fn);
                     if (checkData.Count > 0)
-                    {
+                    { 
                         result.Data = new
                         {
                             Status = JsonResultStatus.Exception,
@@ -76,7 +87,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             var deleteUser = UserBll.RemoveUser(userInfo.Id);
                             if (deleteUser == null)
                             {
-                                Session["UserEditResultMessage"] = $"کاربر { userInfo.Username} با موفقیت حذف شد.";
+                                Session["UserEditResultMessage"] =$"کاربر {userInfo.Username} با موفقیت <span style=\"color: red; \" > حذف </span> شد.";
                                 result.Data = new
                                 {
                                     Status = JsonResultStatus.Ok,
@@ -105,7 +116,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             });
                             if (userAdd == null)
                             {
-                                Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت اضافه شد";
+                                Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت <span style=\"color: green; \" > درج </span> شد";
                                 result.Data = new
                                 {
                                     Status = JsonResultStatus.Ok,
@@ -137,7 +148,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
                                 if (userEdit == null)
                                 {
-                                    Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت تغییر یافت";
+                                    Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
                                     result.Data = new
                                     {
                                         Status = JsonResultStatus.Ok,
@@ -203,7 +214,6 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
 
         #endregion
-
 
     }
 }

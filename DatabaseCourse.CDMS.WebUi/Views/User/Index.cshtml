@@ -19,9 +19,9 @@
         <div class="col-lg-12" id="ResultSection">
             @if (Session["UserEditResultMessage"] != null)
             {
-                <div class="alert alert-success alert-dismissable" id="ResultMessage">
+                <div class="alert @Html.Raw(Session["UserEditResultMessage"].ToString().Contains("نشد") ? "alert-danger" :"alert-success")  alert-dismissable" id="ResultMessage">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    @Session["UserEditResultMessage"].ToString()
+                    @Html.Raw(Session["UserEditResultMessage"].ToString())
                 </div>
                 Session["UserEditResultMessage"] = null;
             }
@@ -71,8 +71,8 @@
                                                 <td style="width: 100px;" title="@roleTitles">@user.Username</td>
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 <td style="width: 10px;">
-                                                    <a class="fa fa-pencil op-link" href="../User/Edit?id=@user.Id"></a>&nbsp;|&nbsp;
-                                                    <a class="fa fa-times op-link" onclick="DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
+                                                    <a class="fa fa-pencil op-link" title="ویرایش" href="../User/Edit?id=@user.Id"></a>&nbsp;|&nbsp;
+                                                    <a class="fa fa-times op-link" title="حذف" onclick="if(confirm('آیا از حذف کاربر @Html.Raw(user?.Username??"") مطمئن هستید ؟'))DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
                                                 </td>
                                             </tr>
                                             counter++;

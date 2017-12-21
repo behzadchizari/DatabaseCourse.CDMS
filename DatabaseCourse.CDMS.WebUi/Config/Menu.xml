@@ -28,4 +28,19 @@
     </RoleList>
     <ParentId></ParentId>
   </Menu>
+
+
+  <Menu>
+    <MenuId>3</MenuId>
+    <MenuTitle>رخدادها</MenuTitle>
+    <MenuDescription>رخدادها</MenuDescription>
+    <MenuUrl><![CDATA[Event]]></MenuUrl>
+    <MenuIcon>exchange</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId></ParentId>
+  </Menu>
 </MenuItemList>
