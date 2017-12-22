@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatabaseCourse.CDMS.DataAccess.Model;
+using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
@@ -14,6 +16,14 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public int Id { get; set; }
 
         public string Type { get; set; }
+
+        public LogTypeEnum LogType
+        {
+            get
+            {
+                return EnumUtility.GetEnumByTitle<LogTypeEnum>(Type);
+            }
+        }
 
         public string Message { get; set; }
 
@@ -26,13 +36,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public UserInfo User { get; set; }
 
         #endregion
-
-        #region Business Methods
-
-
-
-        #endregion
-
+        
         #region Helpers
 
         internal static LogException ConvertToDataAccessModel(LogExceptionInfo logExceptionInfo)

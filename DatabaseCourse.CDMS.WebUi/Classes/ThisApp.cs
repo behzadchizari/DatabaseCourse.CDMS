@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using DatabaseCourse.Common.Enums;
+using DatabaseCourse.CDMS.Business.BusinessModel;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
@@ -122,6 +123,18 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
             return appConfig;
         }
 
+        public static bool HasAccessToView(string controllerName, string acctionName, UserInfo user = null)
+        {
+            try
+            {
+                var acc = AccessHelper.HasAccessToAction(controllerName, acctionName, user);
+                return acc == null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         #endregion
 
         #region Helper

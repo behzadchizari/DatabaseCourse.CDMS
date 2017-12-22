@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\LogInfo.cs" />
     <Compile Include="BusinessLogic\UserBLL.cs" />
     <Compile Include="BusinessModel\LogExceptionInfo.cs" />
     <Compile Include="BusinessModel\RoleInfo.cs" />

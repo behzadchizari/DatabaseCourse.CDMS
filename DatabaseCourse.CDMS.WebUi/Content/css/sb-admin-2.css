@@ -57,7 +57,9 @@ body {
 .op-link:hover {
     text-decoration:none;
 }
-
+.fa-passwd-reset > .fa-lock {
+  font-size: 0.85rem;
+}
 
 
 
@@ -141,8 +143,8 @@ body {
 }
 
 .navbar-top-links .dropdown-user {
-    left: 0;
-    right: auto;
+    /*left: 0;*/
+    right: 0;
 }
 
 .sidebar .sidebar-nav.navbar-collapse {

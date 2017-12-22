@@ -62,6 +62,17 @@
   </Page>
   <Page>
     <PageName>مدیریت کاربران</PageName>
+    <PageAddress>/User/ResetPassword</PageAddress>
+    <PageDescription>بازیابی رمز عبور</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <Page>
+    <PageName>مدیریت کاربران</PageName>
     <PageAddress><![CDATA[/User/Edit]]></PageAddress>
     <PageDescription>ویرایش یا افزودن کاربر</PageDescription>
     <PageHelp></PageHelp>

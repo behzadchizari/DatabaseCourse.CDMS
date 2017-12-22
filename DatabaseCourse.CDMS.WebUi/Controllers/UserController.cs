@@ -36,6 +36,87 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        public ActionResult ResetPassword(int id = 0)
+        {
+            ThisApp.Session["UserId"] = id;
+            if (id != 0)
+            {
+                var userInfo = UserBll.GetUserInfoById(id);
+                if (userInfo == null)
+                {
+                    Session["UserEditResultMessage"] = "کاربر یافت نشد.";
+                    return View("Index");
+                }
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult EditPassword(string password)
+        {
+            Session["UserEditResultMessage"] = null;
+            var UserId = 0;
+            var result = new JsonResult();
+            try
+            {
+                if (ThisApp.AccessDeniedType == AccessDeniedType.NoAccessToPage)
+                { result.Data = ThisApp.AccessDenied.Message ?? ThisApp.InnerAccessDenied.Message ?? ""; return result; }
+                if (string.IsNullOrEmpty(password) || password.Length < 3)
+                {
+                    result.Data = new
+                    {
+                        Status = JsonResultStatus.Exception,
+                        Description = new List<Exception>() { new Exception("رمز عبور وارد شده معتبر نیست - طول رمزعبور باید بیشتر از 3 باشد") }
+                    };
+                    return result;
+                }
+                UserId = (ThisApp.Session["UserId"] != null) ? (int)ThisApp.Session["UserId"] : 0;
+
+                if (UserId != 0)
+                {
+                    var user = UserBll.GetUserInfoById(UserId);
+                    var userEdit = UserBll.UpdateExistingUserInfor(new UserInfo()
+                    {
+                        Password = password,
+                        Id = UserId,
+                        LastModifyUser = ThisApp.CurrentUser.Id,
+                        LastModifyDate = DateTime.Now
+                    });
+
+                    if (userEdit == null)
+                    {
+                        Session["UserEditResultMessage"] = $"رمزعبور کاربر { user.Username} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
+                        result.Data = new
+                        {
+                            Status = JsonResultStatus.Ok,
+                        };
+                    }
+                    else
+                    {
+                        result.Data = new
+                        {
+                            Status = JsonResultStatus.Exception,
+                            Description = new List<Exception>() { userEdit }
+                        };
+                    }
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                result.Data = new
+                {
+                    Status = JsonResultStatus.Exception,
+                    Description = new List<Exception>() { e }
+                };
+            }
+            return result;
+        }
+
         [HttpGet]
         public ActionResult Edit(int id = 0)
         {

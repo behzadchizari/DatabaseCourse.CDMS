@@ -262,6 +262,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Classes\AccessHelper.cs" />
     <Compile Include="Classes\BaseController.cs" />
     <Compile Include="Classes\DataTransfer.cs" />
     <Compile Include="Classes\MenuConfigReader.cs" />
@@ -300,6 +301,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

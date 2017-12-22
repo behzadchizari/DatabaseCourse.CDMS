@@ -71,7 +71,18 @@
                                                 <td style="width: 100px;" title="@roleTitles">@user.Username</td>
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 <td style="width: 10px;">
-                                                    <a class="fa fa-pencil op-link" title="ویرایش" href="../User/Edit?id=@user.Id"></a>&nbsp;|&nbsp;
+                                                    <a class="fa fa-pencil op-link" title="ویرایش" href="../User/Edit?id=@user.Id"></a>
+                                                    @if (ThisApp.HasAccessToView("User", "ResetPassword"))
+                                                    {
+                                                        <span>|</span>
+                                                        <a class="op-link" title="بازیابی رمزعبور" href="../User/ResetPassword?id=@user.Id">
+                                                            <span class="fa-passwd-reset fa-stack" style="font-size:10px">
+                                                                <i class="fa fa-undo fa-stack-2x"></i>
+                                                                <i class="fa fa-lock fa-stack-1x"></i>
+                                                            </span>
+                                                        </a>
+                                                    }
+                                                    <span>|</span>
                                                     <a class="fa fa-times op-link" title="حذف" onclick="if(confirm('آیا از حذف کاربر @Html.Raw(user?.Username??"") مطمئن هستید ؟'))DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
                                                 </td>
                                             </tr>

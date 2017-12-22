@@ -55,6 +55,7 @@
     <Compile Include="Classes\UserInitItem.cs" />
     <Compile Include="Enums\AccessDeniedType.cs" />
     <Compile Include="Enums\JsonResultStatus.cs" />
+    <Compile Include="Enums\LogType.cs" />
     <Compile Include="Enums\UserRoleEnum.cs" />
     <Compile Include="Interface\IConvertModel.cs" />
     <Compile Include="Interface\IDataTransfer.cs" />
