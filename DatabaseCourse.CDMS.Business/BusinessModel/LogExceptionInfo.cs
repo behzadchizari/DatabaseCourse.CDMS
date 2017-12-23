@@ -37,42 +37,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 
         #endregion
         
-        #region Helpers
-
-        internal static LogException ConvertToDataAccessModel(LogExceptionInfo logExceptionInfo)
-        {
-            if (logExceptionInfo != null)
-            {
-                return new LogException()
-                {
-                    Id = logExceptionInfo.Id,
-                    DateTime = logExceptionInfo.DateTime,
-                    Type = logExceptionInfo.Type,
-                    User_Id = logExceptionInfo.UserId,
-                    Message = logExceptionInfo.Message,
-                    StackTrace = logExceptionInfo.StackTrace
-                };
-            }
-            return null;
-        }
-        internal static LogExceptionInfo ConvertToBusinessModel(LogException logException)
-        {
-            if (logException != null)
-            {
-                return new LogExceptionInfo()
-                {
-                    Id = logException.Id,
-                    DateTime = logException.DateTime,
-                    Type = logException.Type,
-                    UserId = logException.User_Id,
-                    Message = logException.Message,
-                    StackTrace = logException.StackTrace
-                };
-            }
-            return null;
-        }
-
-        #endregion
 
 
 

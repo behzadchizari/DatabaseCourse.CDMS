@@ -36,6 +36,11 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult UserProfile()
+        {
+            return View();
+        }
 
         [HttpGet]
         public ActionResult ResetPassword(int id = 0)

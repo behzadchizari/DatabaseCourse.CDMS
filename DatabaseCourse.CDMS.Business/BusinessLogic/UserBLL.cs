@@ -35,7 +35,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             var da = new UserDA();
             return ConvertToBusinessModel(da.GetById(id).FirstOrDefault());
         }
-
         public List<UserInfo> GetAllUserInfos()
         {
             var da = new UserDA();
@@ -47,8 +46,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return userInfoList;
         }
-
-
         public UserInfo GetUserInfoByUserName(string username)
         {
             var da = new UserDA();
@@ -62,7 +59,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             var user = da.GetAll().FirstOrDefault(x => x.Username == username && x.Password == encPass);
             return ConvertToBusinessModel(user);
         }
-
         public List<UserInfo> GetUserInfoByRole(UserRoleEnum userRole)
         {
 
@@ -80,7 +76,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return userInfoList;
         }
-
         public Exception AddNewUserInfo(UserInfo user)
         {
             Exception exData = null;
@@ -101,7 +96,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return exData;
         }
-
         public Exception UpdateExistingUserInfor(UserInfo user)
         {
             Exception exData = null;
@@ -134,7 +128,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return exData;
         }
-
         public Exception RemoveUser(UserInfo user)
         {
             var da = new UserDA();
@@ -152,7 +145,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                 return ex;
             }
         }
-
         public Exception RemoveUser(int id)
         {
             var da = new UserDA();
