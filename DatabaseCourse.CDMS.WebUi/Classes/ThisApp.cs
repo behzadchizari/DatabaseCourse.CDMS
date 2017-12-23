@@ -42,6 +42,8 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                     LastModifyUser = user.LastModifyUser,
                     UserRoles = user.UserRoles,
                     Username = user.Username,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
                 };
             }
         }

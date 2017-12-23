@@ -55,6 +55,7 @@
     <Compile Include="BusinessModel\RoleInfo.cs" />
     <Compile Include="BusinessModel\UserInfo.cs" />
     <Compile Include="BusinessModel\UserRoleInfo.cs" />
+    <Compile Include="Classes\LogException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

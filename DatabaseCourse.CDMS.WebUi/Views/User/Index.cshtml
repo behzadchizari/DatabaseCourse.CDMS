@@ -25,6 +25,9 @@
                 </div>
                 Session["UserEditResultMessage"] = null;
             }
+        </div>
+        <div class="col-lg-12">
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     @ThisApp.PageDesctiption
@@ -75,12 +78,12 @@
                                                     @if (ThisApp.HasAccessToView("User", "ResetPassword"))
                                                     {
                                                         <span>|</span>
-                                                        <a class="op-link" title="بازیابی رمزعبور" href="../User/ResetPassword?id=@user.Id">
-                                                            <span class="fa-passwd-reset fa-stack" style="font-size:10px">
-                                                                <i class="fa fa-undo fa-stack-2x"></i>
-                                                                <i class="fa fa-lock fa-stack-1x"></i>
-                                                            </span>
-                                                        </a>
+                                                            <a class="op-link" title="بازیابی رمزعبور" href="../User/ResetPassword?id=@user.Id">
+                                                                <span class="fa-passwd-reset fa-stack" style="font-size:10px">
+                                                                    <i class="fa fa-undo fa-stack-2x"></i>
+                                                                    <i class="fa fa-lock fa-stack-1x"></i>
+                                                                </span>
+                                                            </a>
                                                     }
                                                     <span>|</span>
                                                     <a class="fa fa-times op-link" title="حذف" onclick="if(confirm('آیا از حذف کاربر @Html.Raw(user?.Username??"") مطمئن هستید ؟'))DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
@@ -101,32 +104,32 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <script>
-        function DeleteUser(userId) {
-            ShowLoading();
-            $.ajax({
-                url: "/User/UserEdit",
-                type: "POST",
-                data: {
-                    fn: @Html.Raw((int)UserController.EditUserFunctionEnum.Delete),
-                    userUiModel: {
-                        Id: userId,
+        <script>
+            function DeleteUser(userId) {
+                ShowLoading();
+                $.ajax({
+                    url: "/User/UserEdit",
+                    type: "POST",
+                    data: {
+                        fn: @Html.Raw((int)UserController.EditUserFunctionEnum.Delete),
+                        userUiModel: {
+                            Id: userId,
+                        },
                     },
-                },
-                success : function (result) {
-                    if(result.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
-                    {
-                        location.reload();
+                    success : function (result) {
+                        if(result.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
+                        {
+                            location.reload();
                     }
-                    else
-                    {
-                        $('#ResultSection #ResultMessage').removeClass("alert-success");
-                        $('#ResultSection #ResultMessage').addClass("alert-danger");
-                    }
-                },
+                else
+                {
+                            $('#ResultSection #ResultMessage').removeClass("alert-success");
+                $('#ResultSection #ResultMessage').addClass("alert-danger");
+            }
+            },
 
-        });
-        }
-    </script>
+            });
+            }
+        </script>
 
 }

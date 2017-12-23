@@ -60,8 +60,24 @@ body {
 .fa-passwd-reset > .fa-lock {
   font-size: 0.85rem;
 }
-
-
+table.profile-info tr{
+    padding:10px 15px;
+}
+table.profile-info tr td{
+    padding:5px
+}
+table.profile-info tr td ul li{
+    list-style:none;
+}
+table.profile-info tr td ul{
+    padding:0;
+}
+table.profile-info tr td:first-child{
+    font-weight:bold;
+    color : #999;
+    padding:10px;
+    font-size:12px
+}
 
 
 

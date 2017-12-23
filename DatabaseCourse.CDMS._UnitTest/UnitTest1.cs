@@ -7,6 +7,8 @@ using DatabaseCourse.Common.Utility;
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using System.Collections.Generic;
 using DatabaseCourse.CDMS.WebUi.Classes;
+using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.Business.BusinessLogic;
 
 namespace DatabaseCourse.CDMS._UnitTest
 {
@@ -39,6 +41,17 @@ namespace DatabaseCourse.CDMS._UnitTest
         [TestMethod]
         public void MenuConfigTest()
         {
+            var loginfo = new LogExceptionInfo()
+            {
+                LogType = Common.Enums.LogTypeEnum.Log,
+                DateTime = DateTime.Now,
+                Message = "behzad",
+                UserId = 1
+            };
+            var logbll = new LogBLL(null);
+            logbll.AddLogException(loginfo);
+            var sdc = logbll.GetAllLogAndExceptions();
+            var t = sdc[0].User;
         }
     }
 

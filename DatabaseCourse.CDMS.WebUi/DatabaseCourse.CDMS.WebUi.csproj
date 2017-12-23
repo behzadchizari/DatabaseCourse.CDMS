@@ -302,6 +302,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

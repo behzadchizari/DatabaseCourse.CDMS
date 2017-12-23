@@ -2,6 +2,7 @@
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
+using DatabaseCourse.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             try
             {
                 var da = new LogExceptionDA();
+                logExceptionInfo.UserId = _currentUser.Id;
                 var add = da.Add(ConvertToDataAccessModel(logExceptionInfo));
                 if (add > 0)
                     return null;
@@ -44,7 +46,68 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                 return e;
             }
         }
-
+        public List<LogExceptionInfo> GetAllLogAndExceptions()
+        {
+            try
+            {
+                var da = new LogExceptionDA();
+                var allLogs = da.GetAll();
+                var result = new List<LogExceptionInfo>();
+                foreach (var item in allLogs)
+                {
+                    result.Add(ConvertToBusinessModel(item));
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                return new List<LogExceptionInfo>();
+            }
+        }
+        public List<LogExceptionInfo> GetAllByType(LogTypeEnum logTypeEnum)
+        {
+            try
+            {
+                var da = new LogExceptionDA();
+                var allLogs = da.GetAll().Where(x=>x.Type == logTypeEnum.ToString());
+                var result = new List<LogExceptionInfo>();
+                foreach (var item in allLogs)
+                {
+                    result.Add(ConvertToBusinessModel(item));
+                }
+                return result;
+            }
+            catch (Exception)
+            {
+                return new List<LogExceptionInfo>();
+            }
+        }
+        public int GetAllCount()
+        {
+            try
+            {
+                var da = new LogExceptionDA();
+                var allLogs = da.GetAll();
+                return allLogs.Count();
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+        public int GetCountByType(LogTypeEnum logTypeEnum)
+        {
+            try
+            {
+                var da = new LogExceptionDA();
+                var allLogs = da.GetAll();
+                return allLogs.Where(x=>x.Type == logTypeEnum.ToString()).Count();
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
         #endregion
 
 

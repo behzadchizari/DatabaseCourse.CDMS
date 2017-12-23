@@ -21,6 +21,8 @@ namespace DatabaseCourse.Common.Classes
         public DateTime? LastModifyDate { get; set; }
 
         public int? LastModifyUser { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         public List<UserRoleEnum> UserRoles{ get; set; }
     }
