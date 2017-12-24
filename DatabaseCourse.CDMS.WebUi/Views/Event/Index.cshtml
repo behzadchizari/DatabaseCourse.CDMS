@@ -20,9 +20,9 @@
                         گزارشات سیستم
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-success selected" onclick="ShowLogs()" id="log" style="padding:10px"><span class="fa fa-history" style="padding:0 5px"></span> گزارشات</a>
-                        <a class="btn btn-default selected" onclick="" id="exception" style="padding:10px"><span class="fa fa-exclamation-triangle" style="padding:0 5px"></span>خطاهای سیستمی</a>
-                        
+                        <a class="btn btn-success selected no-print" onclick="ShowLogs()" id="log" style="padding:10px"><span class="fa fa-history" style="padding:0 5px"></span> گزارشات</a>
+                        <a class="btn btn-default selected no-print" onclick="" id="exception" style="padding:10px"><span class="fa fa-exclamation-triangle" style="padding:0 5px"></span>خطاهای سیستمی</a>
+                        <a class="btn btn-primary pull-left no-print" onclick="window.print();"><i class="fa fa-print" style="padding:10px"></i>پرینت</a>
                         <div  id="LogExceptionResult" class="table-responsive" style="margin-top: 10px">
 
                         </div>
@@ -56,7 +56,8 @@
                     if (param.Data == null || param.Data.length === 0) {
                         ShowNoDataError('#LogExceptionResult');
                     } else {
-                        var logTable = '<table class="table table-striped table-bordered table-hover text-center" id="table-filter">' +
+                        var logTable = '<input type="text" id="input-filter" class="form-control no-print" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px; margin: 10px 0;" />' +
+                            '<table class="table table-striped table-bordered table-hover text-center" id="table-filter">' +
                             '<thead>' +
                             '<tr>' +
                             '<th class="text-center" style="width:10%">ردیف</th>' +
