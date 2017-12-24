@@ -1,6 +1,7 @@
 ﻿using DatabaseCourse.CDMS.Business.BusinessLogic;
 using DatabaseCourse.CDMS.Business.BusinessModel;
 using DatabaseCourse.Common.Classes;
+using DatabaseCourse.Common.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +41,8 @@ namespace DatabaseCourse.CDMS.Business.Classes
                 {
                     DateTime = DateTime.Now,
                     LogType = Common.Enums.LogTypeEnum.Exception,
-                    Message = exception.Message,
-                    StackTrace = exception.StackTrace,
+                    Message = ExceptionUtility.GetAllInnerException(exception),
+                    StackTrace = exception.StackTrace.Replace(")",$"){Environment.NewLine}"),
                     UserId = currentUser?.Id ?? null
                 };
                 logBll.AddLogException(loginfo);
@@ -50,5 +51,6 @@ namespace DatabaseCourse.CDMS.Business.Classes
             {
             }
         }
+
     }
 }

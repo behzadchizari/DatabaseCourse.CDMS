@@ -18,13 +18,38 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetLogs(LogTypeEnum type)
+        public JsonResult GetLogs()
         {
             var result = new JsonResult() { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             try
             {
                 var logBll = new LogBLL(ThisApp.CurrentUser);
                 var loglist = logBll.GetAllByType(LogTypeEnum.Log);
+                result.Data = new
+                {
+                    Status = JsonResultStatus.Ok,
+                    Data = loglist
+                };
+                return result;
+            }
+            catch (Exception e)
+            {
+                result.Data = new
+                {
+                    Status = JsonResultStatus.Exception,
+                    Data = e.Message
+                };
+            }
+            return result;
+        }
+        [HttpGet]
+        public JsonResult GetExceptions()
+        {
+            var result = new JsonResult() { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            try
+            {
+                var logBll = new LogBLL(ThisApp.CurrentUser);
+                var loglist = logBll.GetAllByType(LogTypeEnum.Exception);
                 result.Data = new
                 {
                     Status = JsonResultStatus.Ok,

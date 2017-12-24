@@ -38,7 +38,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
 
         protected override void OnException(ExceptionContext filterContext)
         {
-
+            ThisApp.AddExceptionData(filterContext.Exception);
         }
 
         #endregion
