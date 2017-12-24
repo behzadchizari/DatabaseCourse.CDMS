@@ -81,7 +81,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             Exception exData = null;
             try
             {
-                user.Password = user.Password;
+                user.CreationDate = DateTime.Now;
+                user.LastModifyDate = DateTime.Now;
+                user.LastModifyUser = _currentUser?.Id;
                 if (user.UserRoles.Count == 0)
                     return new Exception("Cannot Add New User - No Rule is Selected.");
                 var daModel = ConvertToDataAccessModel(user);
@@ -101,6 +103,8 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             Exception exData = null;
             try
             {
+                user.LastModifyDate = DateTime.Now;
+                user.LastModifyUser = _currentUser?.Id;
                 var da = new UserDA();
                 var roleDA = new UserRoleDA();
                 var roles = roleDA.GetByUserId(user.Id).ToList();

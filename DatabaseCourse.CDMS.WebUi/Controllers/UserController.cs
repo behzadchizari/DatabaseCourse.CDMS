@@ -87,8 +87,6 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                     {
                         Password = password,
                         Id = UserId,
-                        LastModifyUser = ThisApp.CurrentUser.Id,
-                        LastModifyDate = DateTime.Now
                     });
 
                     if (userEdit == null)
@@ -228,8 +226,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                                     UserRoles = userUiModel.UserRoles,
                                     FirstName = userUiModel.FirstName,
                                     LastName = userUiModel.LastName,
-                                    Id = UserId,
-                                    LastModifyUser = ThisApp.CurrentUser.Id,
+                                    Id = UserId
                                 });
 
                                 if (userEdit == null)

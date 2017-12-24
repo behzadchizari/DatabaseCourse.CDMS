@@ -25,6 +25,9 @@
       <Role>
         <RoleName>Admin</RoleName>
       </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
     </RoleList>
     <ParentId></ParentId>
   </Menu>
