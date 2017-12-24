@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using DatabaseCourse.Common.Enums;
 using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.Business.Classes;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
@@ -137,6 +138,16 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                 return false;
             }
         }
+
+        public static void AddLogData(string message)
+        {
+            LogException.AddLogData(message, ThisApp.CurrentUser);
+        }
+        public static void AddExceptionData(Exception exception)
+        {
+            LogException.AddExceptionData(exception, ThisApp.CurrentUser);
+        }
+
         #endregion
 
         #region Helper

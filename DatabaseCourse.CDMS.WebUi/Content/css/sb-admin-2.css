@@ -79,9 +79,15 @@ table.profile-info tr td:first-child{
     font-size:12px
 }
 
-
-
-
+.no-data {
+    padding: 10px;
+    border: 1px solid #dddddd;
+    font-weight: bold;
+    color: #b52b27;
+    background: #f7f7f7;
+    margin-top: 10px;
+    text-align: center;
+}
 
 
 
@@ -457,4 +463,16 @@ ul.pull-left {
     float: left;
     left: 0;
     right: auto;
+}
+.just-print {
+    display: none;
+}
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .just-print {
+        display: block;
+    }
 }

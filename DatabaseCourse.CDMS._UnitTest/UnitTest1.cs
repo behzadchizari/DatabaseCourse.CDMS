@@ -46,12 +46,10 @@ namespace DatabaseCourse.CDMS._UnitTest
                 LogType = Common.Enums.LogTypeEnum.Log,
                 DateTime = DateTime.Now,
                 Message = "behzad",
-                UserId = 1
             };
             var logbll = new LogBLL(null);
             logbll.AddLogException(loginfo);
             var sdc = logbll.GetAllLogAndExceptions();
-            var t = sdc[0].User;
         }
     }
 

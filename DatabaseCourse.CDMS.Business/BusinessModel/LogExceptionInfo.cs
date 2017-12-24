@@ -8,6 +8,7 @@ using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility.EnumUtility;
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.Business.BusinessLogic;
+using DatabaseCourse.Common.Utility;
 
 namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
@@ -40,19 +41,10 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 
         public DateTime? DateTime { get; set; }
 
+        public string DateTimeStr => DateTimeUtility.ConvertToPersianCalender(DateTime ?? System.DateTime.MinValue);
+
         public int? UserId { get; internal set; }
-
-        public UserInfo User
-        {
-            get
-            {
-                var userDa = new UserDA();
-                if (UserId == null) return null;
-                var userInfo = userDa.GetById(UserId??0).FirstOrDefault();
-                return UserBLL.ConvertToBusinessModel(userInfo);
-            }
-        }
-
+        
         #endregion
 
 

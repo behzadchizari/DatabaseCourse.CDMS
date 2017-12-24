@@ -1,7 +1,97 @@
-﻿
+﻿@using DatabaseCourse.Common.Utility.EnumUtility
+@using DatabaseCourse.Common.Enums
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
+<style type="text/css">
+    .selected {
+        margin-bottom: 20px 0;
+    }
+</style>
+<script src="~/Content/js/jquery-1.11.0.js"></script>
 
+<div class="row">
+    <div class="">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        گزارشات سیستم
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-success selected" onclick="ShowLogs()" id="log" style="padding:10px"><span class="fa fa-history" style="padding:0 5px"></span> گزارشات</a>
+                        <a class="btn btn-default selected" id="exception" style="padding:10px"><span class="fa fa-exclamation-triangle" style="padding:0 5px"></span>خطاهای سیستمی</a>
+                        <div id="LogExceptionResult" class="table-responsive" style="margin-top: 10px">
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function ShowLogs() {
+            $('#LogExceptionResult').html('');
+            $.ajax({
+                url: "/Event/GetLogs",
+                type: "GET",
+                data: {type:@EnumUtility.GetEnumValue(LogTypeEnum.Log) },
+                success: function (param) {
+                    debugger;
+                    if (param.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception))) {
+                        ShowNoDataError('#LogExceptionResult' + param.Data);
+                    }
+                    if (param.Data == null || param.Data.length === 0) {
+                        ShowNoDataError('#LogExceptionResult');
+                    } else {
+                        var logTable = '<table class="table table-striped table-bordered table-hover text-center">' +
+                            '<thead>' +
+                            '<tr>' +
+                            '<th class="text-center" style="width:10%">ردیف</th>' +
+                            '<th class="text-center">شرح</th>' +
+                            '<th class="text-center"style="width:20%">زمان</th>' +
+                            '</tr>' +
+                            '</thead>' +
+                            '<tbody></tbody>' +
+                            '</table>';
+                        $('#LogExceptionResult').html(logTable);
+
+                        $.each(param.Data, function (key, val) {
+
+                            var log = '<tr>' +
+                                '<td>'+(Number(key)+1)+'</td>' +
+                                '<td>' + val.Message + '</td>' +
+                                '<td>' + val.DateTimeStr +'</td>'+
+                                '</tr>';
+
+                            $('#LogExceptionResult table tbody').append(log);
+
+                        });
+                    }
+                },
+                error: function(err,data) {
+                    ShowNoDataError('#LogExceptionResult' + err);
+                }
+            });
+        }
+    </script>
+    <script>
+        $(".selected").click(function () {
+            $(".selected").removeClass("btn-success");
+            $(".selected").removeClass("btn-danger");
+            $(".selected").addClass("btn-default");
+
+            switch ($(this).attr("id")) {
+                case "log":
+                    {
+                        $(this).addClass("btn-success"); break;
+                    }
+                case "exception":
+                    {
+                        $(this).addClass("btn-danger"); break;
+                    }
+            }
+        });
+    </script>
+</div>

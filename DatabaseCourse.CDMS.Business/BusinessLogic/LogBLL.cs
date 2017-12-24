@@ -34,7 +34,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             try
             {
                 var da = new LogExceptionDA();
-                logExceptionInfo.UserId = _currentUser.Id;
+                logExceptionInfo.UserId = _currentUser?.Id ;
                 var add = da.Add(ConvertToDataAccessModel(logExceptionInfo));
                 if (add > 0)
                     return null;
@@ -109,7 +109,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
         }
         #endregion
-
 
         #region Helpers
 

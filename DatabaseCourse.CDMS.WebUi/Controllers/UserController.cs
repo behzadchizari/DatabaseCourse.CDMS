@@ -35,13 +35,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public ActionResult UserProfile()
-        {
-            return View();
-        }
-
+        
         [HttpGet]
         public ActionResult ResetPassword(int id = 0)
         {
@@ -92,6 +86,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                     if (userEdit == null)
                     {
                         Session["UserEditResultMessage"] = $"رمزعبور کاربر { user.Username} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
+                        ThisApp.AddLogData($"بازیابی رمزعبور کاربر {user.Username} توسط {ThisApp.CurrentUser.Username}");
                         result.Data = new
                         {
                             Status = JsonResultStatus.Ok,
@@ -172,6 +167,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             if (deleteUser == null)
                             {
                                 Session["UserEditResultMessage"] =$"کاربر {userInfo.Username} با موفقیت <span style=\"color: red; \" > حذف </span> شد.";
+                                ThisApp.AddLogData($"حذف کاربر {userInfo.Username} توسط {ThisApp.CurrentUser.Username}");
                                 result.Data = new
                                 {
                                     Status = JsonResultStatus.Ok,
@@ -201,6 +197,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             if (userAdd == null)
                             {
                                 Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت <span style=\"color: green; \" > درج </span> شد";
+                                ThisApp.AddLogData($"درج کاربر {userUiModel.Username} توسط {ThisApp.CurrentUser.Username}");
                                 result.Data = new
                                 {
                                     Status = JsonResultStatus.Ok,
@@ -232,6 +229,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                                 if (userEdit == null)
                                 {
                                     Session["UserEditResultMessage"] = $"کاربر { userUiModel.Username} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
+                                    ThisApp.AddLogData($"به روز رسانی کاربر {userUiModel.Username} توسط {ThisApp.CurrentUser.Username}");
                                     result.Data = new
                                     {
                                         Status = JsonResultStatus.Ok,

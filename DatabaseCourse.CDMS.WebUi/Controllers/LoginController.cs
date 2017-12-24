@@ -31,7 +31,6 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         public JsonResult Login(string userName, string password)
         {
             var json = new JsonResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
             try
             {
                 if (ThisApp.AccessDenied != null ||
@@ -57,6 +56,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                 var user = userBll.GetUserInfoByUserNameAndPassword(userName, password);
                 if (user != null)
                 {
+                    ThisApp.AddLogData($"ورود به سامانه - کاربر {user.Username}");
                     _loginUserId = user.Id;
                     json.Data = new
                     {
@@ -87,6 +87,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
         public ActionResult logout()
         {
+            ThisApp.AddLogData($"خروج از سامانه - کاربر {ThisApp.CurrentUser?.Username??""}");
             Session["UserId"] = null;
             return View("Index");
         }

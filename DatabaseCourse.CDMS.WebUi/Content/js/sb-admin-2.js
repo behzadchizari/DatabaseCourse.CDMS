@@ -1,8 +1,13 @@
-$(document).ready(function() {
+﻿$(document).ready(function () {
     $('#Loading').height($(window).height() + 'px');
     $('#loader').css({ "margin-top": $(window).height() / 2 - 120 + 'px' });
-
 });
+
+function ShowNoDataError(elemName,optInfo='') {
+    $(elemName).html('<p class="no-data">داده ای جهت نمایش یافت نشد!</p>' +
+        '<code>' + optInfo +'</code>'
+        );
+}
 
 function ShowLoading() {
     $('#Loading').show();

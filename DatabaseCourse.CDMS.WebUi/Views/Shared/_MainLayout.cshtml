@@ -10,7 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@{var title = $"{ThisApp.PageTitle} - {ThisApp.PageDesctiption}";}@title</title>
+    @{ 
+        var tit = ThisApp.PageTitle.TrimEnd();
+        var desc = ThisApp.PageDesctiption.TrimEnd();
+        var title = tit;
+        if (tit != desc)
+        {
+            title += $" - {desc}";
+        }
+    }
+    <title>@title</title>
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
     <link href="~/Content/css/plugins/timeline.css" rel="stylesheet">

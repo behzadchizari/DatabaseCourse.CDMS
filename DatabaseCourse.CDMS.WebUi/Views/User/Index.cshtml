@@ -34,13 +34,13 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="col-lg-3 col-md-3" style="padding: 10px 0">
+                    <div class="col-lg-3 col-md-3 no-print" style="padding: 10px 0">
                         <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px; margin: 10px 0;" />
                     </div>
                     @{
                         if (ThisApp.HasAccessToView("User", "Edit"))
                         {
-                            <div class="col-lg-9 col-md-9" style="padding: 15px 0;">
+                            <div class="col-lg-9 col-md-9 no-print" style="padding: 15px 0;">
                                 <a href="~/User/Edit" class="btn btn-default btn-success pull-left" style="padding: 10px"><i class="fa fa-plus"></i> افزودن کاربر جدید</a>
                             </div>
                         }
@@ -57,7 +57,7 @@
                                     @{
                                         if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.Admin || x == UserRoleEnum.SuperAdmin))
                                         {
-                                            <th class="text-center">عملگر</th>
+                                            <th class="text-center no-print">عملگر</th>
                                         }
                                     }
                                     
@@ -86,9 +86,9 @@
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 @if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.Admin || x == UserRoleEnum.SuperAdmin))
                                                 {
-                                                <td style="width: 10px;">
+                                                <td class="no-print" style="width: 10px;">
                                                     @{
-                                                        if (user.UserRoles.Any(x => x == UserRoleEnum.SuperAdmin) && !ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.SuperAdmin))
+                                                        if (user.UserRoles.Any(x => x == UserRoleEnum.SuperAdmin) && ThisApp.CurrentUser.UserRoles.All(x => x != UserRoleEnum.SuperAdmin))
                                                         {
                                                             <span>-</span>
                                                         }
