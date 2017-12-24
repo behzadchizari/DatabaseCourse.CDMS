@@ -86,34 +86,40 @@
                                                 <td style="width: 100px;">@DateTimeUtility.ConvertToPersianCalender(user?.CreationDate ?? DateTime.MaxValue)</td>
                                                 @if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.Admin || x == UserRoleEnum.SuperAdmin))
                                                 {
-                                                <td class="no-print" style="width: 10px;">
-                                                    @{
-                                                        if (user.UserRoles.Any(x => x == UserRoleEnum.SuperAdmin) && ThisApp.CurrentUser.UserRoles.All(x => x != UserRoleEnum.SuperAdmin))
-                                                        {
-                                                            <span>-</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a class="fa fa-pencil op-link" title="ویرایش" href="../User/Edit?id=@user.Id"></a>
-                                                            if (ThisApp.HasAccessToView("User", "ResetPassword"))
+                                                    <td class="no-print" style="width: 10px;">
+                                                        @{
+                                                            if (user.UserRoles.Any(x => x == UserRoleEnum.SuperAdmin) && ThisApp.CurrentUser.UserRoles.All(x => x != UserRoleEnum.SuperAdmin))
                                                             {
-                                                                <span>|</span>
-                                                                <a class="op-link" title="بازیابی رمزعبور" href="../User/ResetPassword?id=@user.Id">
-                                                                    <span class="fa-passwd-reset fa-stack" style="font-size:10px">
-                                                                        <i class="fa fa-undo fa-stack-2x"></i>
-                                                                        <i class="fa fa-lock fa-stack-1x"></i>
-                                                                    </span>
-                                                                </a>
+                                                                <span>-</span>
                                                             }
-                                                            <span>|</span>
-                                                            <a class="fa fa-times op-link" title="حذف" onclick="if(confirm('آیا از حذف کاربر @Html.Raw(user?.Username ?? "") مطمئن هستید ؟'))DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
+                                                            else
+                                                            {
+                                                                <a class="fa fa-pencil op-link" title="ویرایش" href="../User/Edit?id=@user.Id"></a>
+                                                                if (ThisApp.HasAccessToView("User", "ResetPassword"))
+                                                                {
+                                                                    <span>|</span>
+                                                                    <a class="op-link" title="بازیابی رمزعبور" href="../User/ResetPassword?id=@user.Id">
+                                                                        <span class="fa-passwd-reset fa-stack" style="font-size:10px">
+                                                                            <i class="fa fa-undo fa-stack-2x"></i>
+                                                                            <i class="fa fa-lock fa-stack-1x"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                }
+                                                                <span>|</span>
+                                                                <a class="fa fa-times op-link" title="حذف" onclick="if(confirm('آیا از حذف کاربر @Html.Raw(user?.Username ?? "") مطمئن هستید ؟'))DeleteUser(@Html.Raw(user.Id));" style="color: #cf1212;"></a>
+                                                            }
                                                         }
-                                                    }
 
 
 
-                                                </td>
+                                                    </td>
                                                 }
+                                            </tr>
+                                            
+                                            <tr id='DescriptionArea_@user.Id' class="invisible">
+                                                <td colspan="5">
+                                                    aclaclnacslkn
+                                                </td>
                                             </tr>
                                             counter++;
                                         }

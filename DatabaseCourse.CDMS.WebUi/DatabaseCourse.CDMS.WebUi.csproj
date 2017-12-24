@@ -134,6 +134,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome\font-awesome.min.css" />
+    <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\plugins\dataTables.bootstrap.css" />
     <Content Include="Content\css\plugins\metisMenu\metisMenu.css" />
     <Content Include="Content\css\plugins\metisMenu\metisMenu.min.css" />
@@ -162,6 +163,7 @@
     <Content Include="Content\js\flot\jquery.flot.time.js" />
     <Content Include="Content\js\flot\jquery.flot.tooltip.min.js" />
     <Content Include="Content\js\jquery-1.11.0.js" />
+    <Content Include="Content\js\jquery\jquery-ui.js" />
     <Content Include="Content\js\jquery\jquery.dataTables.min.js" />
     <Content Include="Content\js\jquery\jquery.min.js" />
     <Content Include="Content\js\metisMenu\metisMenu.min.js" />
@@ -188,6 +190,7 @@
     <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\forms.html" />
     <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\grid.html" />
+    <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\HtmlPage1.html" />
     <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_asc.png" />
     <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_asc_disabled.png" />
     <Content Include="Content\sb-admin2-rtl-master\sb-admin2-rtl-master\images\bootstrap\datatables\sort_both.png" />

@@ -38,8 +38,15 @@ function FilterTable() {
         }
     }
 }
+//onclick = "$(this).toggleClass("fa- plus - square");$(this).toggleClass("fa- minus - square");$("").toggle();"
 
-
+function Expand(element) {
+    debugger;
+    var target = $(element).attr('data-toggle');
+    $(element).toggleClass("fa-plus-square");
+    $(element).toggleClass("fa-minus-square");
+    $(target).toggle();
+}
 
 
 

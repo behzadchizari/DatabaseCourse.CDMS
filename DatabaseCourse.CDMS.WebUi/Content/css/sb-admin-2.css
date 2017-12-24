@@ -88,11 +88,24 @@ table.profile-info tr td:first-child{
     margin-top: 10px;
     text-align: center;
 }
+.ui-helper-hidden-accessible {
+    position: absolute;
+    left: -9999px;
+}
 
-
-
-
-
+.ExpandTd i {
+    color: #0066B3;
+    cursor: pointer;
+}
+.visible {
+    display: block !important;
+}
+.invisible {
+    display: none;
+}
+pre {
+    word-wrap: break-word;
+}
 
 
 
