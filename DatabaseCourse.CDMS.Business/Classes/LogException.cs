@@ -12,6 +12,11 @@ namespace DatabaseCourse.CDMS.Business.Classes
 {
     public class LogException
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="currentUser"></param>
         public static void AddLogData(string message, CurrentUser currentUser)
         {
             var logBll = new LogBLL(currentUser);

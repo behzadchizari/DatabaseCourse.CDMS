@@ -24,7 +24,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             try
             {
                 var logBll = new LogBLL(ThisApp.CurrentUser);
-                var loglist = logBll.GetAllByType(LogTypeEnum.Log);
+                var loglist = logBll.GetAllByType(LogTypeEnum.Log).OrderByDescending(x=>x.DateTime);
                 result.Data = new
                 {
                     Status = JsonResultStatus.Ok,
@@ -49,7 +49,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             try
             {
                 var logBll = new LogBLL(ThisApp.CurrentUser);
-                var loglist = logBll.GetAllByType(LogTypeEnum.Exception);
+                var loglist = logBll.GetAllByType(LogTypeEnum.Exception).OrderByDescending(x => x.DateTime);
                 result.Data = new
                 {
                     Status = JsonResultStatus.Ok,

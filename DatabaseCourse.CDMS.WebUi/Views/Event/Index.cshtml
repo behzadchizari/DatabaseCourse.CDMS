@@ -10,7 +10,6 @@
     }
 </style>
 <script src="~/Content/js/jquery-1.11.0.js"></script>
-
 <div class="row">
     <div class="">
         <div class="row">
@@ -23,7 +22,7 @@
                         <a class="btn btn-success selected no-print" onclick="ShowLogs()" id="log" style="padding:10px"><span class="fa fa-history" style="padding:0 5px"></span> گزارشات</a>
                         <a class="btn btn-default selected no-print" onclick="ShowExceptions()" id="exception" style="padding:10px"><span class="fa fa-exclamation-triangle" style="padding:0 5px"></span>خطاهای سیستمی</a>
                         <a class="btn btn-primary pull-left no-print" onclick="window.print();"><i class="fa fa-print" style="padding:10px"></i>پرینت</a>
-                        <div  id="LogExceptionResult" class="table-responsive" style="margin-top: 10px">
+                        <div id="LogExceptionResult" class="table-responsive" style="margin-top: 10px">
 
                         </div>
                     </div>
@@ -31,16 +30,14 @@
             </div>
         </div>
     </div>
-
     <script>
         $(function () {
-            var dataSrc = ["حذف", "ورود", "به روز رسانی", "بازیابی رمزعبور", "درج","خروج"];
+            var dataSrc = ["حذف", "ورود", "به روز رسانی", "بازیابی رمزعبور", "درج", "خروج"];
             $("#input-filter").autocomplete({
                 source: dataSrc
             });
         });
     </script>
-   
     <script>
         function ShowLogs() {
             $('#LogExceptionResult').html('');
@@ -75,9 +72,7 @@
                                 '<td>' + val.Message + '</td>' +
                                 '<td>' + val.DateTimeStr +'</td>' +
                                 '</tr>';
-
                             $('#LogExceptionResult table tbody').append(log);
-
                         });
                     }
                 },
@@ -102,31 +97,28 @@
                     if (param.Data == null || param.Data.length === 0) {
                         ShowNoDataError('#LogExceptionResult');
                     } else {
-                        var logTable = '<table class="table table-striped table-bordered table-hover text-center" id="table-filter">' +
+                        var logTable = '<input type="text" id="input-filter" class="form-control no-print" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px; margin: 10px 0;" />' +
+                        '<table class="table table-striped table-bordered table-hover text-center" id="table-filter">' +
                             '<thead>' +
                             '<tr>' +
-                            '<th class="text-center" style="width:10%">ردیف</th>' +
-                            '<th style="width: 20px; border-left: none; border-right: none;"></td>' +
-                            '<th class="text-center">شرح</th>' +
-                            '<th class="text-center"style="width:20%">زمان</th>' +
+                                '<th class="text-center" style="width:10%">ردیف</th>' +
+                                '<th style="width: 20px; border-left: none; border-right: none;"></td>' +
+                                '<th class="text-center">شرح</th>' +
+                                '<th class="text-center"style="width:20%">زمان</th>' +
                             '</tr>' +
                             '</thead>' +
                             '<tbody></tbody>' +
                             '</table>';
                         $('#LogExceptionResult').html(logTable);
-
                         $.each(param.Data, function (key, val) {
-
                             var log = '<tr class="ltr">' +
-                                '<td>'+(Number(key)+1)+'</td>' +
-                                '<td><i class="fa fa-plus-square fa-lg op-link" onClick="Expand(this)" data-toggle="#StackTrace_' + val.Id +'"></i></td>' +
-                                '<td>' + val.Message + '</td>' +
-                                '<td>' + val.DateTimeStr +'</td>' +
+                                    '<td>'+(Number(key)+1)+'</td>' +
+                                    '<td><i class="fa fa-plus-square fa-lg op-link" onClick="Expand(this)" data-toggle="#StackTrace_' + val.Id +'"></i></td>' +
+                                    '<td>' + val.Message + '</td>' +
+                                    '<td>' + val.DateTimeStr +'</td>' +
                                 '</tr>' +
-                                '<tr class="ltr" id="StackTrace_' + val.Id + '" style="display:none;"><td colspan="5" style="word-break: break-all;"><p align="left">' + val.StackTrace+'</p></td></tr>';
-
+                                '<tr class="ltr" id="StackTrace_' + val.Id + '" style="display:none;"><td colspan="5" style="word-break: break-all;"><p align="left" style="font-family:consolas">' + val.StackTrace.replace(new RegExp(/\)/g), ')<br/>').replace(new RegExp(/\(/g), '<span style="color:red">(</span>').replace(new RegExp(/\)/g), '<span style="color:red">)</span>')+'</p></td></tr>';
                             $('#LogExceptionResult table tbody').append(log);
-
                         });
                     }
                 },
@@ -141,16 +133,11 @@
             $(".selected").removeClass("btn-success");
             $(".selected").removeClass("btn-danger");
             $(".selected").addClass("btn-default");
-
             switch ($(this).attr("id")) {
-            case "log":
-            {
-                $(this).addClass("btn-success"); break;
-            }
-            case "exception":
-            {
-                $(this).addClass("btn-danger"); break;
-            }
+                case "log":
+                        $(this).addClass("btn-success"); break;
+                case "exception":
+                        $(this).addClass("btn-danger"); break;
             }
         });
     </script>
