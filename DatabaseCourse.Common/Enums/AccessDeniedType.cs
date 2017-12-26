@@ -19,5 +19,7 @@ namespace DatabaseCourse.Common.Enums
         NoAccessToPage = 30,
         [EnumDescription("کاربر لاگین شده")]
         UserLogined = 40,
+        [EnumDescription("تجاوز کاربر از حد مجاز")]
+        ExceededLimits = 40,
     }
 }

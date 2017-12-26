@@ -70,7 +70,7 @@
     <PageHelp></PageHelp>
     <UserRoles>
       <Role>
-        <RoleName>SuperAdmin</RoleName>
+        <RoleName>All</RoleName>
       </Role>
     </UserRoles>
   </Page>

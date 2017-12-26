@@ -40,6 +40,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         public ActionResult ResetPassword(int id = 0)
         {
             ThisApp.Session["UserId"] = id;
+           
             if (id != 0)
             {
                 var userInfo = UserBll.GetUserInfoById(id);
@@ -293,7 +294,12 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
         #region Helper Methods
 
-
+        public Exception SetExceededLimitException(int id)
+        {
+            if (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) && id != ThisApp.CurrentUser?.Id)
+                ThisApp.AccessDeniedType = AccessDeniedType.ExceededLimits;
+                return new Exception("تجاوز کاربر از حد مجاز");
+        }
         #endregion
 
     }
