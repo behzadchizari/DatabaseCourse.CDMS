@@ -10,10 +10,11 @@ namespace DatabaseCourse.CDMS.WebUi
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        protected void Application_Start()
+protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
             var UserInit = new UserConfigTransfer(new Classes.UserConfigTransfer());
         }
 

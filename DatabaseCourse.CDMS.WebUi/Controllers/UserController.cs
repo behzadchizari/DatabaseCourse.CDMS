@@ -44,7 +44,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             if (id != 0)
             {
                 var userInfo = UserBll.GetUserInfoById(id);
-                if (userInfo == null)
+                if (userInfo == null && ThisApp.HasAccessToView("User","Index"))
                 {
                     Session["UserEditResultMessage"] = "کاربر یافت نشد.";
                     return View("Index");
@@ -293,13 +293,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         #endregion
 
         #region Helper Methods
-
-        public Exception SetExceededLimitException(int id)
-        {
-            if (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) && id != ThisApp.CurrentUser?.Id)
-                ThisApp.AccessDeniedType = AccessDeniedType.ExceededLimits;
-                return new Exception("تجاوز کاربر از حد مجاز");
-        }
+        
         #endregion
 
     }

@@ -74,21 +74,18 @@
                                 <i class="fa fa-user"></i> سلام @username <small class="fa fa-caret-down"></small>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li>
-                                    <a href="../User/ResetPassword?id=@Html.Raw(ThisApp.CurrentUser?.Id??0)"><i class="fa fa-gear fa-fw"></i> تغییر رمزعبور</a>
+                                <li>                                    
+                                    <a href="../User/ResetPassword?id=@Html.Raw(ThisApp.CurrentUser?.Id ?? 0)">
+                                        <i class="fa fa-gear fa-fw"></i> تغییر رمزعبور
+                                    </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="../Login/Logout"><i class="fa fa-sign-out fa-fw"></i>خروج</a>
                                 </li>
                             </ul>
-                            <!-- /.dropdown-user -->
                         </li>
-                        <!-- /.dropdown -->
                     </ul>
-
-                    <!-- /.navbar-top-links -->
-
                     <div class="navbar-default sidebar" role="navigation">
                         <div class="sidebar-nav navbar-collapse">
                             <ul class="nav" id="side-menu" style="padding-top: 90px;">
@@ -123,20 +120,16 @@
                             </ul>
 
                         </div>
-                        <!-- /.sidebar-collapse -->
                     </div>
-                    <!-- /.navbar-static-side -->
                 </nav>
                 <div id="page-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">@ThisApp.PageTitle</h1>
                         </div>
-                        <!-- /.col-lg-12 -->
                     </div>
                     @RenderBody()
                 </div>
-                <!-- /#page-wrapper -->
             </div>
                                                                 }
                                                                 else
@@ -151,7 +144,5 @@
                                                                     }
                                                                 }
     }
-
-    
 </body>
 </html>
