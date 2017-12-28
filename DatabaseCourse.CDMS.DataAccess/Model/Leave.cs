@@ -6,17 +6,17 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("UserRole")]
-    public partial class UserRole
+    [Table("Leave")]
+    public partial class Leave
     {
         public int Id { get; set; }
 
-        public int? User_Id { get; set; }
+        public DateTime? StartDateTime { get; set; }
 
-        public int? Role_Id { get; set; }
+        public DateTime? EndDateTime { get; set; }
 
-        public virtual Role Role { get; set; }
+        public int? CooperationContractId { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual CooperationContract CooperationContract { get; set; }
     }
 }

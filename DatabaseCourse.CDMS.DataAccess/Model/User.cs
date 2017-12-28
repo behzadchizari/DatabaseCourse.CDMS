@@ -13,6 +13,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         public User()
         {
             LogException = new HashSet<LogException>();
+            Project = new HashSet<Project>();
             UserRole = new HashSet<UserRole>();
         }
 
@@ -20,8 +21,10 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         [StringLength(50)]
         public string Username { get; set; }
+
         [StringLength(50)]
         public string FirstName { get; set; }
+
         [StringLength(50)]
         public string LastName { get; set; }
 
@@ -36,6 +39,9 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogException> LogException { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Project> Project { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRole> UserRole { get; set; }
