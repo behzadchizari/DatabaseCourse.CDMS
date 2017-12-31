@@ -6,11 +6,11 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Good")]
-    public partial class Good
+    [Table("Goods")]
+    public partial class Goods
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Good()
+        public Goods()
         {
             Expense = new HashSet<Expense>();
         }

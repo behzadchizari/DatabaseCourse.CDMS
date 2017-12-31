@@ -8,17 +8,17 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
     [Table("Attachment")]
     public partial class Attachment
-    {
+    { 
         public int Id { get; set; }
 
         [StringLength(50)]
         public string FileAddress { get; set; }
 
         [StringLength(50)]
-        public string AttachmentType { get; set; }
+        public string AttachmentCategory{ get; set; }
 
         [StringLength(50)]
-        public string Type { get; set; }
+        public string AttachmentType { get; set; }
 
         public DateTime? CreationDate { get; set; }
 

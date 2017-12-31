@@ -10,7 +10,6 @@ using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Interface;
 using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility.EnumUtility;
-
 namespace DatabaseCourse.CDMS.DataAccess.DAL
 {
     // ReSharper disable once InconsistentNaming
