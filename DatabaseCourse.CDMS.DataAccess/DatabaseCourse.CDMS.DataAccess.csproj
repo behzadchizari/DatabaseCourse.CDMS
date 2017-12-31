@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\DatabaseInitializer.cs" />
+    <Compile Include="DAL\AttachmentDA.cs" />
+    <Compile Include="DAL\ContractorDA.cs" />
     <Compile Include="DAL\LogExceptionDA.cs" />
     <Compile Include="DAL\RoleDA.cs" />
     <Compile Include="DAL\UserDA.cs" />
@@ -61,7 +63,7 @@
     <Compile Include="Model\Contractor.cs" />
     <Compile Include="Model\CooperationContract.cs" />
     <Compile Include="Model\Expense.cs" />
-    <Compile Include="Model\Good.cs" />
+    <Compile Include="Model\Goods.cs" />
     <Compile Include="Model\Inspection.cs" />
     <Compile Include="Model\Leave.cs" />
     <Compile Include="Model\LogException.cs" />

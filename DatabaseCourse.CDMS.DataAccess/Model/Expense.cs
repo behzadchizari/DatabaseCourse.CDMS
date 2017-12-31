@@ -27,7 +27,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         public int? GoodId { get; set; }
 
-        public virtual Good Good { get; set; }
+        public virtual Goods Good { get; set; }
 
         public virtual Project Project { get; set; }
     }
