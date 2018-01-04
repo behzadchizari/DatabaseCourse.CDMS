@@ -54,8 +54,15 @@
     <Compile Include="Context\DatabaseInitializer.cs" />
     <Compile Include="DAL\AttachmentDA.cs" />
     <Compile Include="DAL\ContractorDA.cs" />
+    <Compile Include="DAL\CooperationContractDA.cs" />
+    <Compile Include="DAL\ExpenseDA.cs" />
+    <Compile Include="DAL\GoodsDA.cs" />
+    <Compile Include="DAL\InspectionDA.cs" />
+    <Compile Include="DAL\LeaveDA.cs" />
     <Compile Include="DAL\LogExceptionDA.cs" />
+    <Compile Include="DAL\ProjectDA.cs" />
     <Compile Include="DAL\RoleDA.cs" />
+    <Compile Include="DAL\SupervisorEngineerDA.cs" />
     <Compile Include="DAL\UserDA.cs" />
     <Compile Include="DAL\UserRoleDA.cs" />
     <Compile Include="Model\Attachment.cs" />

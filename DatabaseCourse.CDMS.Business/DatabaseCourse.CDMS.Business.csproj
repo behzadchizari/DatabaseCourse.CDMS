@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\LogBLL.cs" />
+    <Compile Include="BusinessLogic\ProjectBLL.cs" />
     <Compile Include="BusinessLogic\UserBLL.cs" />
     <Compile Include="BusinessModel\LogExceptionInfo.cs" />
+    <Compile Include="BusinessModel\ProjectInfo.cs" />
     <Compile Include="BusinessModel\RoleInfo.cs" />
     <Compile Include="BusinessModel\UserInfo.cs" />
     <Compile Include="BusinessModel\UserRoleInfo.cs" />
