@@ -60,7 +60,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             newEntity.LastName = entity?.LastName?? newEntity.LastName;
             newEntity.FirstName= entity?.FirstName?? newEntity.FirstName;
             newEntity.Password = entity?.Password ?? newEntity.Password;
-            newEntity.LastModifyUser = entity?.LastModifyUser;//ToDo
+            newEntity.LastModifyUser = entity?.LastModifyUser;
             _context.SaveChanges();
             return newEntity?.Id ?? 0;
         }
