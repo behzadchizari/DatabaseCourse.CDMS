@@ -19,19 +19,13 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         }
 
         public int Id { get; set; }
-
         public DateTime? CreationDate { get; set; }
-
         public DateTime? LastModifiedDate { get; set; }
-
         [StringLength(50)]
         public string GroundType { get; set; }
-
         [StringLength(50)]
         public string ProductionLicense { get; set; }
-
         public DateTime? EndingDate { get; set; }
-
         public int? UserId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
