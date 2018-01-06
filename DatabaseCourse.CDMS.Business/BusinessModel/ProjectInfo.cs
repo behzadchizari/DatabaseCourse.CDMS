@@ -27,7 +27,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
             {
                 if (_user != null) return _user;
                 if (UserId == null) return null;
-                return  UserBLL.ConvertToBusinessModel(new UserDA().GetById(UserId ?? 0).FirstOrDefault());
+                return  UserBll.ConvertToBusinessModel(new UserDA().GetById(UserId ?? 0).FirstOrDefault());
             }
         }
     }

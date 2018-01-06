@@ -49,9 +49,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\AttachmentBLL.cs" />
+    <Compile Include="BusinessLogic\ContractorBLL.cs" />
+    <Compile Include="BusinessLogic\CooperationContractBLL.cs" />
+    <Compile Include="BusinessLogic\ExpenseBLL.cs" />
+    <Compile Include="BusinessLogic\GoodsBLL.cs" />
+    <Compile Include="BusinessLogic\InspectionBLL.cs" />
+    <Compile Include="BusinessLogic\LeaveBLL.cs" />
     <Compile Include="BusinessLogic\LogBLL.cs" />
     <Compile Include="BusinessLogic\ProjectBLL.cs" />
+    <Compile Include="BusinessLogic\SupervisorEngineerBLL.cs" />
     <Compile Include="BusinessLogic\UserBLL.cs" />
+    <Compile Include="BusinessModel\AttachmentInfo.cs" />
+    <Compile Include="BusinessModel\ContractorInfo.cs" />
+    <Compile Include="BusinessModel\CooperationContractInfo.cs" />
+    <Compile Include="BusinessModel\ExpenseInfo.cs" />
+    <Compile Include="BusinessModel\GoodsInfo.cs" />
+    <Compile Include="BusinessModel\InspectionInfo.cs" />
+    <Compile Include="BusinessModel\LeaveInfo.cs" />
+    <Compile Include="BusinessModel\SupervisorEngineerInfo.cs" />
     <Compile Include="BusinessModel\LogExceptionInfo.cs" />
     <Compile Include="BusinessModel\ProjectInfo.cs" />
     <Compile Include="BusinessModel\RoleInfo.cs" />

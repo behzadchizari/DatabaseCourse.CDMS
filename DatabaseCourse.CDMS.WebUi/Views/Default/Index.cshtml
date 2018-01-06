@@ -45,7 +45,7 @@
                             <tr>
                                 <td colspan="2">
                                     @{
-                                        var userBll = new UserBLL(ThisApp.CurrentUser);
+                                        var userBll = new UserBll(ThisApp.CurrentUser);
                                         var lmu = userBll.GetUserInfoById(currentUsser?.LastModifyUser ?? 0);
                                     }
                                     <small style="font-size:9px;">

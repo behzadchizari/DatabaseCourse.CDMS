@@ -25,7 +25,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
         public List<Exception> ChackModel(EditUserFunctionEnum fn)
         {
             var exData = new List<Exception>();
-            var userBll = new UserBLL(ThisApp.CurrentUser);
+            var userBll = new UserBll(ThisApp.CurrentUser);
             var userId = ThisApp.Session["UserId"];
             try
             {

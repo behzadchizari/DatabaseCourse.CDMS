@@ -10,7 +10,7 @@
     var userRoleList = EnumUtility.List(typeof(UserRoleEnum));
     var userRoleEnumList = new List<UserRoleEnum>();
     var DataId = (int)ThisApp.Session["UserId"];
-    var userBll = new UserBLL(ThisApp.CurrentUser);
+    var userBll = new UserBll(ThisApp.CurrentUser);
     var Data = new UserInfo();
     Data = null;
     if (DataId != 0)

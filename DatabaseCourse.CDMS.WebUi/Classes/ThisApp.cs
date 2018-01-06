@@ -32,7 +32,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
                 if (sessionUserId == null) return null;
                 int userId = 0;
                 if (!int.TryParse(sessionUserId.ToString(), out userId)) return null;
-                var userBll = new UserBLL(null);
+                var userBll = new UserBll(null);
                 var user = userBll.GetUserInfoById(userId);
                 if (user == null) return null;
                 return new CurrentUser()

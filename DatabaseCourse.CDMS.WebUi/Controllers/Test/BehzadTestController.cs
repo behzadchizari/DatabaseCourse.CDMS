@@ -20,7 +20,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
         }
         public ActionResult Add()
         {
-            var userBll = new UserBLL(ThisApp.CurrentUser);
+            var userBll = new UserBll(ThisApp.CurrentUser);
             var e = userBll.AddNewUserInfo(new UserInfo()
             {
                 Username = "Admin5",
@@ -37,7 +37,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
         // GET: BehzadTest
         public ActionResult Update()
         {
-            var userBll = new UserBLL(ThisApp.CurrentUser);
+            var userBll = new UserBll(ThisApp.CurrentUser);
             var us = userBll.GetUserInfoById(1);
             us.Username = "Admin2";
             var e = userBll.UpdateExistingUserInfor(us);
@@ -50,7 +50,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
         // GET: BehzadTest
         public ActionResult Login(string p,string u)
         {
-            var userBll = new UserBLL(ThisApp.CurrentUser);
+            var userBll = new UserBll(ThisApp.CurrentUser);
             var e = userBll.GetUserInfoByUserNameAndPassword(u, p);
             if (e != null)
             {

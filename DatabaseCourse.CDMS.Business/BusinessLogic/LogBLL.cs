@@ -15,7 +15,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
     {
         #region Properties
 
-        private CurrentUser _currentUser = null;
+        private readonly CurrentUser _currentUser = null;
 
         #endregion
 

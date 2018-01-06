@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
-    class ProjectBLL
+    class ProjectBll
     {
         #region Variables
         private CurrentUser _currentUser = null;
@@ -18,7 +18,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Ctor
-        public ProjectBLL(CurrentUser currentUser)
+        public ProjectBll(CurrentUser currentUser)
         {
             _currentUser = currentUser;
         }

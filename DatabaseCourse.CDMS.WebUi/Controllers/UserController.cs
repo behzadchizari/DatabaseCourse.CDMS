@@ -18,7 +18,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
     {
         #region variables
 
-        readonly UserBLL UserBll = new UserBLL(ThisApp.CurrentUser);
+        readonly UserBll UserBll = new UserBll(ThisApp.CurrentUser);
         public enum EditUserFunctionEnum
         {
             Null = 0,

@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
-    public class UserBLL
+    public class UserBll
     {
         #region Properties
 
-        private CurrentUser _currentUser = null;
+        private readonly CurrentUser _currentUser = null;
 
         #endregion
 
         #region ctor
-        public UserBLL(CurrentUser currentUser)
+        public UserBll(CurrentUser currentUser)
         {
             _currentUser = currentUser;
         }
@@ -122,7 +122,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     if (user.UserRoles.Any(x => (int)x == role.Role_Id)) continue;
                     roleDA.Delete(role);
                 }
-                var update = da.Update(UserBLL.ConvertToDataAccessModel(user));
+                var update = da.Update(UserBll.ConvertToDataAccessModel(user));
                 if (update == 0)
                     return new Exception("Cannot Add New User - Internal Error.");
             }

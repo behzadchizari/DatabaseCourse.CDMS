@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseCourse.CDMS.DataAccess.DAL
 {
-    public class SupervisorEngineerDA : IEntity<SupervisorEngineer>
+    public class SupervisorEngineerDA
     {
         private CDMSEntities _context = new CDMSEntities();
 

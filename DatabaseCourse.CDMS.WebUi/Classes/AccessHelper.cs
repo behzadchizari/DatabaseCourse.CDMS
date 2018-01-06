@@ -14,7 +14,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         public static Exception HasAccessToAction(string controllerName, string actionName, UserInfo user = null,bool setPageSetting = false)
         {
 
-            var userbll = new UserBLL(ThisApp.CurrentUser);
+            var userbll = new UserBll(ThisApp.CurrentUser);
             if (user == null && ThisApp.CurrentUser != null)
                 user = userbll.GetUserInfoById(ThisApp.CurrentUser.Id);
 

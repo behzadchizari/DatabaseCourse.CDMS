@@ -41,7 +41,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
             get
             {
                 if (LastModifyUser == null) return null;
-                return UserBLL.ConvertToBusinessModel(new UserDA().GetById(TypeUtility.ConvertToInt(LastModifyUser)).FirstOrDefault());
+                return UserBll.ConvertToBusinessModel(new UserDA().GetById(TypeUtility.ConvertToInt(LastModifyUser)).FirstOrDefault());
             }
         }
 

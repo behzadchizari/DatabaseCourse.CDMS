@@ -52,7 +52,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                     };
                     return json;
                 }
-                var userBll = new UserBLL(ThisApp.CurrentUser);
+                var userBll = new UserBll(ThisApp.CurrentUser);
                 var user = userBll.GetUserInfoByUserNameAndPassword(userName, password);
                 if (user != null)
                 {

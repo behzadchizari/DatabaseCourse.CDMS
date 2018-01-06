@@ -42,7 +42,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
                 var userDa = new UserDA();
                 if (RoleId == null) return null;
                 var userInfo = userDa.GetById(RoleIdInt).FirstOrDefault();
-                return UserBLL.ConvertToBusinessModel(userInfo);
+                return UserBll.ConvertToBusinessModel(userInfo);
             }
         }
         #endregion
