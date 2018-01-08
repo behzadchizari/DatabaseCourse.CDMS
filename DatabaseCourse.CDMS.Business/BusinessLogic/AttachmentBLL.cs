@@ -11,6 +11,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #region Variables
 
         private CurrentUser _currentUser = null;
+        private AttachmentDA _attachmentDa = new AttachmentDA();
 
         #endregion
 
@@ -25,11 +26,15 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Methods
 
+        //public int AddNewAttachment()
+        //{
+            
+        //}
 
         #endregion
 
         #region Helper
-        public Attachment ConvertToDataAccessModel(AttachmentInfo businessModel)
+        internal Attachment ConvertToDataAccessModel(AttachmentInfo businessModel)
         {
             if (businessModel == null) return null;
             return new Attachment()
@@ -43,7 +48,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             };
         }
 
-        public AttachmentInfo ConvertToBusinessModel(Attachment dataAccessModel)
+        internal AttachmentInfo ConvertToBusinessModel(Attachment dataAccessModel)
         {
             if (dataAccessModel == null) return null;
             return new AttachmentInfo()

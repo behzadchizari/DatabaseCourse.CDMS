@@ -10,10 +10,15 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         private CurrentUser _currentUser = null;
 
+
         #endregion
 
         #region Ctor
 
+        public GoodsBll(CurrentUser currentUser)
+        {
+            _currentUser = currentUser;
+        }
 
 
         #endregion
@@ -27,7 +32,16 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #region Helper
         public Goods ConvertToDataAccessModel(GoodsInfo businessModel)
         {
-            throw new System.NotImplementedException();
+            if (businessModel == null) return null;
+            return new Goods()
+            {
+                Id = businessModel.Id,
+                Amount = businessModel.Amount,
+                Description = businessModel.Description,
+                Module = businessModel.Module,
+                Name = businessModel.Name,
+                Price = businessModel.Price
+            };
         }
 
         public GoodsInfo ConvertToBusinessModel(Goods dataAccessModel)

@@ -28,15 +28,38 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Helper
-        public Contractor ConvertToDataAccessModel(ContractorInfo businessModel)
+
+        internal Contractor ConvertToDataAccessModel(ContractorInfo businessModel)
         {
-            throw new System.NotImplementedException();
+            return businessModel == null
+                ? null
+                : new Contractor()
+                {
+                    Id = businessModel.Id,
+                    Contact = businessModel.Contact,
+                    FirstCooperationDate = businessModel.FirstCooperationDate,
+                    FirstName = businessModel.FirstName,
+                    InsuranceNo = businessModel.InsuranceNo,
+                    LastName = businessModel.LastName,
+                    Nationalid = businessModel.Contact
+                };
         }
 
-        public ContractorInfo ConvertToBusinessModel(Contractor dataAccessModel)
+        internal ContractorInfo ConvertToBusinessModel(Contractor dataAccessModel)
         {
-            throw new System.NotImplementedException();
-        }
+            return dataAccessModel == null
+                ? null
+                : new ContractorInfo()
+                {
+                    Id = dataAccessModel.Id,
+                    Contact = dataAccessModel.Contact,
+                    FirstCooperationDate = dataAccessModel.FirstCooperationDate,
+                    FirstName = dataAccessModel.FirstName,
+                    InsuranceNo = dataAccessModel.InsuranceNo,
+                    LastName = dataAccessModel.LastName,
+                    NationalId = dataAccessModel.Nationalid
+                };
+            }
         #endregion
     }
 }

@@ -27,14 +27,32 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Helper
-        public CooperationContract ConvertToDataAccessModel(CooperationContractInfo businessModel)
+        internal CooperationContract ConvertToDataAccessModel(CooperationContractInfo businessModel)
         {
-            throw new System.NotImplementedException();
+            if (businessModel == null) return null;
+            return new CooperationContract()
+            {
+                Id = businessModel.Id,
+                ProjectId = businessModel.ProjectId,
+               ContractorId = businessModel.ContractorId,
+               EndDate = businessModel.EndDate,
+               StartDate = businessModel.StartDate,
+               WageType = businessModel.WageType
+            };
         }
 
-        public CooperationContractInfo ConvertToBusinessModel(CooperationContract dataAccessModel)
+        internal CooperationContractInfo ConvertToBusinessModel(CooperationContract dataAccessModel)
         {
-            throw new System.NotImplementedException();
+            if (dataAccessModel == null) return null;
+            return new CooperationContractInfo()
+            {
+                Id = dataAccessModel.Id,
+                ProjectId = dataAccessModel.ProjectId,
+                ContractorId = dataAccessModel.ContractorId,
+                EndDate = dataAccessModel.EndDate,
+                StartDate = dataAccessModel.StartDate,
+                WageType = dataAccessModel.WageType
+            };
         }
         #endregion
     }

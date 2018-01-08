@@ -4,7 +4,7 @@ using DatabaseCourse.Common.Classes;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
-    public class LeaveInfo
+    public class LeaveBll
     {
         #region Variables
 
@@ -14,7 +14,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Ctor
 
-        public LeaveInfo(CurrentUser currentUser)
+        public LeaveBll(CurrentUser currentUser)
         {
             _currentUser = currentUser;
         }
@@ -26,14 +26,28 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Helper
-        public Leave ConvertToDataAccessModel(LeaveInfo businessModel)
+        internal Leave ConvertToDataAccessModel(LeaveInfo businessModel)
         {
-            throw new System.NotImplementedException();
+            if (businessModel == null) return null;
+            return new Leave()
+            {
+                Id = businessModel.Id,
+                CooperationContractId = businessModel.CooperationContractId,
+                EndDateTime = businessModel.EndDateTime,
+                StartDateTime = businessModel.StartDateTime
+            };
         }
 
-        public LeaveInfo ConvertToBusinessModel(Leave dataAccessModel)
+        internal LeaveInfo ConvertToBusinessModel(Leave dataAccessModel)
         {
-            throw new System.NotImplementedException();
+            if (dataAccessModel == null) return null;
+            return new LeaveInfo()
+            {
+                Id = dataAccessModel.Id,
+                CooperationContractId = dataAccessModel.CooperationContractId,
+                EndDateTime = dataAccessModel.EndDateTime,
+                StartDateTime = dataAccessModel.StartDateTime
+            };
         }
         #endregion
     }

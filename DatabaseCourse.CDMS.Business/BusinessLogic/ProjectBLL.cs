@@ -31,12 +31,10 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         {
             return projectDA.Add(ConvertToDataAccessModel(project));
         }
-
         public int UpdateExistingProject(ProjectInfo project)
         {
             return projectDA.Update(ConvertToDataAccessModel(project));
         }
-
         public List<ProjectInfo> GetAllProject()
         {
             var result = new List<ProjectInfo>();
@@ -47,16 +45,16 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return result;
         }
-
         public ProjectInfo GetByProjectId(int projectId)
         {
             return ConvertToBusinessModel(projectDA.GetById(projectId).FirstOrDefault());
         }
+
         #endregion
 
         #region Helper
 
-        public static ProjectInfo ConvertToBusinessModel(Project dataAccessModel)
+        internal static ProjectInfo ConvertToBusinessModel(Project dataAccessModel)
         {
             if (dataAccessModel != null)
             {
@@ -73,7 +71,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return null;
         }
-        public static Project ConvertToDataAccessModel(ProjectInfo businessModel)
+        internal static Project ConvertToDataAccessModel(ProjectInfo businessModel)
         {
             if (businessModel != null)
             {

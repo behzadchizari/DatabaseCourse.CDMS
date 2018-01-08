@@ -29,14 +29,30 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Helper
 
-        public SupervisorEngineer ConvertToDataAccessModel(SupervisorEngineerInfo businessModel)
+        internal SupervisorEngineer ConvertToDataAccessModel(SupervisorEngineerInfo businessModel)
         {
-            throw new System.NotImplementedException();
+            if (businessModel == null) return null;
+            return new SupervisorEngineer()
+            {
+                Id = businessModel.Id,
+                EngineeringCode = businessModel.EngineeringCode,
+                FirstName = businessModel.FirstName,
+                LastName = businessModel.LastName,
+                PhoneNumber = businessModel.PhoneNumber
+            };
         }
 
-        public SupervisorEngineerInfo ConvertToBusinessModel(SupervisorEngineer dataAccessModel)
+        internal SupervisorEngineerInfo ConvertToBusinessModel(SupervisorEngineer dataAccessModel)
         {
-            throw new System.NotImplementedException();
+            if (dataAccessModel == null) return null;
+            return new SupervisorEngineerInfo()
+            {
+                Id = dataAccessModel.Id,
+                EngineeringCode = dataAccessModel.EngineeringCode,
+                FirstName = dataAccessModel.FirstName,
+                LastName = dataAccessModel.LastName,
+                PhoneNumber = dataAccessModel.PhoneNumber
+            };
         }
         #endregion
 

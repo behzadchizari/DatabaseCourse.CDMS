@@ -10,7 +10,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
 {
     public class ProjectDA 
     {
-        private CDMSEntities _context = new CDMSEntities();
+        private readonly CDMSEntities _context = new CDMSEntities();
 
         public int Add(Project entity)
         {

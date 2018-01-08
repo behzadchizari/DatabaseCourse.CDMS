@@ -1,9 +1,10 @@
-﻿using DatabaseCourse.CDMS.DataAccess.Model;
+﻿using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
-    public class InspectionInfo
+    public class InspectionBll
     {
         #region Variables
 
@@ -13,7 +14,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Ctor
 
-        public InspectionInfo(CurrentUser currentUser)
+        public InspectionBll(CurrentUser currentUser)
         {
             _currentUser = currentUser;
         }
@@ -26,14 +27,30 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Helper
-        public Inspection ConvertToDataAccessModel(InspectionInfo businessModel)
+        internal Inspection ConvertToDataAccessModel(InspectionInfo businessModel)
         {
-            throw new System.NotImplementedException();
+            if (businessModel == null) return null;
+            return new Inspection()
+            {
+                Id = businessModel.Id,
+                ProjectId = businessModel.ProjectId,
+                Date = businessModel.Date,
+                SupervisorEngId = businessModel.SupervisorEngId,
+                Result = businessModel.Result
+            };
         }
 
-        public InspectionInfo ConvertToBusinessModel(Inspection dataAccessModel)
+        internal InspectionInfo ConvertToBusinessModel(Inspection dataAccessModel)
         {
-            throw new System.NotImplementedException();
+            if (dataAccessModel == null) return null;
+            return new InspectionInfo()
+            {
+                Id = dataAccessModel.Id,
+                ProjectId = dataAccessModel.ProjectId,
+                Date = dataAccessModel.Date,
+                SupervisorEngId = dataAccessModel.SupervisorEngId,
+                Result = dataAccessModel.Result
+            };
         }
         #endregion
     }
