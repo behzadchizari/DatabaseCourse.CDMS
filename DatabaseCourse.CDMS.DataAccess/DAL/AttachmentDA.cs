@@ -43,9 +43,9 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.Attachment?.AsQueryable();
         }
 
-        public IQueryable<Attachment> GetById(int id)
+        public Attachment GetById(int id)
         {
-            return _context?.Attachment?.Where(x => x.Id == id);
+            return _context?.Attachment?.FirstOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Attachment> GetAttachmentByProjectIdAndAttachmentCategoryAndAttachmentType(

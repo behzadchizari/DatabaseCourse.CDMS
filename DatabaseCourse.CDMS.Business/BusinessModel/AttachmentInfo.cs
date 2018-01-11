@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseCourse.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 
         public string FileAddress { get; set; }
 
-        public string AttachmentCategory { get; set; }
+        public AttachmentCategoryEnum AttachmentCategory { get; set; }
 
-        public string AttachmentType { get; set; }
+        public AttachmentTypeEnum AttachmentType { get; set; }
 
         public DateTime? CreationDate { get; set; }
 

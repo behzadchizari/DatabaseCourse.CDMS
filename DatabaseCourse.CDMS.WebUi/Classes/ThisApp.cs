@@ -8,6 +8,7 @@ using System.Web;
 using DatabaseCourse.Common.Enums;
 using DatabaseCourse.CDMS.Business.BusinessModel;
 using DatabaseCourse.CDMS.Business.Classes;
+using DatabaseCourse.Common.Utility;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes
 {
@@ -99,33 +100,11 @@ namespace DatabaseCourse.CDMS.WebUi.Classes
         /// <typeparam name="T">the type you want to return[int|string|double|decimal|bool|float|long|char]</typeparam>
         /// <param name="configName">key name</param>
         /// <returns></returns>
-        public static object GetConfiguration<T>(string configName)
+        public static object GetConfiguration<T>(string configName,T defaultValue)
         {
-            var appConfig = "";
-            try
-            {
-                appConfig = ConfigurationManager.AppSettings[configName];
-                return Convert.ChangeType(appConfig, typeof(T));
-            }
-            catch (Exception)
-            {
-                return appConfig;
-            }
+            return ConfigurationUtility.GetConfigurationByKey<T>(configName, defaultValue);
         }
-
-        /// <summary>
-        /// return value of a key from Web.Config
-        /// </summary>
-        /// <param name="configName"></param>
-        /// <returns></returns>
-        public static object GetConfiguration(string configName)
-        {
-            var appConfig = "";
-            try { appConfig = ConfigurationManager.AppSettings[configName]; }
-            catch (Exception) { }
-            return appConfig;
-        }
-
+        
         public static bool HasAccessToView(string controllerName, string acctionName, UserInfo user = null)
         {
             try

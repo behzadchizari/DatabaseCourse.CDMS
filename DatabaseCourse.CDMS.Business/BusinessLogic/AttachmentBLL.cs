@@ -2,7 +2,10 @@
 using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
+using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Interface;
+using DatabaseCourse.Common.Utility.EnumUtility;
+using System.Collections.Generic;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
@@ -26,11 +29,36 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Methods
 
-        //public int AddNewAttachment()
-        //{
-            
-        //}
+        public int AddNewAttachment(AttachmentInfo attachment)
+        {
+            return _attachmentDa.Add(ConvertToDataAccessModel(attachment));
+        }
 
+        public int UpdateExsitingAttachmetn(AttachmentInfo attachment)
+        {
+            return _attachmentDa.Update(ConvertToDataAccessModel(attachment));
+        }
+
+        public int RemoveAttachmentById(int id)
+        {
+            var attachment = _attachmentDa.GetById(id);
+            return _attachmentDa.Delete(attachment);
+        }
+
+        public List<AttachmentInfo> GetByProjectIdAndType(int projectId, AttachmentCategoryEnum cat, AttachmentTypeEnum type)
+        {
+            var list = _attachmentDa.GetAttachmentByProjectIdAndAttachmentCategoryAndAttachmentType(projectId,
+                                                        type == AttachmentTypeEnum.Null ? null : cat.ToString(),
+                                                        cat == AttachmentCategoryEnum.Null ? null : type.ToString());
+
+            var result = new List<AttachmentInfo>();
+            foreach (var item in list)
+            {
+                result.Add(ConvertToBusinessModel(item));
+            }
+
+            return result;
+        }
         #endregion
 
         #region Helper
@@ -40,8 +68,8 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             return new Attachment()
             {
                 Id = businessModel.Id,
-                AttachmentCategory = businessModel.AttachmentCategory,
-                AttachmentType = businessModel.AttachmentType,
+                AttachmentCategory = businessModel.AttachmentCategory.ToString(),
+                AttachmentType = businessModel.AttachmentType.ToString(),
                 CreationDate = businessModel.CreationDate,
                 FileAddress = businessModel.FileAddress,
                 ProjectId = businessModel.ProjectId
@@ -54,8 +82,8 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             return new AttachmentInfo()
             {
                 Id = dataAccessModel.Id,
-                AttachmentCategory = dataAccessModel.AttachmentCategory,
-                AttachmentType = dataAccessModel.AttachmentType,
+                AttachmentCategory = EnumUtility.GetEnumByTitle<AttachmentCategoryEnum>(dataAccessModel.AttachmentCategory),
+                AttachmentType = EnumUtility.GetEnumByTitle<AttachmentTypeEnum>(dataAccessModel.AttachmentType),
                 CreationDate = dataAccessModel.CreationDate,
                 FileAddress = dataAccessModel.FileAddress,
                 ProjectId = dataAccessModel.ProjectId
