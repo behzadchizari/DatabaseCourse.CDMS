@@ -22,7 +22,7 @@
                         <a class="btn btn-success selected no-print" onclick="ShowLogs()" id="log" style="padding:10px"><span class="fa fa-history" style="padding:0 5px"></span> گزارشات</a>
                         <a class="btn btn-default selected no-print" onclick="ShowExceptions()" id="exception" style="padding:10px"><span class="fa fa-exclamation-triangle" style="padding:0 5px"></span>خطاهای سیستمی</a>
                         <a class="btn btn-primary pull-left no-print" onclick="window.print();"><i class="fa fa-print" style="padding:10px"></i>پرینت</a>
-                        <div id="LogExceptionResult" class="table-responsive" style="margin-top: 10px">
+                        <div id="LogExceptionResult" class="table-responsive" style="margin-top: 10px" onload="ShowLogs()">
 
                         </div>
                     </div>

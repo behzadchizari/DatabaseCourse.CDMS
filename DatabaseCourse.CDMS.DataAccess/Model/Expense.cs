@@ -21,14 +21,23 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         public DateTime? SubmittedDate { get; set; }
 
-        public DateTime? CreationDate { get; set; }
+        public DateTime? RequestDate { get; set; }
 
         public int? ProjectId { get; set; }
 
-        public int? GoodId { get; set; }
+        [StringLength(15)]
+        public string Module { get; set; }
 
-        public virtual Goods Good { get; set; }
+        public int? Amount { get; set; }
 
-        public virtual Project Project { get; set; }
+        public DateTime? PurchaseDate { get; set; }
+
+        public int? Price { get; set; }
+
+        [StringLength(4000)]
+        public string FinDescription { get; set; }
+
+        [StringLength(50)]
+        public string Goods { get; set; }
     }
 }

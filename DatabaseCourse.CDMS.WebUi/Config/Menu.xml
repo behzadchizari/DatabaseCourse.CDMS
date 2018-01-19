@@ -46,4 +46,18 @@
     </RoleList>
     <ParentId></ParentId>
   </Menu>
+  
+  <Menu>
+    <MenuId>4</MenuId>
+    <MenuTitle>پروژه‌ها</MenuTitle>
+    <MenuDescription>لیست پروژها</MenuDescription>
+    <MenuUrl><![CDATA[Project]]></MenuUrl>
+    <MenuIcon>tasks</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId></ParentId>
+  </Menu>
 </MenuItemList>

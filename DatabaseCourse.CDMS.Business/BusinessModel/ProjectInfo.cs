@@ -1,5 +1,6 @@
 ﻿using DatabaseCourse.CDMS.Business.BusinessLogic;
 using DatabaseCourse.CDMS.DataAccess.DAL;
+using DatabaseCourse.CDMS.DataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,29 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public string ProductionLicense { get; set; }
         public DateTime? EndingDate { get; set; }
         public int? UserId { get; set; }
-        public UserInfo User 
+        public int? SupervisorEngineerId { get; set; }
+        public string Client { get; set; }
+        public string Address { get; set; }
+        public string GroundOwner { get; set; }
+        public string Title { get; set; }
+        public string Name { get; set; }
+        public SupervisorEngineer SupervisorEngineer
+        {
+            get
+            {
+                //TODO
+                return null;
+            }
+        }
+
+        public UserInfo User
         {
             set { _user = value; }
             get
             {
                 if (_user != null) return _user;
                 if (UserId == null) return null;
-                return  UserBll.ConvertToBusinessModel(new UserDA().GetById(UserId ?? 0).FirstOrDefault());
+                return UserBll.ConvertToBusinessModel(new UserDA().GetById(UserId ?? 0).FirstOrDefault());
             }
         }
     }

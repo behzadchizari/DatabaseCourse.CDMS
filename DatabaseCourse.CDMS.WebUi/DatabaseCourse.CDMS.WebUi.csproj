@@ -130,6 +130,7 @@
     <Content Include="Config\Security.xml" />
     <Content Include="Config\UserInit.xml" />
     <Content Include="Config\UserRole.xml" />
+    <Content Include="Content\UserRole.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -277,6 +278,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\Test\BehzadTestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -305,6 +307,8 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Project\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

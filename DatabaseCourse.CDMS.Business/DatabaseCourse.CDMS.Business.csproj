@@ -53,7 +53,6 @@
     <Compile Include="BusinessLogic\ContractorBLL.cs" />
     <Compile Include="BusinessLogic\CooperationContractBLL.cs" />
     <Compile Include="BusinessLogic\ExpenseBLL.cs" />
-    <Compile Include="BusinessLogic\GoodsBLL.cs" />
     <Compile Include="BusinessLogic\InspectionBLL.cs" />
     <Compile Include="BusinessLogic\LeaveBLL.cs" />
     <Compile Include="BusinessLogic\LogBLL.cs" />

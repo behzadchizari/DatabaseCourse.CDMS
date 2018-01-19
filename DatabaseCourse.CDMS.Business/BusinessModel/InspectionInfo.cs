@@ -17,8 +17,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 
         public int? ProjectId { get; set; }
 
-        public int? SupervisorEngId { get; set; }
-
         public ProjectInfo Project { get; set; }
 
         public SupervisorEngineerInfo SupervisorEngineer

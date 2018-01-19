@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
-    class ProjectBll
+    public class ProjectBll
     {
         #region Variables
         private CurrentUser _currentUser = null;
@@ -66,7 +66,11 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     Id = dataAccessModel.Id,
                     LastModifiedDate = dataAccessModel.LastModifiedDate,
                     ProductionLicense = dataAccessModel.ProductionLicense,
-                    UserId = dataAccessModel.UserId
+                    UserId = dataAccessModel.UserId,
+                    SupervisorEngineerId = dataAccessModel.SupervisorEngineerId,
+                    Address = dataAccessModel.Address,
+                    Client = dataAccessModel.Client,
+                    GroundOwner = dataAccessModel.GroundOwner
                 };
             }
             return null;
@@ -83,7 +87,11 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     Id = businessModel.Id,
                     GroundType = businessModel.GroundType,
                     EndingDate = businessModel.EndingDate,
-                    CreationDate = businessModel.CreationDate
+                    CreationDate = businessModel.CreationDate,
+                    SupervisorEngineerId = businessModel.SupervisorEngineerId,
+                    GroundOwner = businessModel.GroundOwner,
+                    Client = businessModel.Client,
+                    Address = businessModel.Address
                 };
             }
             return null;

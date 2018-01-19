@@ -17,7 +17,6 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         public virtual DbSet<Contractor> Contractor { get; set; }
         public virtual DbSet<CooperationContract> CooperationContract { get; set; }
         public virtual DbSet<Expense> Expense { get; set; }
-        public virtual DbSet<Goods> Good { get; set; }
         public virtual DbSet<Inspection> Inspection { get; set; }
         public virtual DbSet<Leave> Leave { get; set; }
         public virtual DbSet<LogException> LogException { get; set; }

@@ -14,7 +14,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
 
         public int Add(Expense entity)
         {
-            entity.CreationDate = DateTime.Now;
+            entity.RequestDate = DateTime.Now;
             _context?.Expense?.Add(entity);
             _context?.SaveChanges();
             return entity?.Id ?? 0;

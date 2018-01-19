@@ -70,7 +70,6 @@
     <Compile Include="Model\Contractor.cs" />
     <Compile Include="Model\CooperationContract.cs" />
     <Compile Include="Model\Expense.cs" />
-    <Compile Include="Model\Goods.cs" />
     <Compile Include="Model\Inspection.cs" />
     <Compile Include="Model\Leave.cs" />
     <Compile Include="Model\LogException.cs" />

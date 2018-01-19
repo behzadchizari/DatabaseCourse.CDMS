@@ -1,0 +1,76 @@
+﻿@using DatabaseCourse.CDMS.Business.BusinessLogic
+@using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.CDMS.WebUi.Classes
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+    ProjectBll projectBll = new ProjectBll(ThisApp.CurrentUser);
+    var projectDataList = projectBll.GetAllProject();
+}
+
+<div class="row">
+    <div class="col-lg-12" id="ResultSection">
+        @if (Session["ProjectEditResultMessage"] != null)
+            {
+            <div class="alert @Html.Raw(Session["ProjectEditResultMessage"].ToString().Contains("نشد") ? "alert-danger" : "alert-success")  alert-dismissable" id="ResultMessage">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                @Html.Raw(Session["ProjectEditResultMessage"].ToString())
+            </div>
+            Session["ProjectEditResultMessage"] = null;
+        }
+    </div>
+
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @ThisApp.PageDesctiption
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-3 col-md-3 no-print" style="padding: 10px 0">
+                    <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="padding: 15px; margin: 10px 0;" />
+                </div>
+                @{
+                    if (ThisApp.HasAccessToView("Project", "Edit"))
+                    {
+                        <div class="col-lg-9 col-md-9 no-print" style="padding: 15px 0;">
+                            <a href="~/Project/Edit" class="btn btn-default btn-success pull-left" style="padding: 10px"><i class="fa fa-plus"></i> ایجاد پروژه</a>
+                        </div>
+                    }
+                }
+                <div class="clearfix"></div>
+                <div id="LogExceptionResult"></div>
+                <div class="table-responsive">
+
+                    @if (projectDataList.Count == 0)
+                    {
+                        <script>
+                            ShowNoDataError('#LogExceptionResult');
+                        </script>
+                    }
+                    else
+                    {
+                        <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">ردیف</th>
+                                    <th class="text-center">نام پروژه</th>
+                                    <th class="text-center">نام مالک</th>
+                                    <th class="text-center">نام کارفرما</th>
+                                    <th class="text-center">پروانه ساخت</th>
+                                    <th class="text-center">مهندس ناظر</th>
+                                    <th class="text-center">تاریخ شروع</th>
+                                    <th class="text-center no-print">عملگر</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- /.panel -->
+    </div>
+
+</div>

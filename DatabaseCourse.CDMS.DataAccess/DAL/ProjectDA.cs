@@ -49,6 +49,11 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             newEntity.GroundType = entity?.GroundType?? newEntity.GroundType;
             newEntity.LastModifiedDate = DateTime.Now;
             newEntity.ProductionLicense = entity?.ProductionLicense ?? newEntity.ProductionLicense;
+            newEntity.Address = entity?.Address ?? newEntity.Address;
+            newEntity.Client = entity?.Client ?? newEntity.Client;
+            newEntity.GroundOwner = entity?.GroundOwner ?? newEntity.GroundOwner;
+            newEntity.Name= entity?.Name?? newEntity.Name;
+            newEntity.Title = entity?.Title?? newEntity.Title;
             _context.SaveChanges();
             return newEntity?.Id ?? 0;
         }

@@ -17,10 +17,6 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         public int? ProjectId { get; set; }
 
-        public int? SupervisorEngId { get; set; }
-
         public virtual Project Project { get; set; }
-
-        public virtual SupervisorEngineer SupervisorEngineer { get; set; }
     }
 }

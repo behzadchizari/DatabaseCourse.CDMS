@@ -1,0 +1,52 @@
+﻿@using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.CDMS.Business.BusinessLogic
+@using DatabaseCourse.CDMS.Business.BusinessModel
+    @{
+        ViewBag.Title = "Edit";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+        var DataId = (int)ThisApp.Session["ProjectId"];
+        var projectBll = new ProjectBll(ThisApp.CurrentUser);
+        var Data = new ProjectInfo();
+        Data = null;
+        if (DataId != 0)
+        {
+            Data = projectBll.GetByProjectId(DataId);
+        }
+    }
+
+
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @ThisApp.PageDesctiption
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label>نام پروژه </label>
+                                    <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.Name??"")">
+                                    <p class="text-danger" id="FirstName_Error"></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>عنوان پروژه <small>انگلیسی وارد کنید</small></label>
+                                    <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.Name??"")">
+                                    <p class="text-danger" id="FirstName_Error"></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>عنوان پروژه <small>انگلیسی وارد کنید</small></label>
+                                    <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.Name??"")">
+                                    <p class="text-danger" id="FirstName_Error"></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
