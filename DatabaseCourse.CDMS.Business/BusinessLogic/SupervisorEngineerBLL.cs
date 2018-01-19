@@ -3,6 +3,8 @@ using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
 using DatabaseCourse.Common.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
@@ -11,6 +13,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #region Variables
 
         private CurrentUser _currentUser = null;
+        private SupervisorEngineerDA da = new SupervisorEngineerDA();
 
         #endregion
 
@@ -24,7 +27,22 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Methods
 
+        public int FindSupervisorEngineerInfoByName(string name)
+        {
+            var se = da.FindByName(name);
+            return se.Id;
+        }
 
+        public List<SupervisorEngineerInfo> GetAllSupervisorEngineerInfos()
+        {
+            var se = da.GetAll();
+            var result = new List<SupervisorEngineerInfo>();
+            foreach (var item in se)
+            {
+                result.Add(ConvertToBusinessModel(item));
+            }
+            return result;
+        }
         #endregion
 
         #region Helper
@@ -36,8 +54,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             {
                 Id = businessModel.Id,
                 EngineeringCode = businessModel.EngineeringCode,
-                FirstName = businessModel.FirstName,
-                LastName = businessModel.LastName,
+                FullName = businessModel.FullName,
                 PhoneNumber = businessModel.PhoneNumber
             };
         }
@@ -49,8 +66,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             {
                 Id = dataAccessModel.Id,
                 EngineeringCode = dataAccessModel.EngineeringCode,
-                FirstName = dataAccessModel.FirstName,
-                LastName = dataAccessModel.LastName,
+                FullName = dataAccessModel.FullName,
                 PhoneNumber = dataAccessModel.PhoneNumber
             };
         }

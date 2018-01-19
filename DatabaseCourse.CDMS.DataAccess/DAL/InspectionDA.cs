@@ -36,9 +36,5 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
         {
             return _context?.Inspection?.Where(x => x.ProjectId == projectId);
         }
-        public IQueryable<Inspection> GetBySupervisorEngId(int supervisorEngId)
-        {
-            return _context?.Inspection?.Where(x => x.SupervisorEngId == supervisorEngId);
-        }
     }
 }

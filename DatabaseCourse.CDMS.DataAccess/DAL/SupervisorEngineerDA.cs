@@ -33,9 +33,29 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.SupervisorEngineer?.AsQueryable();
         }
 
-        public IQueryable<SupervisorEngineer> GetById(int id)
+        public SupervisorEngineer GetById(int id)
         {
-            return _context?.SupervisorEngineer?.Where(x => x.Id == id);
+            return _context?.SupervisorEngineer?.FirstOrDefault(x => x.Id == id);
+        }
+
+
+        public SupervisorEngineer FindByName(string name)
+        {
+            var se = _context?.SupervisorEngineer?.FirstOrDefault(x => x.FullName == name);
+            if(se == null)
+            {
+                var entity = new SupervisorEngineer()
+                {
+                    FullName = name
+                };
+                _context?.SupervisorEngineer?.Add(entity);
+                _context?.SaveChanges();
+                return entity;
+            }
+            else
+            {
+                return se;
+            }
         }
 
         public int Update(SupervisorEngineer entity)
@@ -44,8 +64,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             if (newEntity == null)
                 throw new Exception("Exception Occured on Updating Contractor. Contractor not Found");
             newEntity.EngineeringCode = entity?.EngineeringCode ?? newEntity.EngineeringCode;
-            newEntity.FirstName = entity?.FirstName ?? newEntity.FirstName;
-            newEntity.LastName= entity?.LastName ?? newEntity.LastName;
+            newEntity.FullName = entity?.FullName ?? newEntity.FullName;
             newEntity.PhoneNumber = entity?.PhoneNumber ?? newEntity.PhoneNumber;
             _context.SaveChanges();
             return newEntity?.Id ?? 0;

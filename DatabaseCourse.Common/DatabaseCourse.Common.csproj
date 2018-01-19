@@ -57,6 +57,7 @@
     <Compile Include="Enums\AccessDeniedType.cs" />
     <Compile Include="Enums\AttachmentCategory.cs" />
     <Compile Include="Enums\AttachmentType.cs" />
+    <Compile Include="Enums\GroundTypeEnum.cs" />
     <Compile Include="Enums\JsonResultStatus.cs" />
     <Compile Include="Enums\LogType.cs" />
     <Compile Include="Enums\UserRoleEnum.cs" />

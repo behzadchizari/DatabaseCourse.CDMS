@@ -27,7 +27,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public string GroundOwner { get; set; }
         public string Title { get; set; }
         public string Name { get; set; }
-        public SupervisorEngineer SupervisorEngineer
+        public SupervisorEngineerInfo SupervisorEngineer
         {
             get
             {

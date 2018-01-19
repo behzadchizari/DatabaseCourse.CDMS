@@ -35,7 +35,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                 Id = businessModel.Id,
                 ProjectId = businessModel.ProjectId,
                 Date = businessModel.Date,
-                SupervisorEngId = businessModel.SupervisorEngId,
                 Result = businessModel.Result
             };
         }
@@ -48,7 +47,6 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                 Id = dataAccessModel.Id,
                 ProjectId = dataAccessModel.ProjectId,
                 Date = dataAccessModel.Date,
-                SupervisorEngId = dataAccessModel.SupervisorEngId,
                 Result = dataAccessModel.Result
             };
         }

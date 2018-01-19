@@ -1,52 +1,103 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
 @using DatabaseCourse.CDMS.Business.BusinessLogic
 @using DatabaseCourse.CDMS.Business.BusinessModel
-    @{
-        ViewBag.Title = "Edit";
-        Layout = "~/Views/Shared/_MainLayout.cshtml";
+@using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility.EnumUtility
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
 
-        var DataId = (int)ThisApp.Session["ProjectId"];
-        var projectBll = new ProjectBll(ThisApp.CurrentUser);
-        var Data = new ProjectInfo();
-        Data = null;
-        if (DataId != 0)
-        {
-            Data = projectBll.GetByProjectId(DataId);
-        }
+    var DataId = (int)ThisApp.Session["ProjectId"];
+    var projectBll = new ProjectBll(ThisApp.CurrentUser);
+    var supervisorBll = new SupervisorEngineerBll(ThisApp.CurrentUser);
+    var Data = new ProjectInfo();
+    Data = null;
+    if (DataId != 0)
+    {
+        Data = projectBll.GetByProjectId(DataId);
     }
+}
 
 
+<div class="col-lg-12 col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @ThisApp.PageDesctiption
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form role="form">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label>نام پروژه </label>
+                                <input class="form-control" id="txtProjectName" type="text" value="@Html.Raw(Data?.Name??"")">
+                                <p class="text-danger" id="ProjectName_Error"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>نام مالک </label>
+                                <input class="form-control" id="txtOwner" type="text" value="@Html.Raw(Data?.GroundOwner??"")">
+                                <p class="text-danger" id="Owner_Error"></p>
+                            </div>
+                            <div class="form-group">
+                                <label>نوع زمین </label>
+                                <select id="drpGroundType" class="form-control" style="padding:0 5px">
+                                    <option value="0">---- نوع زمین ----</option>
+                                    @{
+                                        var goundTypeList = EnumUtility.List(typeof(GroundTypeEnum));
+                                        string dataGroundType = null;
+                                        if (Data != null)
+                                        {
+                                            dataGroundType = Data.GroundType;
+                                        }
+                                        foreach (var item in goundTypeList)
+                                        {
+                                            if (item.Value != 0)
+                                            {
+                                                <option @Html.Raw(dataGroundType != null && dataGroundType == item.Name ? "selected=\"selected\"" : "") value="@item.Value">@item.Description</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <p class="text-danger" id="GroundType_Error"></p>
 
-    <div class="row">
-        <div class="col-lg-6 col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    @ThisApp.PageDesctiption
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form role="form">
                                 <div class="form-group">
-                                    <label>نام پروژه </label>
-                                    <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.Name??"")">
-                                    <p class="text-danger" id="FirstName_Error"></p>
+                                    <label>آدرس</label>
+                                    <textarea class="form-control" id="txtAddress" style="min-width:100%;max-width:100%;min-height:100px;max-height:100px;">
+                                    @Html.Raw(Data?.Address?? "")
+                                    </textarea>
+                                    <p class="text-danger" id="Address_Error"></p>
                                 </div>
-
-                                <div class="form-group">
-                                    <label>عنوان پروژه <small>انگلیسی وارد کنید</small></label>
-                                    <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.Name??"")">
-                                    <p class="text-danger" id="FirstName_Error"></p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>عنوان پروژه <small>انگلیسی وارد کنید</small></label>
-                                    <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.Name??"")">
-                                    <p class="text-danger" id="FirstName_Error"></p>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label>نام کارفرما </label>
+                                <input class="form-control" id="txtClient" type="text" value="@Html.Raw(Data?.Client??"")">
+                                <p class="text-danger" id="Client_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>نام مهندس ناظر </label><br />
+                                <input id="txtSupervisorEngineer" class="form-control" list="mylist" />
+                                @{
+                                    var engList = supervisorBll.GetAllSupervisorEngineerInfos();
+                                    <datalist id="mylist">
+                                        @foreach (var item in engList)
+                                        {
+                                            <option value="@item.Id">@item.FullName</option>
+                                        }
+                                    </datalist>
+                                }
+                                <p class="text-danger" id="SupervisorEngineer_Error"></p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <a class="btn btn-primary text-center pull-left" id="btnPressOk">اعمال تغییرات</a>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
+</div>

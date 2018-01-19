@@ -18,10 +18,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
         public int Id { get; set; }
 
         [StringLength(50)]
-        public string FirstName { get; set; }
-
-        [StringLength(50)]
-        public string LastName { get; set; }
+        public string FullName { get; set; }
 
         [StringLength(20)]
         public string PhoneNumber { get; set; }

@@ -14,6 +14,14 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
         ProjectBll projectBll = new ProjectBll(ThisApp.CurrentUser);
 
+        public enum EditProjectFunctionEnum
+        {
+            Null =0 ,
+            Add = 10,
+            Delete =20,
+            Edit =30
+        }
+
         #endregion
 
         #region Action Methds
