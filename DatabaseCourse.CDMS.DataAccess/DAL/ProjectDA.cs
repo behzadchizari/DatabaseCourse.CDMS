@@ -35,9 +35,17 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.Project?.AsQueryable();
         }
 
-        public IQueryable<Project> GetById(int id)
+        public Project GetById(int id)
         {
-            return _context?.Project?.Where(x => x.Id == id);
+            return _context?.Project?.FirstOrDefault(x => x.Id == id);
+        }
+        public Project GetByTitle(string title)
+        {
+            return _context?.Project?.FirstOrDefault(x => x.Title == title);
+        }
+        public IQueryable<Project> GetByUserId(int id)
+        {
+            return _context?.Project?.Where(x => x.UserId == id);
         }
 
         public int Update(Project entity)

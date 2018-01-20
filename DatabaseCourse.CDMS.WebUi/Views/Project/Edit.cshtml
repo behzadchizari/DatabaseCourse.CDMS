@@ -1,6 +1,7 @@
 ﻿@using DatabaseCourse.CDMS.WebUi.Classes
 @using DatabaseCourse.CDMS.Business.BusinessLogic
 @using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.CDMS.WebUi.Controllers
 @using DatabaseCourse.Common.Enums
 @using DatabaseCourse.Common.Utility.EnumUtility
 @{
@@ -8,7 +9,7 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 
     var DataId = (int)ThisApp.Session["ProjectId"];
-    var projectBll = new ProjectBll(ThisApp.CurrentUser);
+    var projectBll = new ProjectBll();
     var supervisorBll = new SupervisorEngineerBll(ThisApp.CurrentUser);
     var Data = new ProjectInfo();
     Data = null;
@@ -35,10 +36,43 @@
                                 <p class="text-danger" id="ProjectName_Error"></p>
                             </div>
                             <div class="form-group">
+                                <label>عنوان پروژه <small>انگلیسی وارد کنید</small></label>
+                                <input class="form-control" id="txtTitle" type="text" onkeydown="SetUnderScoreinsteadBlank(this)" value="@Html.Raw(Data?.Title??"")">
+                                <p class="text-danger" id="Title_Error"></p>
+                            </div>
+                            <div class="form-group">
                                 <label>نام مالک </label>
                                 <input class="form-control" id="txtOwner" type="text" value="@Html.Raw(Data?.GroundOwner??"")">
                                 <p class="text-danger" id="Owner_Error"></p>
                             </div>
+
+                            <div class="form-group">
+                                <label>نام کارفرما </label>
+                                <input class="form-control" id="txtClient" type="text" value="@Html.Raw(Data?.Client??"")">
+                                <p class="text-danger" id="Client_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>پروانه ساخت</label>
+                                <input class="form-control" id="txtProductionLicense" type="text" value="@Html.Raw(Data?.ProductionLicense??"")">
+                                <p class="text-danger" id="ProductionLicense_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>نام مهندس ناظر </label><br />
+                                <input id="txtSupervisorEngineer" class="form-control" list="mylist" />
+                                @{
+                                    var engList = supervisorBll.GetAllSupervisorEngineerInfos();
+                                    <datalist id="mylist">
+                                        @foreach (var item in engList)
+                                        {
+                                            <option value="@item.FullName">@item.FullName</option>
+                                        }
+                                    </datalist>
+                                }
+                                <p class="text-danger" id="SupervisorEngineer_Error"></p>
+                            </div>
+
                             <div class="form-group">
                                 <label>نوع زمین </label>
                                 <select id="drpGroundType" class="form-control" style="padding:0 5px">
@@ -54,7 +88,7 @@
                                         {
                                             if (item.Value != 0)
                                             {
-                                                <option @Html.Raw(dataGroundType != null && dataGroundType == item.Name ? "selected=\"selected\"" : "") value="@item.Value">@item.Description</option>
+                                                <option @Html.Raw(dataGroundType != null && dataGroundType == item.Name ? "selected=\"selected\"" : "") value="@item.Description">@item.Description</option>
                                             }
                                         }
                                     }
@@ -63,41 +97,139 @@
 
                                 <div class="form-group">
                                     <label>آدرس</label>
-                                    <textarea class="form-control" id="txtAddress" style="min-width:100%;max-width:100%;min-height:100px;max-height:100px;">
-                                    @Html.Raw(Data?.Address?? "")
-                                    </textarea>
+                                    <textarea class="form-control" id="txtAddress" style="min-width:100%;max-width:100%;min-height:100px;max-height:100px;">@Html.Raw(Data?.Address??"")</textarea>
                                     <p class="text-danger" id="Address_Error"></p>
                                 </div>
                             </div>
+                            <a class="btn btn-primary btn-block text-center pull-left" id="btnPressOk">اعمال تغییرات</a>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <div class="form-group">
-                                <label>نام کارفرما </label>
-                                <input class="form-control" id="txtClient" type="text" value="@Html.Raw(Data?.Client??"")">
-                                <p class="text-danger" id="Client_Error"></p>
-                            </div>
-
-                            <div class="form-group">
-                                <label>نام مهندس ناظر </label><br />
-                                <input id="txtSupervisorEngineer" class="form-control" list="mylist" />
-                                @{
-                                    var engList = supervisorBll.GetAllSupervisorEngineerInfos();
-                                    <datalist id="mylist">
-                                        @foreach (var item in engList)
-                                        {
-                                            <option value="@item.Id">@item.FullName</option>
-                                        }
-                                    </datalist>
-                                }
-                                <p class="text-danger" id="SupervisorEngineer_Error"></p>
-                            </div>
+                            <p id="Server_Error">
+                                <ul id="Server_Error_List"></ul>
+                            </p>
                         </div>
                         <div class="clearfix"></div>
-
-                        <a class="btn btn-primary text-center pull-left" id="btnPressOk">اعمال تغییرات</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var FormObject = function () {
+        this.ProjectName = $('#txtProjectName').val();
+        this.Title = $('#txtTitle').val();
+        this.Owner = $('#txtOwner').val();
+        this.Client = $('#txtClient').val();
+        this.SupervisorEngineer = $('#txtSupervisorEngineer').val();
+        this.GroundType = $('#drpGroundType').val();
+        this.Address = $('#txtAddress').val();
+        this.ProductionLicense = $('#txtProductionLicense').val();
+
+        this.ClearErrors = function () {
+            $('#Address_Error').html("");
+            $('#GroundType_Error').html("");
+            $('#SupervisorEngineer_Error').html("");
+            $('#Client_Error').html("");
+            $('#Owner_Error').html("");
+            $('#ProjectName_Error').html("");
+            $('#Title_Error').html("");
+            $('#ProductionLicense_Error').html("");
+        };
+
+        this.CheckProjectName = function () {
+            if (this.ProjectName === "") {
+                $('#ProjectName_Error').html("لطفا نام پروژه را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+        this.CheckTitle = function () {
+            if (this.Title === "") {
+                $('#Title_Error').html("لطفا عنوان پروژه را وارد کنید");
+                return false;
+            }
+            if (!checkChar(this.Title)) {
+                $('#Title_Error').html("لطفا عنوان پروژه را به زبان انگلیسی وارد کنید");
+                return false;
+            }
+            return true;
+        };
+        this.CheckOwner= function () {
+            if (this.Owner === "") {
+                $('#Owner_Error').html("لطفا نام مالک ملک را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+        this.CheckSupervisorEngineer= function () {
+            if (this.SupervisorEngineer === "") {
+                $('#SupervisorEngineer_Error').html("لطفا نام مهندس ناظر را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+        this.CheckProductionLicense = function () {
+            if (this.ProductionLicense === "") {
+                $('#ProductionLicense_Error').html("لطفا پروانه ساخت را وارد کنید");
+                return false;
+            }
+            return true;
+        };
+
+        this.Validate = function () {
+            this.ClearErrors();
+            var res = this.CheckProjectName() &&
+                this.CheckTitle() &&
+                this.CheckOwner() &&
+                this.CheckSupervisorEngineer();
+            return res;
+        }
+    }
+
+    $("#btnPressOk").click(function () {
+        var formObj = new FormObject();
+        debugger;
+        if (formObj.Validate()) {
+            ShowLoading();
+            $.ajax({
+
+                url: "/Project/ProjectEdit",
+                type: "POST",
+                data: {
+                    fn: @Html.Raw((Data== null && DataId == 0)? EnumUtility.GetEnumValue(ProjectController.EditProjectFunctionEnum.Add)
+                       : @EnumUtility.GetEnumValue(ProjectController.EditProjectFunctionEnum.Edit)),
+                    projectUiModel: {
+                          GroundType: formObj.GroundType,
+                          ProductionLicense: formObj.ProductionLicense,
+                          SupervisorEngineerFullName: formObj.SupervisorEngineer,
+                          Client: formObj.Client,
+                          Address: formObj.Address,
+                          GroundOwner: formObj.Owner,
+                          Title: formObj.Title,
+                          Name: formObj.ProjectName
+                    }
+                },
+
+                success: function (data) {
+                    if(data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
+                    {
+                        window.location.assign("../Project/Index");
+                    }
+                    else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception)))
+                    {
+                        HideLoading();
+                        $('ul#Server_Error_List').empty();
+                        var exlist = data.Description;
+                        for (var i = 0; i < exlist.length ; i++) {
+                            $('ul#Server_Error_List').append("<li>" + exlist[i].Message + "</li>");
+                        }
+                    }
+                },
+                error: function (x, e, er) {
+                }
+            });
+        }
+    });
+
+</script>

@@ -12,7 +12,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
     public class ProjectInfo
     {
         private UserInfo _user = null;
-
+        private SupervisorEngineerInfo _supervisorEngineer = null;
 
         public int Id { get; set; }
         public DateTime? CreationDate { get; set; }
@@ -29,11 +29,11 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public string Name { get; set; }
         public SupervisorEngineerInfo SupervisorEngineer
         {
-            get
-            {
-                //TODO
-                return null;
-            }
+                get
+                {
+                    if (SupervisorEngineerId == null) return null;
+                    return SupervisorEngineerBll.ConvertToBusinessModel(new SupervisorEngineerDA().GetById(SupervisorEngineerId ?? 0));
+                }
         }
 
         public UserInfo User

@@ -47,7 +47,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Helper
 
-        internal SupervisorEngineer ConvertToDataAccessModel(SupervisorEngineerInfo businessModel)
+        internal static SupervisorEngineer ConvertToDataAccessModel(SupervisorEngineerInfo businessModel)
         {
             if (businessModel == null) return null;
             return new SupervisorEngineer()
@@ -59,7 +59,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             };
         }
 
-        internal SupervisorEngineerInfo ConvertToBusinessModel(SupervisorEngineer dataAccessModel)
+        internal static SupervisorEngineerInfo ConvertToBusinessModel(SupervisorEngineer dataAccessModel)
         {
             if (dataAccessModel == null) return null;
             return new SupervisorEngineerInfo()

@@ -2,9 +2,13 @@
 using DatabaseCourse.CDMS.WebUi.Classes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.WebUi.Classes.UiModel;
+using DatabaseCourse.Common.Enums;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers
 {
@@ -12,14 +16,15 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
     {
         #region Variables
 
-        ProjectBll projectBll = new ProjectBll(ThisApp.CurrentUser);
+        ProjectBll projectBll = new ProjectBll();
+        SupervisorEngineerBll supervisorEngineerBll = new SupervisorEngineerBll(ThisApp.CurrentUser);
 
         public enum EditProjectFunctionEnum
         {
-            Null =0 ,
+            Null = 0,
             Add = 10,
-            Delete =20,
-            Edit =30
+            Delete = 20,
+            Edit = 30
         }
 
         #endregion
@@ -37,8 +42,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             ThisApp.Session["ProjectId"] = id;
             if (id != 0)
             {
-                var userInfo = projectBll.GetByProjectId(id);
-                if (userInfo == null)
+                var projectInfo = projectBll.GetByProjectId(id);
+                if (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id)
                 {
                     Session["ProjectEditResultMessage"] = "پروژه یافت نشد.";
                     return View("Index");
@@ -48,6 +53,103 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult ProjectEdit(EditProjectFunctionEnum fn, ProjectUiModel projectUiModel)
+        {
+            Session["ProjectEditResultMessage"] = null;
+            var projectId = 0;
+            var result = new JsonResult();
+            try
+            {
+                if (ThisApp.AccessDeniedType == AccessDeniedType.NoAccessToPage)
+                { result.Data = ThisApp.AccessDenied.Message ?? ThisApp.InnerAccessDenied.Message ?? ""; return result; }
+                if (fn != EditProjectFunctionEnum.Delete)
+                {
+                    int.TryParse(ThisApp.Session["ProjectId"]?.ToString(),out projectId);
+                    //projectId = (!= null) ? (int)ThisApp.Session["ProjectId "] : 0;
+                    projectUiModel.Id = projectId;
+
+                    var checkData = projectUiModel.ChackModel(fn);
+                    if (checkData?.Count > 0)
+                    {
+                        result.Data = new
+                        {
+                            Status = JsonResultStatus.Exception,
+                            Description = checkData
+                        };
+                        return result;
+                    }
+                }
+                switch (fn)
+                {
+                    case EditProjectFunctionEnum.Null:
+                        break;
+                    case EditProjectFunctionEnum.Add:
+                        {
+                            var supervisor = supervisorEngineerBll.FindSupervisorEngineerInfoByName(projectUiModel.SupervisorEngineerFullName);
+
+                            var projAdded = projectBll.AddNewProject(new ProjectInfo()
+                            {
+                                Address = projectUiModel.Address,
+                                Client = projectUiModel.Client,
+                                Id = projectUiModel.Id,
+                                SupervisorEngineerId = supervisor,
+                                CreationDate = DateTime.Now,
+                                GroundOwner = projectUiModel.GroundOwner,
+                                GroundType = projectUiModel.GroundType,
+                                LastModifiedDate = DateTime.Today,
+                                Name = projectUiModel.Name,
+                                ProductionLicense = projectUiModel.ProductionLicense,
+                                Title = projectUiModel.Title.Replace(" ","_"),
+                                UserId = ThisApp.CurrentUser.Id
+                            });
+
+                            if (projAdded != 0)
+                            {
+                                try
+                                {
+                                    var path = ThisApp.BaseDirectory + "Attachments//" + projectUiModel.Title;
+                                    if (!Directory.Exists(path))
+                                    {
+                                        Directory.CreateDirectory(path);
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                }
+                                Session["ProjectEditResultMessage"] = $"پروژه { projectUiModel.Name} با موفقیت <span style=\"color: green; \" > درج </span> شد";
+                                ThisApp.AddLogData($"درج پروژه {projectUiModel.Name} با شناسه {projectUiModel.Id} توسط {ThisApp.CurrentUser.Username}");
+                                result.Data = new
+                                {
+                                    Status = JsonResultStatus.Ok,
+                                };
+                            }
+                            else
+                            {
+                                result.Data = new
+                                {
+                                    Status = JsonResultStatus.Exception,
+                                    Description = new List<Exception>() { new Exception("پروژه درج نشد") }
+                                };
+                            }
+                            break;
+                        }
+                    case EditProjectFunctionEnum.Delete:
+                        break;
+                    case EditProjectFunctionEnum.Edit:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Data = new
+                {
+                    Status = JsonResultStatus.Exception,
+                    Description = new List<Exception>() { e }
+                };
+            }
+            return result;
+        }
         #endregion
 
         #region Abstract Methods

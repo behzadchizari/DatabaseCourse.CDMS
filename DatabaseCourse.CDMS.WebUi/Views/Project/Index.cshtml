@@ -1,13 +1,26 @@
 ﻿@using DatabaseCourse.CDMS.Business.BusinessLogic
 @using DatabaseCourse.CDMS.Business.BusinessModel
 @using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 
-    ProjectBll projectBll = new ProjectBll(ThisApp.CurrentUser);
-    var projectDataList = projectBll.GetAllProject();
+    ProjectBll projectBll = new ProjectBll();
+    var projectDataList = new List<ProjectInfo>();
+    if (ThisApp.CurrentUser != null)
+    {
+        if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.Supervisor))
+        {
+            projectDataList = projectBll.GetAllProjectsByUserId(ThisApp.CurrentUser.Id);
+        }
+        else
+        {
+            projectDataList = projectBll.GetAllProject();
+        }
+    }
 }
 
 <div class="row">
@@ -54,17 +67,59 @@
                     {
                         <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
                             <thead>
-                                <tr>
-                                    <th class="text-center">ردیف</th>
-                                    <th class="text-center">نام پروژه</th>
-                                    <th class="text-center">نام مالک</th>
-                                    <th class="text-center">نام کارفرما</th>
-                                    <th class="text-center">پروانه ساخت</th>
-                                    <th class="text-center">مهندس ناظر</th>
-                                    <th class="text-center">تاریخ شروع</th>
-                                    <th class="text-center no-print">عملگر</th>
-                                </tr>
+                            <tr>
+                                <th class="text-center">ردیف</th>
+                                <th class="text-center">نام پروژه</th>
+                                <th class="text-center">نام مالک</th>
+                                <th class="text-center">نام کارفرما</th>
+                                <th class="text-center">پروانه ساخت</th>
+                                <th class="text-center">مهندس ناظر</th>
+                                <th class="text-center">تاریخ شروع</th>
+                                @{
+                                    if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                    {
+                                        <th class="text-center no-print">عملگر</th>
+                                    }
+                                    else
+                                    {
+                                        <th class="text-center">سرپرست  مربوطه</th>
+                                    }
+                                }
+                            </tr>
                             </thead>
+                            <tbody>
+                            @{
+                                int counter = 0;
+                                foreach (var project in projectDataList)
+                                {
+                                    counter++;
+                                        <tr class="@Html.Raw(counter % 2 == 0 ? "odd" : "even")">
+                                            <td class="text-center">@counter</td>
+                                            <td class="text-center" title="@project.Title">
+                                                <a href="../Project/ProjectDetails?id=@project.Id">@project.Name</a>
+                                            </td>
+                                            <td class="text-center">@project.GroundOwner</td>
+                                            <td class="text-center">@project.Client</td>
+                                            <td class="text-center">@project.ProductionLicense</td>
+                                            <td class="text-center">@project.SupervisorEngineer.FullName</td>
+                                            <td class="text-center">@Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(project?.CreationDate ?? DateTime.MinValue))</td>
+                                           
+                                           @{
+                                               if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                               {
+                                                   <td class="text-center no-print">
+                                                       <a href="../Project/Edit?id=@project.Id"><i class="fa fa-pencil"></i></a>
+                                                   </td>
+                                               }
+                                               else
+                                               {
+                                                   <td class="text-center">@project.User.FirstName @project.User.LastName</td>
+                                               }
+                                           }
+                                        </tr>
+                                }
+                            }
+                            </tbody>
                         </table>
                     }
                 </div>

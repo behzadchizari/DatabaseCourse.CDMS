@@ -114,7 +114,7 @@
         <RoleName>CEO</RoleName>
       </Role>
       <Role>
-        <RoleName>TechOfficer</RoleName>
+        <RoleName>Supervisor</RoleName>
       </Role>
     </UserRoles>
   </Page>
@@ -128,7 +128,7 @@
         <RoleName>SuperAdmin</RoleName>
       </Role>
       <Role>
-        <RoleName>TechOfficer</RoleName>
+        <RoleName>Supervisor</RoleName>
       </Role>
     </UserRoles>
   </Page>

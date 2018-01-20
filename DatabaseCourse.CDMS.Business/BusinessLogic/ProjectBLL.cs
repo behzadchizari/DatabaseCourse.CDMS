@@ -18,10 +18,10 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Ctor
-        public ProjectBll(CurrentUser currentUser)
-        {
-            _currentUser = currentUser;
-        }
+        //public ProjectBll(CurrentUser currentUser)
+        //{
+        //    _currentUser = currentUser;
+        //}
 
         #endregion
 
@@ -29,7 +29,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         public int AddNewProject(ProjectInfo project)
         {
-            return projectDA.Add(ConvertToDataAccessModel(project));
+                project.CreationDate = DateTime.Now;
+                project.LastModifiedDate = DateTime.Today;
+                return projectDA.Add(ConvertToDataAccessModel(project));
         }
         public int UpdateExistingProject(ProjectInfo project)
         {
@@ -45,9 +47,44 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return result;
         }
+
+        public int GetCountOfAllNonTerminateProjects()
+        {
+            return projectDA.GetAll().Count(x => x.EndingDate == null);
+        }
+        public ProjectInfo GetprojectByTitle(string title)
+        {
+            return ConvertToBusinessModel(projectDA.GetByTitle(title));
+        }
+        public int GetCountOfAllProjects()
+        {
+            return projectDA.GetAll().Count();
+        }
+
+        public List<ProjectInfo> GetAllProjectsByUserId(int id)
+        {
+            var result = new List<ProjectInfo>();
+            var daList = projectDA.GetByUserId(id);
+            foreach (var item in daList)
+            {
+                result.Add(ConvertToBusinessModel(item));
+            }
+            return result;
+        }
+
+
+        public int GetCountOfAllProjectsByUserId(int id)
+        {
+            return projectDA.GetAll().Count(x => x.UserId == id);
+        }
+        public int GetNonTerminateCountOfAllProjectsByUserId(int id)
+        {
+            return projectDA.GetAll().Count(x => x.UserId == id && x.EndingDate == null);
+        }
+
         public ProjectInfo GetByProjectId(int projectId)
         {
-            return ConvertToBusinessModel(projectDA.GetById(projectId).FirstOrDefault());
+            return ConvertToBusinessModel(projectDA.GetById(projectId));
         }
 
         #endregion
@@ -70,7 +107,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     SupervisorEngineerId = dataAccessModel.SupervisorEngineerId,
                     Address = dataAccessModel.Address,
                     Client = dataAccessModel.Client,
-                    GroundOwner = dataAccessModel.GroundOwner
+                    GroundOwner = dataAccessModel.GroundOwner,
+                    Name = dataAccessModel.Name,
+                    Title = dataAccessModel.Title
                 };
             }
             return null;
@@ -91,7 +130,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     SupervisorEngineerId = businessModel.SupervisorEngineerId,
                     GroundOwner = businessModel.GroundOwner,
                     Client = businessModel.Client,
-                    Address = businessModel.Address
+                    Address = businessModel.Address,
+                    Name = businessModel.Name,
+                    Title = businessModel.Title
                 };
             }
             return null;

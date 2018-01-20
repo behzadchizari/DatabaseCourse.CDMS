@@ -3,10 +3,10 @@
     $('#loader').css({ "margin-top": $(window).height() / 2 - 120 + 'px' });
 });
 
-function ShowNoDataError(elemName,optInfo='') {
+function ShowNoDataError(elemName, optInfo = '') {
     $(elemName).html('<p class="no-data">داده ای جهت نمایش یافت نشد!</p>' +
-        '<code>' + optInfo +'</code>'
-        );
+        '<code>' + optInfo + '</code>'
+    );
 }
 
 function ShowLoading() {
@@ -15,6 +15,24 @@ function ShowLoading() {
 
 function HideLoading() {
     $('#Loading').hide();
+}
+
+function checkChar(string) {
+    validChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890@.-_ ';
+    strlen = string.length;
+    string = string.toUpperCase();
+    for (i = 0; i < strlen; i++) {
+        if (validChar.indexOf(string.charAt(i)) < 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function SetUnderScoreinsteadBlank(a) {
+    setTimeout(function () {
+        a.value = a.value.replace(' ','_');
+    }, 1);
 }
 
 function FilterTable() {

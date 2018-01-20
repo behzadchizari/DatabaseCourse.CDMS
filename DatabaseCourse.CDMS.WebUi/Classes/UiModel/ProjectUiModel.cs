@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using DatabaseCourse.CDMS.Business.BusinessLogic;
 using static DatabaseCourse.CDMS.WebUi.Controllers.ProjectController;
 
 namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
 {
     public class ProjectUiModel
     {
+        ProjectBll projectBll = new ProjectBll();
+
 
         public int Id { get; set; }
         public string GroundType { get; set; }
         public string ProductionLicense { get; set; }
-        public string SupervisorEngineerId { get; set; }
+        public string SupervisorEngineerFullName { get; set; }
         public string Client { get; set; }
         public string Address { get; set; }
         public string GroundOwner { get; set; }
@@ -26,7 +29,15 @@ namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
 
         public List<Exception> ChackModel(EditProjectFunctionEnum fn)
         {
-            return new List<Exception>();
+            var result = new List<Exception>();
+
+            var proj = projectBll.GetprojectByTitle(this.Title);
+                if (proj != null)
+                {
+                    result.Add(new Exception("پروژه با این عنوان قبلا وجود داشته"));
+                }
+
+            return result;
         }
 
         private void MakeDefault()
@@ -34,7 +45,7 @@ namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
             Id = 0;
             GroundType = "";
             ProductionLicense = "";
-            SupervisorEngineerId = "";
+            SupervisorEngineerFullName = "";
             Client = "";
             Address = "";
             GroundOwner = "";

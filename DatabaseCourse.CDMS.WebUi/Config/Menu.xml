@@ -57,6 +57,12 @@
       <Role>
         <RoleName>SuperAdmin</RoleName>
       </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
     </RoleList>
     <ParentId></ParentId>
   </Menu>

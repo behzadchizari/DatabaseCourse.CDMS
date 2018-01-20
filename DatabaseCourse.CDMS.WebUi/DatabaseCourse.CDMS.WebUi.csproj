@@ -278,6 +278,7 @@
     <Compile Include="Classes\MenuConfigReader.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
     <Compile Include="Classes\ThisApp.cs" />
+    <Compile Include="Classes\UiModel\ProjectUiModel.cs" />
     <Compile Include="Classes\UiModel\UserUiModel.cs" />
     <Compile Include="Classes\UserConfigTransfer.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
