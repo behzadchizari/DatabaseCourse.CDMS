@@ -118,7 +118,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                                 {
                                 }
                                 Session["ProjectEditResultMessage"] = $"پروژه { projectUiModel.Name} با موفقیت <span style=\"color: green; \" > درج </span> شد";
-                                ThisApp.AddLogData($"درج پروژه {projectUiModel.Name} با شناسه {projectUiModel.Id} توسط {ThisApp.CurrentUser.Username}");
+                                ThisApp.AddLogData($"درج پروژه {projectUiModel.Name} با شناسه {projAdded} توسط {ThisApp.CurrentUser.Username}");
                                 result.Data = new
                                 {
                                     Status = JsonResultStatus.Ok,
