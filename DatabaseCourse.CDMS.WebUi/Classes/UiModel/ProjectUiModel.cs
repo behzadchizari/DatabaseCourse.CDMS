@@ -32,10 +32,26 @@ namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
             var result = new List<Exception>();
 
             var proj = projectBll.GetprojectByTitle(this.Title);
+
+            if (fn == EditProjectFunctionEnum.Add)
+            {
                 if (proj != null)
-                {
                     result.Add(new Exception("پروژه با این عنوان قبلا وجود داشته"));
+            }
+            else if (fn == EditProjectFunctionEnum.Edit)
+            {
+                if (Id != 0)
+                {
+                    if (proj != null)
+                    {
+                        if (proj.Title != Title)
+                        {
+                            result.Add(new Exception("پروژه با این عنوان قبلا وجود داشته"));
+                        }
+                    }
                 }
+            }
+
 
             return result;
         }

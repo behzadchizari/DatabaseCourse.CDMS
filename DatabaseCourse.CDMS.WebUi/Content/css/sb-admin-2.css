@@ -17,7 +17,10 @@ body {
     background-color: #fff;
     font-family: IranSans;
 }
-
+.grey-title {color:#9a9a9a}
+.blue-title {
+    color: #163e6e
+}
 #Loading {
     width: 100%;
     background: rgba(0,0,0,0.8);

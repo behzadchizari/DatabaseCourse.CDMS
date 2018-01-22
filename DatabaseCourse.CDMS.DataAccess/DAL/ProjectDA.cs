@@ -62,6 +62,7 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             newEntity.GroundOwner = entity?.GroundOwner ?? newEntity.GroundOwner;
             newEntity.Name= entity?.Name?? newEntity.Name;
             newEntity.Title = entity?.Title?? newEntity.Title;
+            newEntity.SupervisorEngineerId = entity?.SupervisorEngineerId ?? newEntity.SupervisorEngineerId;
             _context.SaveChanges();
             return newEntity?.Id ?? 0;
         }

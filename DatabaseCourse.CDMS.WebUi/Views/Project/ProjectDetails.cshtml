@@ -1,0 +1,115 @@
+﻿@using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.Common.Utility
+
+@{
+    ViewBag.Title = "ProjectDetails";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    var Data = (ProjectInfo)ViewBag.ProjectInfo;
+}
+@{
+    if (Data != null)
+    {
+        <h2 style="margin-bottom: 30px; color: #155f79;font-weight: bold">@Html.Raw(Data?.Name ?? "")</h2>
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    اطلاعات شناسنامه‌ای
+                </div>
+                <div class="panel-body">
+                    <div class="row" style="margin-bottom: 25px;">
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">نام پروژه :</span>
+                            <span class="blue-title">@Data.Name</span>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">عنوان پروژه : </span>
+                            <span class="blue-title">@Data.Title</span>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">تاریخ شروع :</span>
+                            <span class="blue-title">@Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(Data.CreationDate ?? DateTime.Today))</span>
+                        </div>
+                    </div>
+                    <div class="row"  style="margin-bottom: 25px;">
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">نام کارفرما :</span>
+                            <span class="blue-title">@Data.Client</span>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">نام مالک زمین:</span>
+                            <span class="blue-title">@Data.GroundOwner</span>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">نام مهندس ناظر :</span>
+                            <span class="blue-title">
+                                @if (Data.SupervisorEngineer.EngineeringCode == null || Data.SupervisorEngineer.PhoneNumber == null)
+                                {
+                                    <i class="fa fa-exclamation-triangle" style="color :#ffd400"></i>
+                                    <a href="#" style="color: #dc0f27" title="برای تکمیل اطلاعات  کلیک کنید">@Data.SupervisorEngineer.FullName</a>
+                                }
+                                else
+                                {
+                                    <a href="#" title="برای مشاهده اطلاعات مهندس ناظر کلیلک کنید">@Data.SupervisorEngineer.FullName</a>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row"  style="margin-bottom: 25px;">
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">نام سرپرست :</span>
+                            <span class="blue-title">@Data.User.FirstName @Data.User.LastName (@Data.User.Username)</span>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">تاریخ  اتمام پروژه :</span>
+                            <span class="blue-title">
+                                @{
+                                    if (Data.EndingDate == null)
+                                    {
+                                        <span style="color:#dc0f27">هنوز تمام نشده</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@Data.EndingDate</span>
+                                    }
+                                }
+                            </span>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title">نوع کاربری زمین :</span>
+                            <span class="blue-title">@Data.GroundType</span>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 25px;">
+                        <div class="col-lg-4 col-md-4">
+                            <span class="grey-title"> پروانه ساخت :</span>
+                            <span class="blue-title">@Data.ProductionLicense</span>
+                        </div>
+                        <div class="col-lg-8 col-md-8">
+                            <span class="grey-title">آدرس ملک :</span>
+                            <span class="blue-title">@Data.Address</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    نقشه‌ها
+                </div>
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+
+    }
+}
+
+

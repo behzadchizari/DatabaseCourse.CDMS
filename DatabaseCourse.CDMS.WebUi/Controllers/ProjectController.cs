@@ -43,7 +43,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             if (id != 0)
             {
                 var projectInfo = projectBll.GetByProjectId(id);
-                if (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id)
+                if (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) && (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id))
                 {
                     Session["ProjectEditResultMessage"] = "پروژه یافت نشد.";
                     return View("Index");
@@ -65,7 +65,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                 { result.Data = ThisApp.AccessDenied.Message ?? ThisApp.InnerAccessDenied.Message ?? ""; return result; }
                 if (fn != EditProjectFunctionEnum.Delete)
                 {
-                    int.TryParse(ThisApp.Session["ProjectId"]?.ToString(),out projectId);
+                    int.TryParse(ThisApp.Session["ProjectId"]?.ToString(), out projectId);
                     //projectId = (!= null) ? (int)ThisApp.Session["ProjectId "] : 0;
                     projectUiModel.Id = projectId;
 
@@ -100,7 +100,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                                 LastModifiedDate = DateTime.Today,
                                 Name = projectUiModel.Name,
                                 ProductionLicense = projectUiModel.ProductionLicense,
-                                Title = projectUiModel.Title.Replace(" ","_"),
+                                Title = projectUiModel.Title.Replace(" ", "_"),
                                 UserId = ThisApp.CurrentUser.Id
                             });
 
@@ -137,7 +137,44 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                     case EditProjectFunctionEnum.Delete:
                         break;
                     case EditProjectFunctionEnum.Edit:
-                        break;
+                        {
+                            if (projectId != 0)
+                            {
+                                var supervisor = supervisorEngineerBll.FindSupervisorEngineerInfoByName(projectUiModel.SupervisorEngineerFullName);
+                                var projectUpadate = projectBll.UpdateExistingProject(new ProjectInfo()
+                                {
+                                    Address = projectUiModel.Address,
+                                    Client = projectUiModel.Client,
+                                    Id = projectUiModel.Id,
+                                    SupervisorEngineerId = supervisor,
+                                    GroundOwner = projectUiModel.GroundOwner,
+                                    GroundType = projectUiModel.GroundType,
+                                    LastModifiedDate = DateTime.Now,
+                                    Name = projectUiModel.Name,
+                                    ProductionLicense = projectUiModel.ProductionLicense,
+                                    UserId = ThisApp.CurrentUser.Id
+                                });
+
+                                if (projectUpadate != 0)
+                                {
+                                    Session["ProjectEditResultMessage"] = $"پروژه { projectUiModel.Name} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
+                                    ThisApp.AddLogData($"به روز رسانی پروژه {projectUiModel.Name} توسط {ThisApp.CurrentUser.Username}");
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Ok,
+                                    };
+                                }
+                            }
+                            else
+                            {
+                                result.Data = new
+                                {
+                                    Status = JsonResultStatus.Exception,
+                                    Description = new List<Exception>() { new Exception("به روز رسانی با شکست روبرو شد") }
+                                };
+                            }
+                            break;
+                        }
                 }
             }
             catch (Exception e)
@@ -149,6 +186,27 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                 };
             }
             return result;
+        }
+
+
+        [HttpGet]
+        public ActionResult ProjectDetails(int id = 0)
+        {
+            ThisApp.Session["ProjectId"] = id;
+
+            var projectInfo = new ProjectInfo();
+            if (id != 0)
+            {
+                projectInfo = projectBll.GetByProjectId(id);
+                if (ThisApp.CurrentUser != null && (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) && (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id)))
+                {
+                    Session["ProjectEditResultMessage"] = "پروژه یافت نشد.";
+                    return View("Index");
+                }
+
+            }
+            ViewBag.ProjectInfo = projectInfo;
+            return View();
         }
         #endregion
 

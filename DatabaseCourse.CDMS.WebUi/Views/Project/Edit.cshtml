@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label>عنوان پروژه <small>انگلیسی وارد کنید</small></label>
-                                <input class="form-control" id="txtTitle" type="text" onkeydown="SetUnderScoreinsteadBlank(this)" value="@Html.Raw(Data?.Title??"")">
+                                <input @Html.Raw(Data!= null ? "disabled=\"disabled\"" : "") class="form-control" id="txtTitle" type="text" onkeydown="SetUnderScoreinsteadBlank(this)" value="@Html.Raw(Data?.Title??"")">
                                 <p class="text-danger" id="Title_Error"></p>
                             </div>
                             <div class="form-group">
@@ -60,10 +60,16 @@
 
                             <div class="form-group">
                                 <label>نام مهندس ناظر </label><br />
-                                <input id="txtSupervisorEngineer" class="form-control" list="mylist" />
+                                <input id="txtSupervisorEngineer" class="form-control" list="mylist"  value="@Html.Raw(Data?.SupervisorEngineer.FullName??"")"/>
                                 @{
                                     var engList = supervisorBll.GetAllSupervisorEngineerInfos();
                                     <datalist id="mylist">
+                                        @{
+                                            if (engList.Count == 0)
+                                            {
+                                                <option>تا کنون داده ای ثبت نشده</option>
+                                            }
+                                        }
                                         @foreach (var item in engList)
                                         {
                                             <option value="@item.FullName">@item.FullName</option>
@@ -88,7 +94,7 @@
                                         {
                                             if (item.Value != 0)
                                             {
-                                                <option @Html.Raw(dataGroundType != null && dataGroundType == item.Name ? "selected=\"selected\"" : "") value="@item.Description">@item.Description</option>
+                                                <option @Html.Raw(dataGroundType != null && dataGroundType == item.Description ? "selected=\"selected\"" : "") value="@item.Description">@item.Description</option>
                                             }
                                         }
                                     }
@@ -232,4 +238,9 @@
         }
     });
 
+    $("#txtSupervisorEngineer").change(function() {
+        if ($("#txtSupervisorEngineer").val() === "تا کنون داده ای ثبت نشده") {
+            $("#txtSupervisorEngineer").val("");
+        }
+    });
 </script>

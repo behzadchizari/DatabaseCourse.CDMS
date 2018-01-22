@@ -132,6 +132,37 @@
       </Role>
     </UserRoles>
   </Page>
+  <Page>
+    <PageName>پروژه‌ها</PageName>
+    <PageAddress><![CDATA[/Project/ProjectEdit]]></PageAddress>
+    <PageDescription>افزودن یا ویرایش پروژه</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <Page>
+    <PageName>جزییات پروژه</PageName>
+    <PageAddress><![CDATA[/Project/ProjectDetails]]></PageAddress>
+    <PageDescription></PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
   <!-- Bezad Test -->
   <Page>
     <PageName>صفحه تست بهزاد</PageName>
