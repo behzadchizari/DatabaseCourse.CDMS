@@ -136,7 +136,6 @@
     <Content Include="Content\js\awesomplete.js" />
     <Content Include="Content\js\index.js" />
     <Content Include="Content\js\prism.js" />
-    <Content Include="Content\UserRole.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />

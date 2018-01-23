@@ -5,7 +5,10 @@ using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -48,7 +51,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
             return View("Index");
         }
         // GET: BehzadTest
-        public ActionResult Login(string p,string u)
+        public ActionResult Login(string p, string u)
         {
             var userBll = new UserBll(ThisApp.CurrentUser);
             var e = userBll.GetUserInfoByUserNameAndPassword(u, p);
@@ -66,6 +69,42 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers.Test
             else
                 ViewBag.IsOk = "NOk";
             return View("Index");
+        }
+
+
+        [HttpPost]
+        public JsonResult UploadHomeReport(string id)
+        {
+            try
+            {
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        //    var inputPath = Server.MapPath(ThisApp.BaseDirectory + "\\Attachments\\Twin_Tower");
+                        //    var rootPath = Server.MapPath("~/");
+                        //    //you could use this outputPath in hyperlink
+                        //    var outputPath = inputPath.Replace(rootPath, "/").Replace(@"\", @" / ");
+                        // get a stream
+                        var stream = fileContent.InputStream;
+                        // and optionally write the file to disk
+                        var fileName = Path.GetFileName(file);
+                        var path = Path.Combine(ThisApp.BaseDirectory + "\\Attachments\\Twin_Tower", fileContent.FileName);
+                        using (var fileStream = System.IO.File.Create(path))
+                        {
+                            stream.CopyTo(fileStream);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Upload failed");
+            }
+
+            return Json("File uploaded successfully");
         }
 
 

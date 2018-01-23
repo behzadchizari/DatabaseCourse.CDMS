@@ -2,11 +2,13 @@
 @using DatabaseCourse.Common.Enums
 @using DatabaseCourse.Common.Utility.EnumUtility
 @{
+    <script src="../Content/js/jquery-1.11.0.js"></script>
     if (ThisApp.AccessDenied == null && ThisApp.InnerAccessDenied == null)
     {
-
-
-
+        <div>
+            <a class="btn btn-sm btn-primary" onclick="$('#txtUploadFile').click(); return false;">آپلود</a>
+            <input style="display:none;" type="file" name="UploadFile" id="txtUploadFile" class="makethispretty" onchange="if(UploadFile(this, 'BehzadTest', 'UploadHomeReport')) {alert('Ok');}" multiple/>
+        </div>
     }
     else
     {
@@ -14,4 +16,5 @@
         { Response.Redirect("/Login/Index"); }
         <p>خطای سیستم : @EnumUtility.GetEnumDescription(ThisApp.AccessDeniedType)</p>
     }
+    <script src="~/Content/js/sb-admin-2.js"></script>
 }

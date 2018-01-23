@@ -111,7 +111,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                                     var path = ThisApp.BaseDirectory + "Attachments//" + projectUiModel.Title;
                                     if (!Directory.Exists(path))
                                     {
-                                        Directory.CreateDirectory(path);
+                                        DirectoryInfo di = Directory.CreateDirectory(path);
+                                        di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
                                     }
                                 }
                                 catch (Exception)
