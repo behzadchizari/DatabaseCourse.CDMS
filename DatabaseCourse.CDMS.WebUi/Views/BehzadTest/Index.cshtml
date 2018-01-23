@@ -7,8 +7,48 @@
     {
         <div>
             <a class="btn btn-sm btn-primary" onclick="$('#txtUploadFile').click(); return false;">آپلود</a>
-            <input style="display:none;" type="file" name="UploadFile" id="txtUploadFile" class="makethispretty" onchange="if(UploadFile(this, 'BehzadTest', 'UploadHomeReport')) {alert('Ok');}" multiple/>
+            <input style="display:none;" type="file" name="UploadFile" id="txtUploadFile" class="makethispretty" multiple/>
+            <ul id="fileList"></ul>
         </div>
+
+        <script>
+            $("#txtUploadFile").change(function (e) {
+                var files = e.target.files;
+                $("#fileList").empty();
+                //var myID = 3; //uncomment this to make sure the ajax URL works
+                if (files.length > 0) {
+                    if (window.FormData !== undefined) {
+                        var data = new FormData();
+                        for (var x = 0; x < files.length; x++) {
+                            debugger;
+                            $("#fileList").append('<li>' + files[x].name + '(' + Number(files[x].size)/1000 +'KB)' +'</li>');
+                            data.append("file" + x, files[x]);
+                        }
+                        var url = '/' + 'BehzadTest' + '/' + 'UploadHomeReport';
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            success: function (result) {
+                                console.log(result);
+                                return true;
+                            },
+                            error: function (xhr, status, p3, p4) {
+                                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                                if (xhr.responseText && xhr.responseText[0] == "{")
+                                    err = JSON.parse(xhr.responseText).Message;
+                                console.log(err);
+                                return false;
+                            }
+                        });
+                    } else {
+                        alert("This browser doesn't support HTML5 file uploads!");
+                    }
+                }
+            });
+        </script>
     }
     else
     {

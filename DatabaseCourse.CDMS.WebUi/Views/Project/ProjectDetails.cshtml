@@ -1,5 +1,7 @@
 ﻿@using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.Common.Enums
 @using DatabaseCourse.Common.Utility
+@using DatabaseCourse.Common.Utility.EnumUtility
 
 @{
     ViewBag.Title = "ProjectDetails";
@@ -30,7 +32,7 @@
                             <span class="blue-title">@Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(Data.CreationDate ?? DateTime.Today))</span>
                         </div>
                     </div>
-                    <div class="row"  style="margin-bottom: 25px;">
+                    <div class="row" style="margin-bottom: 25px;">
                         <div class="col-lg-4 col-md-4">
                             <span class="grey-title">نام کارفرما :</span>
                             <span class="blue-title">@Data.Client</span>
@@ -42,22 +44,22 @@
                         <div class="col-lg-4 col-md-4">
                             <span class="grey-title">نام مهندس ناظر :</span>
                             <span class="blue-title">
-                                @if (Data.SupervisorEngineer.EngineeringCode == null || Data.SupervisorEngineer.PhoneNumber == null)
+                                @if (Data?.SupervisorEngineer?.EngineeringCode == null || Data?.SupervisorEngineer.PhoneNumber == null)
                                 {
                                     <i class="fa fa-exclamation-triangle" style="color :#ffd400"></i>
-                                    <a href="#" style="color: #dc0f27" title="برای تکمیل اطلاعات  کلیک کنید">@Data.SupervisorEngineer.FullName</a>
+                                    <a href="#" style="color: #dc0f27" title="برای تکمیل اطلاعات  کلیک کنید">@Html.Raw(Data?.SupervisorEngineer?.FullName)</a>
                                 }
                                 else
                                 {
-                                    <a href="#" title="برای مشاهده اطلاعات مهندس ناظر کلیلک کنید">@Data.SupervisorEngineer.FullName</a>
+                                    <a href="#" title="برای مشاهده اطلاعات مهندس ناظر کلیلک کنید">@Html.Raw(Data?.SupervisorEngineer?.FullName)</a>
                                 }
                             </span>
                         </div>
                     </div>
-                    <div class="row"  style="margin-bottom: 25px;">
+                    <div class="row" style="margin-bottom: 25px;">
                         <div class="col-lg-4 col-md-4">
                             <span class="grey-title">نام سرپرست :</span>
-                            <span class="blue-title">@Data.User.FirstName @Data.User.LastName (@Data.User.Username)</span>
+                            <span class="blue-title">@Html.Raw(Data?.User?.FirstName) @Html.Raw(Data?.User?.LastName) (@Html.Raw(Data?.User?.Username)</span>
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <span class="grey-title">تاریخ  اتمام پروژه :</span>
@@ -76,7 +78,7 @@
                         </div>
                         <div class="col-lg-4 col-md-4">
                             <span class="grey-title">نوع کاربری زمین :</span>
-                            <span class="blue-title">@Data.GroundType</span>
+                            <span class="blue-title">@Html.Raw(Data?.GroundType)</span>
                         </div>
                     </div>
                     <div class="row" style="margin-bottom: 25px;">
@@ -94,22 +96,43 @@
             </div>
         </div>
 
+                                    var atchCatList = EnumUtility.List(typeof(AttachmentCategoryEnum));
+                                    var atchTypeList = EnumUtility.List(typeof(AttachmentTypeEnum));
+                                    foreach (var cat in atchCatList)
+                                    {
+                                        if (cat.Value != 0)
+                                        {
+                                            <div class="container-fluid">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        @cat.Description
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        @{
+                                                            foreach (var type in atchTypeList)
+                                                            {
+                                                                if (type.Value != 0 && type.Value > cat.Value && type.Value < cat.Value + 10)
+                                                                {
+                                                                    <div class="container-fluid">
+                                                                        <h4 class="page-header">@type.Description</h4>
+                                                                        <div class="">
+                                                                            
+                                                                        </div>
+                                                                    </div>
 
-        <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    نقشه‌ها
-                </div>
-                <div class="panel-body">
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                </div>
-            </div>
-        </div>
-    }
-    else
-    {
+                                                                    }
+                                                                }
 
-    }
+                                                            }
+                                                            else
+                                                            {
+
+                                                            }
 }
-
-
