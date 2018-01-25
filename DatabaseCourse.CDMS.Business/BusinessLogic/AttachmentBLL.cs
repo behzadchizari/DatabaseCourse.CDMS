@@ -6,6 +6,7 @@ using DatabaseCourse.Common.Enums;
 using DatabaseCourse.Common.Interface;
 using DatabaseCourse.Common.Utility.EnumUtility;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
@@ -19,12 +20,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Ctor
-
-        public AttachmentBll(CurrentUser currentUser)
-        {
-            _currentUser = currentUser;
-        }
-
+        
         #endregion
 
         #region Methods
@@ -45,17 +41,30 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             return _attachmentDa.Delete(attachment);
         }
 
-        public List<AttachmentInfo> GetByProjectIdAndType(int projectId, AttachmentCategoryEnum cat, AttachmentTypeEnum type)
+        public List<AttachmentInfo> GetByProjectIdAndType(int projectId, string cat, string type)
         {
             var list = _attachmentDa.GetAttachmentByProjectIdAndAttachmentCategoryAndAttachmentType(projectId,
-                                                        type == AttachmentTypeEnum.Null ? null : cat.ToString(),
-                                                        cat == AttachmentCategoryEnum.Null ? null : type.ToString());
+                string.IsNullOrEmpty(cat) ? null : cat.ToString(),
+                string.IsNullOrEmpty(type) ? null : type.ToString());
 
             var result = new List<AttachmentInfo>();
             foreach (var item in list)
             {
                 result.Add(ConvertToBusinessModel(item));
             }
+
+            return result;
+        }
+
+
+        public AttachmentInfo GetByProjectIdAndTypeAndPath(int projectId, string cat, string type,string fileAddress)
+        {
+            var att = _attachmentDa.GetAttachmentByProjectIdAndAttachmentCategoryAndAttachmentType(projectId,
+                string.IsNullOrEmpty(cat) ? null : cat.ToString(),
+                string.IsNullOrEmpty(type) ? null : type.ToString()).FirstOrDefault(x=>x.FileAddress==fileAddress);
+
+            var result = ConvertToBusinessModel(att);
+           
 
             return result;
         }

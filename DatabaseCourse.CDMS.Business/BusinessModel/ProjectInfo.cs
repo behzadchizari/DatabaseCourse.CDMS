@@ -27,6 +27,8 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
         public string GroundOwner { get; set; }
         public string Title { get; set; }
         public string Name { get; set; }
+        public int? FloorCount { get; set; }
+        public int? UnderGroundFloorCount { get; set; }
         public SupervisorEngineerInfo SupervisorEngineer
         {
                 get

@@ -10,7 +10,7 @@
 
     var DataId = (int)ThisApp.Session["ProjectId"];
     var projectBll = new ProjectBll();
-    var supervisorBll = new SupervisorEngineerBll(ThisApp.CurrentUser);
+    var supervisorBll = new SupervisorEngineerBll();
     var Data = new ProjectInfo();
     Data = null;
     if (DataId != 0)

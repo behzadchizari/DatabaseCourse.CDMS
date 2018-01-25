@@ -17,10 +17,15 @@ body {
     background-color: #fff;
     font-family: IranSans;
 }
-.grey-title {color:#9a9a9a}
+
+.grey-title {
+    color: #9a9a9a
+}
+
 .blue-title {
     color: #163e6e
 }
+
 #Loading {
     width: 100%;
     background: rgba(0,0,0,0.8);
@@ -32,6 +37,7 @@ body {
     left: 0;
     z-index: 9999;
 }
+
 #loader {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #3498db; /* Blue */
@@ -53,34 +59,41 @@ body {
     }
 }
 
-.op-link{
-    cursor :pointer;
-    font-size:18px !important;
+.op-link {
+    cursor: pointer;
+    font-size: 18px !important;
 }
-.op-link:hover {
-    text-decoration:none;
-}
+
+    .op-link:hover {
+        text-decoration: none;
+    }
+
 .fa-passwd-reset > .fa-lock {
-  font-size: 0.85rem;
+    font-size: 0.85rem;
 }
-table.profile-info tr{
-    padding:10px 15px;
+
+table.profile-info tr {
+    padding: 10px 15px;
 }
-table.profile-info tr td{
-    padding:5px
-}
-table.profile-info tr td ul li{
-    list-style:none;
-}
-table.profile-info tr td ul{
-    padding:0;
-}
-table.profile-info tr td:first-child{
-    font-weight:bold;
-    color : #999;
-    padding:10px;
-    font-size:12px
-}
+
+    table.profile-info tr td {
+        padding: 5px
+    }
+
+        table.profile-info tr td ul li {
+            list-style: none;
+        }
+
+        table.profile-info tr td ul {
+            padding: 0;
+        }
+
+        table.profile-info tr td:first-child {
+            font-weight: bold;
+            color: #999;
+            padding: 10px;
+            font-size: 12px
+        }
 
 .no-data {
     padding: 10px;
@@ -91,6 +104,7 @@ table.profile-info tr td:first-child{
     margin-top: 10px;
     text-align: center;
 }
+
 .ui-helper-hidden-accessible {
     position: absolute;
     left: -9999px;
@@ -100,12 +114,15 @@ table.profile-info tr td:first-child{
     color: #0066B3;
     cursor: pointer;
 }
+
 .visible {
     display: block !important;
 }
+
 .invisible {
     display: none;
 }
+
 pre {
     word-wrap: break-word;
 }
@@ -480,15 +497,27 @@ ul.pull-left {
     left: 0;
     right: auto;
 }
+
 .just-print {
     display: none;
 }
+
 @media print {
+    #page-wrapper {
+        margin: 0px !important;
+        padding: 0px !important;
+        border: none !important;
+    }
+
     .no-print {
         display: none !important;
     }
-    
+
     .just-print {
         display: block;
+    }
+
+    #supereunSection {
+        color: black;
     }
 }

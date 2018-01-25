@@ -38,6 +38,11 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.SupervisorEngineer?.FirstOrDefault(x => x.Id == id);
         }
 
+        public SupervisorEngineer GetByName(string name)
+        {
+            return _context?.SupervisorEngineer?.FirstOrDefault(x => x.FullName == name);
+            
+        }
 
         public SupervisorEngineer FindByName(string name)
         {

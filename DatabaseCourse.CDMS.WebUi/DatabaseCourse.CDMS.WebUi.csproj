@@ -272,12 +272,14 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Classes\AccessHelper.cs" />
+    <Compile Include="Classes\AttachmentUiModel.cs" />
     <Compile Include="Classes\BaseController.cs" />
     <Compile Include="Classes\DataTransfer.cs" />
     <Compile Include="Classes\MenuConfigReader.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
     <Compile Include="Classes\ThisApp.cs" />
     <Compile Include="Classes\UiModel\ProjectUiModel.cs" />
+    <Compile Include="Classes\UiModel\SupervisorEngineerUiModel.cs" />
     <Compile Include="Classes\UiModel\UserUiModel.cs" />
     <Compile Include="Classes\UserConfigTransfer.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
@@ -285,6 +287,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SupervisorEngineerController.cs" />
     <Compile Include="Controllers\Test\BehzadTestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -328,6 +331,7 @@
     <Folder Include="Classes\Enum\" />
     <Folder Include="Classes\Interface\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\SupervisorEngineer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseCourse.CDMS.Business\DatabaseCourse.CDMS.Business.csproj">

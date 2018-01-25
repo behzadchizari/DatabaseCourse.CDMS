@@ -4,11 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using DatabaseCourse.CDMS.Business.BusinessModel;
 using DatabaseCourse.CDMS.WebUi.Classes.UiModel;
 using DatabaseCourse.Common.Enums;
+using DatabaseCourse.Common.Utility;
+using DatabaseCourse.Common.Utility.EnumUtility;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers
 {
@@ -17,8 +20,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         #region Variables
 
         ProjectBll projectBll = new ProjectBll();
-        SupervisorEngineerBll supervisorEngineerBll = new SupervisorEngineerBll(ThisApp.CurrentUser);
-
+        SupervisorEngineerBll supervisorEngineerBll = new SupervisorEngineerBll();
+        AttachmentBll attachmentBll = new AttachmentBll();
         public enum EditProjectFunctionEnum
         {
             Null = 0,
@@ -108,7 +111,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             {
                                 try
                                 {
-                                    var path = ThisApp.BaseDirectory + "Attachments//" + projectUiModel.Title;
+                                    var path = ThisApp.BaseDirectory + $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\" + projectUiModel.Title;
                                     if (!Directory.Exists(path))
                                     {
                                         DirectoryInfo di = Directory.CreateDirectory(path);
@@ -199,7 +202,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             if (id != 0)
             {
                 projectInfo = projectBll.GetByProjectId(id);
-                if (ThisApp.CurrentUser != null && (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) && (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id)))
+                if (ThisApp.CurrentUser != null && projectInfo == null)
                 {
                     Session["ProjectEditResultMessage"] = "پروژه یافت نشد.";
                     return View("Index");
@@ -209,6 +212,66 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             ViewBag.ProjectInfo = projectInfo;
             return View();
         }
+
+        [HttpPost]
+        public JsonResult UploadFile(string id, string type, string category)
+        {
+            var result = new JsonResult();
+            try
+            {
+                var project = projectBll.GetByProjectId((int)ThisApp.Session["ProjectId"]);
+
+                foreach (string file in Request.Files)
+                {
+                    var fileContent = Request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        var fileUtil = new FileUtility(fileContent.FileName);
+                        // get a stream
+                        var stream = fileContent.InputStream;
+                        // and optionally write the file to disk
+                        if (fileUtil.IsExtentionAcception)
+                        {
+                            var dir = ThisApp.BaseDirectory +
+                                      $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}";
+                            if (!Directory.Exists(dir))
+                                Directory.CreateDirectory(dir);
+                            var path = Path.Combine($"{dir}", fileContent.FileName);
+                            using (var fileStream = System.IO.File.Create(path))
+                            {
+                                stream.CopyTo(fileStream);
+                            }
+                        }
+
+                        var att = attachmentBll.GetByProjectIdAndTypeAndPath(project.Id,
+                            category,
+                            type, $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName+"." +fileUtil.FileExtention}");
+                        if (att == null)
+                        {
+                            attachmentBll.AddNewAttachment(new AttachmentInfo()
+                            {
+                                ProjectId = project.Id,
+                                AttachmentCategory = EnumUtility.GetEnumByTitle<AttachmentCategoryEnum>(category),
+                                AttachmentType = EnumUtility.GetEnumByTitle<AttachmentTypeEnum>(type),
+                                CreationDate = DateTime.Now,
+                                FileAddress =
+                                    $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName + "." + fileUtil.FileExtention}",
+                            });
+                        }
+                    }
+
+                }
+                result.Data = new
+                {
+                    Status = JsonResultStatus.Ok
+                };
+            }
+            catch (Exception e)
+            {
+            }
+            return result;
+        }
+
         #endregion
 
         #region Abstract Methods

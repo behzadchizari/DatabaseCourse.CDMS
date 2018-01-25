@@ -40,5 +40,9 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
 
         [StringLength(50)]
         public string Name { get; set; }
+
+        public int? FloorCount { get; set; }
+
+        public int? UnderGroundFloorCount { get; set; }
     }
 }

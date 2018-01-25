@@ -12,16 +12,12 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
     {
         #region Variables
 
-        private CurrentUser _currentUser = null;
         private SupervisorEngineerDA da = new SupervisorEngineerDA();
 
         #endregion
 
         #region Ctor
-        public SupervisorEngineerBll(CurrentUser currentUser)
-        {
-            _currentUser = currentUser;
-        }
+
 
         #endregion
 
@@ -31,6 +27,10 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         {
             var se = da.FindByName(name);
             return se.Id;
+        }
+        public SupervisorEngineerInfo GetSupervisorEngineerInfoByName(string name)
+        {
+            return ConvertToBusinessModel(da.GetByName(name));
         }
 
         public List<SupervisorEngineerInfo> GetAllSupervisorEngineerInfos()
@@ -42,6 +42,11 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                 result.Add(ConvertToBusinessModel(item));
             }
             return result;
+        }
+
+        public int UpdateExisting(SupervisorEngineerInfo supervisorEng)
+        {
+            return da.Update(ConvertToDataAccessModel(supervisorEng));
         }
         #endregion
 

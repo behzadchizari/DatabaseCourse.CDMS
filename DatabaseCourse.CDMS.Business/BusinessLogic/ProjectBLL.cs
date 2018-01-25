@@ -109,7 +109,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     Client = dataAccessModel.Client,
                     GroundOwner = dataAccessModel.GroundOwner,
                     Name = dataAccessModel.Name,
-                    Title = dataAccessModel.Title
+                    Title = dataAccessModel.Title,
+                    FloorCount = dataAccessModel.FloorCount,
+                    UnderGroundFloorCount = dataAccessModel.UnderGroundFloorCount
                 };
             }
             return null;
@@ -132,7 +134,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
                     Client = businessModel.Client,
                     Address = businessModel.Address,
                     Name = businessModel.Name,
-                    Title = businessModel.Title
+                    Title = businessModel.Title,
+                    FloorCount = businessModel.FloorCount,
+                    UnderGroundFloorCount = businessModel.UnderGroundFloorCount
                 };
             }
             return null;

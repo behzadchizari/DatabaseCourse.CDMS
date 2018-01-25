@@ -73,6 +73,7 @@
     <Compile Include="Utility\EnumUtility\EnumParentValue.cs" />
     <Compile Include="Utility\EnumUtility\EnumUtility.cs" />
     <Compile Include="Utility\ExceptionUtility.cs" />
+    <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="Utility\TypeUtility.cs" />
   </ItemGroup>
   <ItemGroup>
