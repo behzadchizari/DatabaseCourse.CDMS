@@ -21,6 +21,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Methods
 
+
         public List<CooperationContractInfo> GetCooperationContractInfosByProjectId(int id)
         {
             var res = ContractDa.GetAll().Where(x => x.ProjectId == id);
@@ -31,10 +32,15 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return result;
         }
-
+        
         public int AddNewCooperationContract(CooperationContractInfo cooperationContractInfo)
         {
             return ContractDa.Add(ConvertToDataAccessModel(cooperationContractInfo));
+        }
+
+        public int UpdateExsisting(CooperationContractInfo cooperationContractInfo)
+        {
+            return ContractDa.Update(ConvertToDataAccessModel(cooperationContractInfo));
         }
         #endregion
 

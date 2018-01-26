@@ -16,9 +16,9 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
         public enum EditContractorFunctionEnum
         {
-            Add =10,
-            Update =20,
-            Delete =30
+            Add = 10,
+            Update = 20,
+            Delete = 30
         }
 
         // GET: Contractor
@@ -41,7 +41,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                 }
                 else
                 {
-                  ViewBag.ContractorData  = Contractor;
+                    ViewBag.ContractorData = Contractor;
                 }
 
             }
@@ -50,7 +50,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
 
         [HttpPost]
-        public ActionResult ContractorEdit(EditContractorFunctionEnum fn,ContractorUiModel contractorUiModel)
+        public ActionResult ContractorEdit(EditContractorFunctionEnum fn, ContractorUiModel contractorUiModel)
         {
 
             Session["ContractorEditResultMessage"] = null;
@@ -159,7 +159,6 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             }
             return result;
         }
-
 
         protected override void SetSessionAndViewBags()
         {

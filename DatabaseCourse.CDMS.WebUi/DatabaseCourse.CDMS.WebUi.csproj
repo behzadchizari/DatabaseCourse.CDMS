@@ -275,6 +275,7 @@
     <Compile Include="Classes\AttachmentUiModel.cs" />
     <Compile Include="Classes\BaseController.cs" />
     <Compile Include="Classes\ContractorUiModel.cs" />
+    <Compile Include="Classes\CooperationUiModel.cs" />
     <Compile Include="Classes\DataTransfer.cs" />
     <Compile Include="Classes\MenuConfigReader.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
@@ -283,7 +284,9 @@
     <Compile Include="Classes\UiModel\SupervisorEngineerUiModel.cs" />
     <Compile Include="Classes\UiModel\UserUiModel.cs" />
     <Compile Include="Classes\UserConfigTransfer.cs" />
+    <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\ContractorController.cs" />
+    <Compile Include="Controllers\cooperationContractController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -335,6 +338,8 @@
     <Folder Include="Classes\Enum\" />
     <Folder Include="Classes\Interface\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Attachment\" />
+    <Folder Include="Views\cooperationContract\" />
     <Folder Include="Views\SupervisorEngineer\" />
   </ItemGroup>
   <ItemGroup>

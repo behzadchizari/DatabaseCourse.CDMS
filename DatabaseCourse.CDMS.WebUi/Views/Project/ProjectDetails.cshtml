@@ -11,6 +11,18 @@
     var Data = (ProjectInfo)ViewBag.ProjectInfo;
     var attachmentBll = new AttachmentBll();
     var coorp = new CooperationContractBll();
+    var contractorBll = new ContractorBll();
+    var coo = coorp.GetCooperationContractInfosByProjectId(Data.Id);
+    var contractors = contractorBll.GetAllContractorInfos();
+    var contractorList = contractors;//new List<ContractorInfo>();
+    //foreach (var item in contractors)
+    //{
+    //    if (coo.Any(x => x.ContractorId != item.Id))
+    //    {
+    //        contractorList.Add(item);
+    //    }
+    //}
+
 }
 @{
     if (Data != null)
@@ -64,88 +76,6 @@
                                     <i class="fa"></i>
                                     <a href="#" title="برای مشاهده اطلاعات مهندس ناظر کلیلک کنید" data-toggle="modal" data-target="#SupervisorEngEditModal">@Html.Raw(Data?.SupervisorEngineer?.FullName)</a>
                                 }
-                                <!-- Modal -->
-                                <div class="modal fade" id="SupervisorEngEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title" id="myModalLabel"> مشاهده و تغییر مهندس ناظر</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="col-lg-12">
-                                                    <form role="form">
-                                                        <div class="form-group">
-                                                            <label>نام مهندس ناظر </label>
-                                                            <p id="txtSupEngName" type="text" style="margin-right: 30px;color:black">@Html.Raw(Data?.SupervisorEngineer?.FullName ?? "")</p>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>شماره تماس</label>
-                                                            <input class="form-control" id="txtContact" type="text" value="@Html.Raw(Data?.SupervisorEngineer?.PhoneNumber??"")">
-                                                            <p class="text-danger" id="Contact_Error"></p>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>  شماره نظام مهندسی </label>
-                                                            <input class="form-control" id="txtSupEngCode" type="text" value="@Html.Raw(Data?.SupervisorEngineer?.EngineeringCode??"")">
-                                                            <p class="text-danger" id="SupEngCode_Error"></p>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="modal-footer">
-                                                <button id="btnPressOk" type="button" class="btn btn-primary pull-left">اعمال تغییرات</button>
-                                            </div>
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
-                                <script>
-                                var FormObject = function() {
-                                    this.Name = $('#txtSupEngName').html();
-                                    this.Contact = $('#txtContact').val();
-                                    this.Code = $('#txtSupEngCode').val();
-                                }
-
-
-                                $("#btnPressOk").click(function() {
-                                    var formObj = new FormObject();
-                                    ShowLoading();
-                                    $.ajax({
-                                        url: "/SupervisorEngineer/Edit",
-                                        type: "POST",
-                                        data: {
-                                            supervisorEngineerUiModel: {
-                                                Name: formObj.Name,
-                                                Contact: formObj.Contact,
-                                                Code: formObj.Code
-                                            }
-                                        },
-                                        success: function (result) {
-                                            $('button[data-dismiss="modal"]').click();
-                                            HideLoading();
-                                            if (result.status ===
-                                                @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok))) {
-                                                if (result.isCompelete) {
-                                                    $('#supereunSection i.fa-exclamation-triangle')
-                                                        .removeClass("fa-exclamation-triangle");
-                                                    $('a[data-target = "#SupervisorEngEditModal"]')
-                                                        .css('color', '#428bca');
-                                                } else {
-
-                                                    $('#supereunSection i.fa').addClass("fa-exclamation-triangle");
-                                                    $('#supereunSection i.fa-exclamation-triangle').css('color', '#ffd400');
-                                                    $('a[data-target = "#SupervisorEngEditModal"]').css('color', '#dc0f27');
-                                                }
-                                            } else if (result.status ===
-                                                @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception))) {
-                                                alert(result.description);
-                                            }
-                                        }
-                                    });
-                                });
-                                </script>
                             </span>
                         </div>
                     </div>
@@ -187,42 +117,6 @@
 
                 </div>
             </div>
-            <!---Modal-->
-            <div class="modal fade" id="FileUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel"> آپلود فایل</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table text-center" id="fileList">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th>ردیف</th>
-                                                <th>نام فایل</th>
-                                                <th>حجم</th>
-                                                <th>پیشوند فایل</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                    <p class="text-danger"> * فایلهای قرمز رنگ نمیتوانند در سیستم آپلود شوند</p>
-                                    <p>پسوندهای قابل قبول : PDF, PNG, JPG, JPEG, DOCX, DOC, XLS, XLSX</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="modal-footer">
-                            <a id="btnPressUpload" class="btn btn-primary pull-left" onclick=" FileUpload(); return false;">آپلود</a>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
         </div>
 
         <div class="container-fluid">
@@ -231,9 +125,13 @@
                     پیمانکاران
                 </div>
                 <div class="panel-body">
+                    <div class="container-fluid">
+                        <a href="" class="btn btn-default btn-success pull-left no-print" style="padding: 10px;margin: 20px 5px" data-toggle="modal" data-target="#AddContractorModal">
+                            <i class="fa fa-plus" style="margin-left: 5px"></i>تخصیص پیمانکار
+                        </a>
+                    </div>
                     <div class="table-responsive">
                         @{
-                            var coo = coorp.GetCooperationContractInfosByProjectId(Data.Id);
                             if (coo.Count > 0)
                             {
                                 <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
@@ -243,11 +141,13 @@
                                             <th class="text-center">نام</th>
                                             <th class="text-center">نام خانوادگی</th>
                                             <th class="text-center">کد ملی</th>
+                                            <th class="text-center"> دستمزد</th>
                                             <th class="text-center"> شماره تماس</th>
+                                            <th class="text-center">  شروع</th>
                                             @{
-                                                if (ThisApp.HasAccessToView("Contractor", "Remove"))
+                                                if (ThisApp.HasAccessToView("Contractor", "EndOfWork"))
                                                 {
-                                                    <th class="text-center no-print">عملگر</th>
+                                                    <th class="text-center no-print">پایان کار</th>
                                                 }
                                             }
 
@@ -261,326 +161,609 @@
                                                 var contractor = item.Contractor;
                                                 if (contractor != null)
                                                 {
-                                                    <tr>
+                                                    <tr >
                                                         <td>@counter</td>
                                                         <td>@contractor.FirstName</td>
                                                         <td>@contractor.LastName</td>
                                                         <td>@contractor.NationalId</td>
+                                                        <td>@item.WageType</td>
                                                         <td>@contractor.Contact</td>
+                                                        <td>@Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(item.StartDate??DateTime.MaxValue))</td>
                                                         @{
-                                                            if (ThisApp.HasAccessToView("Contractor", "Remove"))
+                                                            if (ThisApp.HasAccessToView("Contractor", "EndOfWork"))
                                                             {
-                                                                <td></td>
+                                                                <td class="no-print">
+                                                                    @{
+                                                                        if (item.EndDate == null)
+                                                                        {
+                                                                            <a class="EndOfWork" href="" id="EndOfWork_@item.Id">
+                                                                                <i class="fa  fa-thumbs-o-up text-danger"></i>
+                                                                            </a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <span>@Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(item.EndDate??DateTime.MaxValue))</span>
+                                                                        }
+                                                                    }
+
+                                                                </td>
                                                             }
                                                         }
-                                                      
+
                                                     </tr>
-                                                    counter++;
-                                                }
-                                            }
+                                                                    counter++;
+                                                                }
+                                                            }
                                         }
                                     </tbody>
                                 </table>
 
-                                            }
+                                                            }
                         }
                     </div>
                 </div>
             </div>
         </div>
-                                        var atchCatList = EnumUtility.List(typeof(AttachmentCategoryEnum));
-                                        var atchTypeList = EnumUtility.List(typeof(AttachmentTypeEnum));
-                                        foreach (var cat in atchCatList)
-                                        {
-                                            if (cat.Value != 0)
-                                            {
-                                                <div class="container-fluid no-print">
-                                                    <div class="panel panel-default">
-                                                        <div class="panel-heading">
-                                                            @cat.Description
-                                                        </div>
-                                                        <div class="panel-body">
-                                                            @{
-                                                                foreach (var type in atchTypeList)
+                                                            var atchCatList = EnumUtility.List(typeof(AttachmentCategoryEnum));
+                                                            var atchTypeList = EnumUtility.List(typeof(AttachmentTypeEnum));
+                                                            foreach (var cat in atchCatList)
+                                                            {
+                                                                if (cat.Value != 0)
                                                                 {
-                                                                    if (type.Value != 0 && type.Value > cat.Value && type.Value < cat.Value + 10)
-                                                                    {
-                                                                        <div class="container-fluid page-header">
-                                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                                                <h4 class="">@type.Description</h4>
+                                                                    <div class="container-fluid no-print">
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading">
+                                                                                @cat.Description
                                                                             </div>
-                                                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                            <div class="panel-body">
                                                                                 @{
-                                                                                    if (ThisApp.HasAccessToView("Project", "UploadFile"))
+                                                                                    foreach (var type in atchTypeList)
                                                                                     {
-                                                                                        <a class="btn btn-primary btn-sm uploadFileLink pull-left" id="@Html.Raw($"{cat.Name}_{type.Name}")_link" onclick="$('#' + GetInputIdByLinkId($(this).attr('id'))).click();return false;">
-                                                                                            <i class="fa fa-upload" margin-left:10px></i>
-                                                                                        </a>
-                                                                                    }
+                                                                                        if (type.Value != 0 && type.Value > cat.Value && type.Value < cat.Value + 10)
+                                                                                        {
+                                                                                            <div class="container-fluid page-header">
+                                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    <h4 class="">@type.Description</h4>
+                                                                                                </div>
+                                                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                                                                    @{
+                                                                                                        if (ThisApp.HasAccessToView("Project", "UploadFile"))
+                                                                                                        {
+                                                                                                            <a class="btn btn-primary btn-sm uploadFileLink pull-left" id="@Html.Raw($"{cat.Name}_{type.Name}")_link" onclick="$('#' + GetInputIdByLinkId($(this).attr('id'))).click();return false;">
+                                                                                                                <i class="fa fa-upload" margin-left:10px></i>
+                                                                                                            </a>
+                                                                                                        }
+                                                                                                    }
+                                                                                                    <input style="display: none;" id="@Html.Raw($"{cat.Name}_{type.Name}")_input" type="file" name="UploadFile" class="makethispretty fileUploadInput" multiple />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="" style="padding:20px">
+                                                                                                @{
+                                                                                                    var thisAttachments = attachmentBll.GetByProjectIdAndType(Data?.Id ?? 0, cat.Name, type.Name);
+                                                                                                    var count = 1;
+
+                                                                                                    if (thisAttachments.Count > 0)
+                                                                                                    {<div class="row">
+                                                                                                    <div class="col-lg-12">
+                                                                                                        <div class="table-responsive">
+                                                                                                            <table class="table table-striped">
+                                                                                                                <thead>
+                                                                                                                    <tr>
+                                                                                                                        <th>ردیف</th>
+                                                                                                                        <th>نام فایل</th>
+                                                                                                                        <th>نوع فایل</th>
+                                                                                                                        <th>تاریخ آپلود</th>
+                                                                                                                        <th></th>
+                                                                                                                    </tr>
+                                                                                                                </thead>
+                                                                                                                <tbody>
+                                                                                                                    @foreach (var item in thisAttachments)
+                                                                                                                    {
+                                                                                                                        var fileUtil = new FileUtility(item.FileAddress);
+                                                                                                                        <tr>
+                                                                                                                            <td>@count</td>
+                                                                                                                            <td>@fileUtil.FileName</td>
+                                                                                                                            <td>@fileUtil.FileExtention</td>
+                                                                                                                            <td>@item.CreationDate</td>
+                                                                                                                            <td>
+                                                                                                                                <a href="../../@item.FileAddress" target="_blank"><i class="fa fa-download"></i></a>
+                                                                                                                                @{
+                                                                                                                                    if (ThisApp.HasAccessToView("Attachment", "Remove"))
+                                                                                                                                    {
+                                                                                                                                        <span>|</span>
+                                                                                                                                        <a class="removeAttachment" href="" id="removeAtt_@item.Id">
+                                                                                                                                            <i class="fa fa-remove text-danger"></i>
+                                                                                                                                        </a>
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                                        count++;
+                                                                                                                                    }
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                                                    }
+
+
+                                                                                                }
+                                                                                            </div>
+
+                                                                                                                                    }
+                                                                                                                                    if (!atchTypeList.Any(x => x.Value > cat.Value && x.Value < cat.Value + 10))
+                                                                                                                                    {
+                                                                                                                                        <div class="container-fluid page-header">
+                                                                                                                                            <a class="btn btn-primary btn-sm pull-left" id="@Html.Raw($"{cat.Name}")_link)"
+                                                                                                                                               onclick="$('#' + GetInputIdByLinkId($(this).attr('id'))).click();return false;">
+                                                                                                                                                <i class="fa fa-upload" margin-left:10px></i>
+                                                                                                                                            </a>
+                                                                                                                                            <input style="display:none;" id="@Html.Raw($"{cat.Name}")_input" type="file" name="UploadFile" class="makethispretty fileUploadInput" multiple />
+                                                                                                                                        </div>
+
+                                                                                                                                        <div class="container" style="padding:20px">
+                                                                                                                                            @{
+                                                                                                                                                var thisAttachments = attachmentBll.GetByProjectIdAndType(Data?.Id ?? 0, cat.Name, null);
+                                                                                                                                                var count = 1;
+
+                                                                                                                                                if (thisAttachments.Count > 0)
+                                                                                                                                                {
+                                                                                                                                                    <div class="table-responsive">
+                                                                                                                                                        <table class="table table-striped">
+                                                                                                                                                            <thead>
+                                                                                                                                                                <tr>
+                                                                                                                                                                    <th>ردیف</th>
+                                                                                                                                                                    <th>نام فایل</th>
+                                                                                                                                                                    <th>نوع فایل</th>
+                                                                                                                                                                    <th>تاریخ آپلود</th>
+                                                                                                                                                                    <th></th>
+                                                                                                                                                                </tr>
+                                                                                                                                                            </thead>
+                                                                                                                                                            <tbody>
+                                                                                                                                                                @foreach (var item in thisAttachments)
+                                                                                                                                                                {
+                                                                                                                                                                    var fileUtil = new FileUtility(item.FileAddress);
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td>@count</td>
+                                                                                                                                                                        <td>@fileUtil.FileName</td>
+                                                                                                                                                                        <td>@fileUtil.FileExtention</td>
+                                                                                                                                                                        <td>@item.CreationDate</td>
+                                                                                                                                                                        <td>
+                                                                                                                                                                            <a href="../../@item.FileAddress" target="_blank"><i class="fa fa-download"></i></a>
+                                                                                                                                                                            @{
+                                                                                                                                                                                if (ThisApp.HasAccessToView("Attachment", "Remove"))
+                                                                                                                                                                                {
+                                                                                                                                                                                    <span>|</span>
+                                                                                                                                                                                    <a class="removeAttachment" href="" id="removeAtt_@item.Id">
+                                                                                                                                                                                        <i class="fa fa-remove text-danger"></i>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                        </td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                                    count++;
+                                                                                                                                                                                }
+                                                                                                                                                            </tbody>
+                                                                                                                                                        </table>
+                                                                                                                                                    </div>
+
+                                                                                                                                                                                }
+
+
+                                                                                                                                            }
+                                                                                                                                        </div>
+                                                                                                                                                                                        break;
+                                                                                                                                                                                    }
+                                                                                                                                                                                }
                                                                                 }
-                                                                                <input style="display: none;" id="@Html.Raw($"{cat.Name}_{type.Name}")_input" type="file" name="UploadFile" class="makethispretty fileUploadInput" multiple />
                                                                             </div>
                                                                         </div>
-                                                                        <div class="container" style="padding:20px">
-                                                                            @{
-                                                                                var thisAttachments = attachmentBll.GetByProjectIdAndType(Data?.Id ?? 0, cat.Name, type.Name);
-                                                                                var count = 1;
+                                                                    </div>
+                                                                                                                                                                                        }
 
-                                                                                if (thisAttachments.Count > 0)
-                                                                                {
-                                                                                    <div class="table-responsive">
-                                                                                        <table class="table table-striped">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th>ردیف</th>
-                                                                                                    <th>نام فایل</th>
-                                                                                                    <th>نوع فایل</th>
-                                                                                                    <th>تاریخ آپلود</th>
-                                                                                                    <th></th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                @foreach (var item in thisAttachments)
-                                                                                                {
-                                                                                                    var fileUtil = new FileUtility(item.FileAddress);
-                                                                                                    <tr>
-                                                                                                        <td>@count</td>
-                                                                                                        <td>@fileUtil.FileName</td>
-                                                                                                        <td>@fileUtil.FileExtention</td>
-                                                                                                        <td>@item.CreationDate</td>
-                                                                                                        <td>
-                                                                                                            <a href="../../@item.FileAddress" target="_blank"><i class="fa fa-download"></i></a>
-                                                                                                            @{
-                                                                                                                if (ThisApp.HasAccessToView("Attachment", "Remove"))
-                                                                                                                {
-                                                                                                                    <span>|</span><a href=""><i class="fa fa-remove text-danger"></i></a>
-                                                                                                                }
-                                                                                                            }
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                                    count++;
-                                                                                                                }
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-
-                                                                                                                }
+                                                                                                                                                                                    }
 
 
-                                                                            }
-                                                                        </div>
+                                                                                                                                                                                }
+                                                                                                                                                                                else
+                                                                                                                                                                                {
 
-                                                                                                                }
-                                                                                                                if (!atchTypeList.Any(x => x.Value > cat.Value && x.Value < cat.Value + 10))
-                                                                                                                {
-                                                                                                                    <div class="container-fluid page-header">
-                                                                                                                        <a class="btn btn-primary btn-sm pull-left" id="@Html.Raw($"{cat.Name}")_link)"
-                                                                                                                           onclick="$('#' + GetInputIdByLinkId($(this).attr('id'))).click();return false;">
-                                                                                                                            <i class="fa fa-upload" margin-left:10px></i>
-                                                                                                                        </a>
-                                                                                                                        <input style="display:none;" id="@Html.Raw($"{cat.Name}")_input" type="file" name="UploadFile" class="makethispretty fileUploadInput" multiple />
-                                                                                                                    </div>
+                                                                                                                                                                                }
 
-                                                                                                                    <div class="container" style="padding:20px">
-                                                                                                                        @{
-                                                                                                                            var thisAttachments = attachmentBll.GetByProjectIdAndType(Data?.Id ?? 0, cat.Name, null);
-                                                                                                                            var count = 1;
+            <!---Modal-->
+                                                                                                                                                                                <div class="modal fade" id="FileUploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                                                                                                                                    <div class="modal-dialog">
+                                                                                                                                                                                        <div class="modal-content">
+                                                                                                                                                                                            <div class="modal-header">
+                                                                                                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                                                                                                                                <h4 class="modal-title" id="myModalLabel"> آپلود فایل</h4>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="modal-body">
+                                                                                                                                                                                                <div class="col-lg-12">
+                                                                                                                                                                                                    <div class="table-responsive">
+                                                                                                                                                                                                        <table class="table text-center" id="fileList">
+                                                                                                                                                                                                            <thead class="text-center">
+                                                                                                                                                                                                                <tr>
+                                                                                                                                                                                                                    <th>ردیف</th>
+                                                                                                                                                                                                                    <th>نام فایل</th>
+                                                                                                                                                                                                                    <th>حجم</th>
+                                                                                                                                                                                                                    <th>پیشوند فایل</th>
+                                                                                                                                                                                                                </tr>
+                                                                                                                                                                                                            </thead>
+                                                                                                                                                                                                            <tbody></tbody>
+                                                                                                                                                                                                        </table>
+                                                                                                                                                                                                        <p class="text-danger"> * فایلهای قرمز رنگ نمیتوانند در سیستم آپلود شوند</p>
+                                                                                                                                                                                                        <p>پسوندهای قابل قبول : PDF, PNG, JPG, JPEG, DOCX, DOC, XLS, XLSX</p>
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="clearfix"></div>
+                                                                                                                                                                                            <div class="modal-footer">
+                                                                                                                                                                                                <a id="btnPressUpload" class="btn btn-primary pull-left" onclick=" FileUpload(); return false;">آپلود</a>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <!-- /.modal-content -->
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <!-- /.modal-dialog -->
+                                                                                                                                                                                </div>
 
-                                                                                                                            if (thisAttachments.Count > 0)
-                                                                                                                            {
-                                                                                                                                <div class="table-responsive">
-                                                                                                                                    <table class="table table-striped">
-                                                                                                                                        <thead>
-                                                                                                                                            <tr>
-                                                                                                                                                <th>ردیف</th>
-                                                                                                                                                <th>نام فایل</th>
-                                                                                                                                                <th>نوع فایل</th>
-                                                                                                                                                <th>تاریخ آپلود</th>
-                                                                                                                                                <th></th>
-                                                                                                                                            </tr>
-                                                                                                                                        </thead>
-                                                                                                                                        <tbody>
-                                                                                                                                            @foreach (var item in thisAttachments)
-                                                                                                                                            {
-                                                                                                                                                var fileUtil = new FileUtility(item.FileAddress);
-                                                                                                                                                <tr>
-                                                                                                                                                    <td>@count</td>
-                                                                                                                                                    <td>@fileUtil.FileName</td>
-                                                                                                                                                    <td>@fileUtil.FileExtention</td>
-                                                                                                                                                    <td>@item.CreationDate</td>
-                                                                                                                                                    <td>
-                                                                                                                                                        <a href="../../@item.FileAddress" target="_blank"><i class="fa fa-download"></i></a>
-                                                                                                                                                        @{
-                                                                                                                                                            if (ThisApp.HasAccessToView("Attachment", "Remove"))
-                                                                                                                                                            {
-                                                                                                                                                                <span>|</span><a href=""><i class="fa fa-remove text-danger"></i></a>
-                                                                                                                                                            }
-                                                                                                                                                        }
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                                count++;
-                                                                                                                                                            }
-                                                                                                                                        </tbody>
-                                                                                                                                    </table>
-                                                                                                                                </div>
+            <!-- Modal -->
+                                                                                                                                                                                <div class="modal fade" id="SupervisorEngEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                                                                                                                                    <div class="modal-dialog">
+                                                                                                                                                                                        <div class="modal-content">
+                                                                                                                                                                                            <div class="modal-header">
+                                                                                                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                                                                                                                                <h4 class="modal-title" id="myModalLabel"> مشاهده و تغییر مهندس ناظر</h4>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="modal-body">
+                                                                                                                                                                                                <div class="col-lg-12">
+                                                                                                                                                                                                    <form role="form">
+                                                                                                                                                                                                        <div class="form-group">
+                                                                                                                                                                                                            <label>نام مهندس ناظر </label>
+                                                                                                                                                                                                            <p id="txtSupEngName" type="text" style="margin-right: 30px;color:black">@Html.Raw(Data?.SupervisorEngineer?.FullName ?? "")</p>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                        <div class="form-group">
+                                                                                                                                                                                                            <label>شماره تماس</label>
+                                                                                                                                                                                                            <input class="form-control" id="txtContact" type="text" value="@Html.Raw(Data?.SupervisorEngineer?.PhoneNumber??"")">
+                                                                                                                                                                                                            <p class="text-danger" id="Contact_Error"></p>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                        <div class="form-group">
+                                                                                                                                                                                                            <label>  شماره نظام مهندسی </label>
+                                                                                                                                                                                                            <input class="form-control" id="txtSupEngCode" type="text" value="@Html.Raw(Data?.SupervisorEngineer?.EngineeringCode??"")">
+                                                                                                                                                                                                            <p class="text-danger" id="SupEngCode_Error"></p>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                    </form>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="clearfix"></div>
+                                                                                                                                                                                            <div class="modal-footer">
+                                                                                                                                                                                                <button id="btnPressOk" type="button" class="btn btn-primary pull-left">اعمال تغییرات</button>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <!-- /.modal-content -->
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <!-- /.modal-dialog -->
+                                                                                                                                                                                </div>
 
-                                                                                                                                                            }
+            <!---Modal-->
+                                                                                                                                                                                <div class="modal fade" id="AddContractorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                                                                                                                                    <div class="modal-dialog">
+                                                                                                                                                                                        <div class="modal-content">
+                                                                                                                                                                                            <div class="modal-header">
+                                                                                                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                                                                                                                                <h4 class="modal-title" id="myModalLabel">  تخصیص پیمانکاران</h4>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="modal-body">
+                                                                                                                                                                                                <div class="col-lg-12">
+                                                                                                                                                                                                    <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="margin: 10px 0;" />
+                                                                                                                                                                                                    <div class="table-responsive">
+                                                                                                                                                                                                        @if (contractorList.Count > 0)
+                                                                                                                                                                                                        {
+                                                                                                                                                                                                            <table class="table text-center" id="table-filter">
+                                                                                                                                                                                                                <thead>
+                                                                                                                                                                                                                    <tr>
+                                                                                                                                                                                                                        <th class="text-center">ردیف</th>
+                                                                                                                                                                                                                        <th class="text-center">نام</th>
+                                                                                                                                                                                                                        <th class="text-center">دستمزد</th>
+                                                                                                                                                                                                                        <th class="text-center"></th>
 
+                                                                                                                                                                                                                    </tr>
+                                                                                                                                                                                                                </thead>
+                                                                                                                                                                                                                <tbody>
+                                                                                                                                                                                                                    @{
+                                                                                                                                                                                                                        var conCounter = 1;
+                                                                                                                                                                                                                        foreach (var item in contractorList)
+                                                                                                                                                                                                                        {
+                                                                                                                                                                                                                            if (item != null)
+                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                <tr>
+                                                                                                                                                                                                                                    <td>@conCounter </td>
+                                                                                                                                                                                                                                    <td>@item.FirstName @item.LastName</td>
+                                                                                                                                                                                                                                    <td>
+                                                                                                                                                                                                                                        <input type="number" id="txtWage_@item.Id" class="form-control" />
+                                                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                                                    <td>
+                                                                                                                                                                                                                                        <div class="checkbox">
+                                                                                                                                                                                                                                            <label>
+                                                                                                                                                                                                                                                <input type="checkbox" value="@item.Id">
+                                                                                                                                                                                                                                            </label>
+                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                    </td>
 
-                                                                                                                        }
-                                                                                                                    </div>
-                                                                                                                                                                    break;
-                                                                                                                                                                }
-                                                                                                                                                            }
-                                                            }
-                                                            <script>
-                                                                // ---- Helper
-                                                                function GetLinkIdByInputId(input) {
-                                                                    var arr = input.split('_');
-                                                                    var link = "";
-                                                                    if (arr.length === 2) {
-                                                                        link = arr[0] + "_" + "_link";
-                                                                    }
-                                                                    if (arr.length === 3) {
-                                                                        link = arr[0] + "_" + arr[1] + "_link";
-                                                                    }
-                                                                    console.log(link);
-                                                                    return link;
-                                                                }
+                                                                                                                                                                                                                                </tr>
+                                                                                                                                                                                                                                conCounter++;
+                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                </tbody>
+                                                                                                                                                                                                            </table>
 
-                                                                function GetInputIdByLinkId(link) {
-                                                                    var arr = link.split('_');
-                                                                    var input = "";
-                                                                    if (arr.length === 2) {
-                                                                        input = arr[0] + "_input";
-                                                                    }
-                                                                    if (arr.length === 3) {
-                                                                        input = arr[0] + "_" + arr[1] + "_input";
-                                                                    }
-
-                                                                    console.log(input);
-                                                                    return input;
-                                                                }
-
-                                                                function GetCategory(str) {
-                                                                    var arr = str.split('_');
-                                                                    return arr[0];
-                                                                }
-
-                                                                function GetType(str) {
-                                                                    var arr = str.split('_');
-                                                                    if (arr.length === 3) {
-                                                                        return arr[1];
-                                                                    } else {
-                                                                        return "";
-                                                                    }
-                                                                }
-                                                                function CheckExtentions(fileName) {
-                                                                    var extention = ["PDF", "PNG", "JPG", "JPEG", "DOCX", "DOC", "XLS", "XLSX"];
-                                                                    var arr = fileName.split('.');
-                                                                    var fileEx = arr[arr.length - 1].toUpperCase();
-                                                                    var has = extention.indexOf(fileEx);
-                                                                    if (has < 0) {
-                                                                        return false;
-                                                                    } else {
-                                                                        return true;
-                                                                    }
-                                                                }
-                                                            </script>
-                                                            <script>
-                                                                var filesToUpload = [];
-                                                                var attachmentData = "";
-                                                                var files = [];
-                                                                $(".fileUploadInput").change(function (e) {
-                                                                    attachmentData = $(this).attr("id");
-
-                                                                    files = e.target.files;
-
-                                                                    $("#fileList tbody").empty();
-                                                                    //var myID = 3; //uncomment this to make sure the ajax URL works
-                                                                    if (files.length > 0) {
-                                                                        if (window.FormData !== undefined) {
-                                                                            for (var i = 0; i < files.length; i++) {
-                                                                                if (CheckExtentions(files[i].name)) {
-                                                                                    filesToUpload.push(files[i]);
-                                                                                }
-                                                                            }
-
-                                                                            var fileup = filesToUpload;
-                                                                            filesToUpload = [];
-                                                                            $.each(fileup, function (i, el) {
-                                                                                if ($.inArray(el, filesToUpload) === -1) filesToUpload.push(el);
-                                                                            });
-
-                                                                            for (var x = 0; x < files.length; x++) {
-                                                                                var classStr = "success text-success";
-                                                                                if (!CheckExtentions(files[x].name)) {
-                                                                                    classStr = "danger text-danger";
-                                                                                }
-                                                                                var tr = " <tr class='" + classStr + "'>" +
-                                                                                    "<td>" + (Number(x) + 1) + "</td>" +
-                                                                                    "<td>" + files[x].name.split('.')[0] + "</td>" +
-                                                                                    "<td>" + Number(files[x].size) / 1000 + 'KB' + "</td>" +
-                                                                                    "<td>" + files[x].name.split('.')[files[x].name.split('.').length - 1] + "</td>" +
-                                                                                    "</tr>";
-                                                                                $("#fileList tbody").append(tr);
-
-                                                                            }
-                                                                            $('#FileUploadModal').modal();
-                                                                        } else {
-                                                                            alert("This browser doesn't support HTML5 file uploads!");
-                                                                        }
-                                                                    }
-                                                                });
-
-                                                                function FileUpload() {
-                                                                    if (window.FormData !== undefined) {
-                                                                        var data = new FormData();
-                                                                        for (var x = 0; x < files.length; x++) {
-                                                                            data.append("file" + x, files[x]);
-                                                                        }
-                                                                        ShowLoading();
-                                                                        var category = GetCategory(attachmentData);
-                                                                        var type = GetType(attachmentData);
-                                                                        var url = '/Project/UploadFile?type=' + type + '&category=' + category;
-                                                                        $.ajax({
-                                                                            type: "POST",
-                                                                            url: url,
-                                                                            //contentType: false,
-                                                                            processData: false,
-                                                                            contentType: false,
-                                                                            data: data,
-                                                                            success: function (result) {
-                                                                                HideLoading();
-                                                                                $('#FileUploadModal').modal('hide');
-                                                                                location.reload();
-                                                                            },
-                                                                            error: function (jqXhr, textStatus, errorThrown) {
-                                                                                HideLoading();
-                                                                                $('#FileUploadModal').modal('hide');
-                                                                                location.reload();
-                                                                            }
-                                                                        });
-                                                                    }
-                                                                }
-                                                                //$("#btnPressUpload").unbind().click(function () {
-
-                                                                //});
-
-                                                                $("#FileUploadModal").on("hidden.bs.modal", function () {
-                                                                    filesToUpload = [];
-                                                                    attachmentData = "";
-                                                                });
-                                                            </script>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                                                                                                                                    }
-                                                                                                                                                                }
-
-                                                                                                                                                            }
-                                                                                                                                                            else
-                                                                                                                                                            {
-
-                                                                                                                                                            }
+                                                                                                                                                                                                                        }
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="clearfix"></div>
+                                                                                                                                                                                            <div class="modal-footer">
+                                                                                                                                                                                                <a id="btnAddCooperation" class="btn btn-primary pull-left">ثبت</a>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <!-- /.modal-content -->
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <!-- /.modal-dialog -->
+                                                                                                                                                                                </div>
 }
+
+
+<script>
+    $("#btnAddCooperation").click(function() {
+        var chkArray = $('.checkbox input[type="checkbox"]:checked');
+        var chkValArray = {};
+        for (var i = 0; i < chkArray.length; i++) {
+            var txtVal = $('#txtWage_' + chkArray[i].value).val();
+            chkValArray[i] = { 'id': Number(chkArray[i].value), 'Wage': txtVal,'ProjectId' : @Data.Id};
+        }
+        ShowLoading();
+        $.ajax({
+
+            url: "/CooperationContract/AddCooperation",
+            type: "POST",
+            data: {cooperationUiModelList:chkValArray},
+            success: function (data) {
+                $("#AddContractorModal").modal('hide');
+                location.reload();
+            },
+            error: function (x, e, er) {
+                location.reload();
+            }
+        });
+    });
+</script>
+<script>
+                                    var FormObject = function() {
+                                        this.Name = $('#txtSupEngName').html();
+                                        this.Contact = $('#txtContact').val();
+                                        this.Code = $('#txtSupEngCode').val();
+                                    }
+
+
+                                    $("#btnPressOk").click(function() {
+                                        var formObj = new FormObject();
+                                        ShowLoading();
+                                        $.ajax({
+                                            url: "/SupervisorEngineer/Edit",
+                                            type: "POST",
+                                            data: {
+                                                supervisorEngineerUiModel: {
+                                                    Name: formObj.Name,
+                                                    Contact: formObj.Contact,
+                                                    Code: formObj.Code
+                                                }
+                                            },
+                                            success: function (result) {
+                                                $('button[data-dismiss="modal"]').click();
+                                                HideLoading();
+                                                if (result.status ===
+                                                    @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok))) {
+                                                    if (result.isCompelete) {
+                                                        $('#supereunSection i.fa-exclamation-triangle')
+                                                            .removeClass("fa-exclamation-triangle");
+                                                        $('a[data-target = "#SupervisorEngEditModal"]')
+                                                            .css('color', '#428bca');
+                                                    } else {
+
+                                                        $('#supereunSection i.fa').addClass("fa-exclamation-triangle");
+                                                        $('#supereunSection i.fa-exclamation-triangle').css('color', '#ffd400');
+                                                        $('a[data-target = "#SupervisorEngEditModal"]').css('color', '#dc0f27');
+                                                    }
+                                                } else if (result.status ===
+                                                    @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception))) {
+                                                    alert(result.description);
+                                                }
+                                            }
+                                        });
+                                    });
+</script>
+<script>
+                                    // ---- Helper
+                                    function GetLinkIdByInputId(input) {
+                                        var arr = input.split('_');
+                                        var link = "";
+                                        if (arr.length === 2) {
+                                            link = arr[0] + "_" + "_link";
+                                        }
+                                        if (arr.length === 3) {
+                                            link = arr[0] + "_" + arr[1] + "_link";
+                                        }
+                                        console.log(link);
+                                        return link;
+                                    }
+
+                                    function GetInputIdByLinkId(link) {
+                                        var arr = link.split('_');
+                                        var input = "";
+                                        if (arr.length === 2) {
+                                            input = arr[0] + "_input";
+                                        }
+                                        if (arr.length === 3) {
+                                            input = arr[0] + "_" + arr[1] + "_input";
+                                        }
+
+                                        console.log(input);
+                                        return input;
+                                    }
+
+                                    function GetCategory(str) {
+                                        var arr = str.split('_');
+                                        return arr[0];
+                                    }
+
+                                    function GetType(str) {
+                                        var arr = str.split('_');
+                                        if (arr.length === 3) {
+                                            return arr[1];
+                                        } else {
+                                            return "";
+                                        }
+                                    }
+                                    function CheckExtentions(fileName) {
+                                        var extention = ["PDF", "PNG", "JPG", "JPEG", "DOCX", "DOC", "XLS", "XLSX"];
+                                        var arr = fileName.split('.');
+                                        var fileEx = arr[arr.length - 1].toUpperCase();
+                                        var has = extention.indexOf(fileEx);
+                                        if (has < 0) {
+                                            return false;
+                                        } else {
+                                            return true;
+                                        }
+                                    }
+</script>
+<script>
+                                    var filesToUpload = [];
+                                    var attachmentData = "";
+                                    var files = [];
+                                    $(".fileUploadInput").change(function (e) {
+                                        attachmentData = $(this).attr("id");
+
+                                        files = e.target.files;
+
+                                        $("#fileList tbody").empty();
+                                        //var myID = 3; //uncomment this to make sure the ajax URL works
+                                        if (files.length > 0) {
+                                            if (window.FormData !== undefined) {
+                                                for (var i = 0; i < files.length; i++) {
+                                                    if (CheckExtentions(files[i].name)) {
+                                                        filesToUpload.push(files[i]);
+                                                    }
+                                                }
+
+                                                var fileup = filesToUpload;
+                                                filesToUpload = [];
+                                                $.each(fileup, function (i, el) {
+                                                    if ($.inArray(el, filesToUpload) === -1) filesToUpload.push(el);
+                                                });
+
+                                                for (var x = 0; x < files.length; x++) {
+                                                    var classStr = "success text-success";
+                                                    if (!CheckExtentions(files[x].name)) {
+                                                        classStr = "danger text-danger";
+                                                    }
+                                                    var tr = " <tr class='" + classStr + "'>" +
+                                                        "<td>" + (Number(x) + 1) + "</td>" +
+                                                        "<td>" + files[x].name.split('.')[0] + "</td>" +
+                                                        "<td>" + Number(files[x].size) / 1000 + 'KB' + "</td>" +
+                                                        "<td>" + files[x].name.split('.')[files[x].name.split('.').length - 1] + "</td>" +
+                                                        "</tr>";
+                                                    $("#fileList tbody").append(tr);
+
+                                                }
+                                                $('#FileUploadModal').modal();
+                                            } else {
+                                                alert("This browser doesn't support HTML5 file uploads!");
+                                            }
+                                        }
+                                    });
+
+                                    function FileUpload() {
+                                        if (window.FormData !== undefined) {
+                                            var data = new FormData();
+                                            for (var x = 0; x < files.length; x++) {
+                                                data.append("file" + x, files[x]);
+                                            }
+                                            ShowLoading();
+                                            var category = GetCategory(attachmentData);
+                                            var type = GetType(attachmentData);
+                                            var url = '/Project/UploadFile?type=' + type + '&category=' + category;
+                                            $.ajax({
+                                                type: "POST",
+                                                url: url,
+                                                //contentType: false,
+                                                processData: false,
+                                                contentType: false,
+                                                data: data,
+                                                success: function (result) {
+                                                    $('#FileUploadModal').modal('hide');
+                                                    location.reload();
+                                                },
+                                                error: function (jqXhr, textStatus, errorThrown) {
+                                                    $('#FileUploadModal').modal('hide');
+                                                    location.reload();
+                                                }
+                                            });
+                                        }
+                                    }
+                                    //$("#btnPressUpload").unbind().click(function () {
+
+                                    //});
+
+                                    $("#FileUploadModal").on("hidden.bs.modal", function () {
+                                        filesToUpload = [];
+                                        attachmentData = "";
+                                    });
+</script>
+<script>
+                                    $(".removeAttachment").click(
+                                        function () {
+                                            var attrIdArr = $(this).attr('id').split('_');
+                                            var attId = Number(attrIdArr[attrIdArr.length - 1]);
+                                            ShowLoading();
+                                            $.ajax({
+
+                                                url: "/Attachment/Remove?id=" + attId,
+                                                type: "POST",
+                                                success: function (data) {
+                                                    HideLoading();
+                                                    location.reload();
+                                                },
+                                                error: function (x, e, er) {
+                                                    location.reload();
+                                                }
+                                            });
+                                        });
+</script>
+<script>
+                                    $(".EndOfWork").click(
+                                        function () {
+                                            var attrIdArr = $(this).attr('id').split('_');
+                                            var attId = Number(attrIdArr[attrIdArr.length - 1]);
+                                            ShowLoading();
+                                            $.ajax({
+
+                                                url: "/CooperationContract/EndOfWork?id=" + attId,
+                                                type: "POST",
+                                                success: function (data) {
+                                                    HideLoading();
+                                                    location.reload();
+                                                },
+                                                error: function (x, e, er) {
+                                                    location.reload();
+                                                }
+                                            });
+                                        });
+                                    $("#AddContractorModal").on('hidden.bs.modal', function (e) {
+                                        $("#AddContractorModal table tbody tr td input[type = number]").val('');
+                                        $("#AddContractorModal table tbody tr td input[type = checkbox]").prop('checked', false);;
+                                    })
+</script>

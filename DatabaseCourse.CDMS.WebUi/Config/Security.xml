@@ -228,6 +228,20 @@
       </Role>
     </UserRoles>
   </Page>
+  <Page>
+    <PageName>پیمانکاران</PageName>
+    <PageAddress><![CDATA[/Contractor/EndOfWork]]></PageAddress>
+    <PageDescription>اعلام پایان کار</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
   
 
   <!-- Bezad Test -->
