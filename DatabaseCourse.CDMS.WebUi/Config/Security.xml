@@ -147,6 +147,20 @@
     </UserRoles>
   </Page>
   <Page>
+    <PageName>‌آپلود فایل</PageName>
+    <PageAddress><![CDATA[/Project/UploadFile]]></PageAddress>
+    <PageDescription></PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <Page>
     <PageName>جزییات پروژه</PageName>
     <PageAddress><![CDATA[/Project/ProjectDetails]]></PageAddress>
     <PageDescription></PageDescription>
@@ -163,6 +177,59 @@
       </Role>
     </UserRoles>
   </Page>
+  
+  <!-- Attachment -->
+  
+  <Page>
+    <PageName></PageName>
+    <PageAddress><![CDATA[/Attachment/Remove]]></PageAddress>
+    <PageDescription></PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+
+  <!--Contractor-->
+
+  <Page>
+    <PageName>پیمانکاران</PageName>
+    <PageAddress><![CDATA[/Contractor/Index]]></PageAddress>
+    <PageDescription>لیست پیمانکاران</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  <Page>
+    <PageName>پیمانکاران</PageName>
+    <PageAddress><![CDATA[/Contractor/Edit]]></PageAddress>
+    <PageDescription>ویرایش یا افزودن پیمانکار</PageDescription>
+    <PageHelp></PageHelp>
+    <UserRoles>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+    </UserRoles>
+  </Page>
+  
+
   <!-- Bezad Test -->
   <Page>
     <PageName>صفحه تست بهزاد</PageName>

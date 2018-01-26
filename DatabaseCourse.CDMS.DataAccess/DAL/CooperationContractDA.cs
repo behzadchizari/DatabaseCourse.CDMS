@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseCourse.CDMS.DataAccess.DAL
 {
-    class CooperationContractDA
+   public  class CooperationContractDA
     {
         private CDMSEntities _context = new CDMSEntities();
 

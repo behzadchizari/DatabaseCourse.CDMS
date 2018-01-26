@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using DatabaseCourse.CDMS.Business.BusinessLogic;
 using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.WebUi.Classes;
 using DatabaseCourse.CDMS.WebUi.Classes.UiModel;
 using DatabaseCourse.Common.Enums;
 
 namespace DatabaseCourse.CDMS.WebUi.Controllers
 {
-    public class SupervisorEngineerController : Controller
+    public class SupervisorEngineerController : BaseController
     {
         SupervisorEngineerBll SuperEngBll = new SupervisorEngineerBll();
         // GET: SupervisorEngineer
@@ -43,6 +44,20 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                 result.Data = new { status = JsonResultStatus.Exception, description = "ویرایش با شکست روبرو شد"+Environment.NewLine+ e.Message };
             }
             return result;
+        }
+
+        protected override void SetSessionAndViewBags()
+        {
+            
+        }
+
+        protected override void LoadSessionAndViewBags()
+        {
+        }
+
+        protected override Exception InnerSecurityCheck()
+        {
+            return null;
         }
     }
 }

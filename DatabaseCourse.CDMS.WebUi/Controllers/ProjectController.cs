@@ -241,22 +241,23 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             {
                                 stream.CopyTo(fileStream);
                             }
-                        }
 
-                        var att = attachmentBll.GetByProjectIdAndTypeAndPath(project.Id,
-                            category,
-                            type, $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName+"." +fileUtil.FileExtention}");
-                        if (att == null)
-                        {
-                            attachmentBll.AddNewAttachment(new AttachmentInfo()
+
+                            var att = attachmentBll.GetByProjectIdAndTypeAndPath(project.Id,
+                                category,
+                                type, $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName + "." + fileUtil.FileExtention}");
+                            if (att == null)
                             {
-                                ProjectId = project.Id,
-                                AttachmentCategory = EnumUtility.GetEnumByTitle<AttachmentCategoryEnum>(category),
-                                AttachmentType = EnumUtility.GetEnumByTitle<AttachmentTypeEnum>(type),
-                                CreationDate = DateTime.Now,
-                                FileAddress =
-                                    $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName + "." + fileUtil.FileExtention}",
-                            });
+                                attachmentBll.AddNewAttachment(new AttachmentInfo()
+                                {
+                                    ProjectId = project.Id,
+                                    AttachmentCategory = EnumUtility.GetEnumByTitle<AttachmentCategoryEnum>(category),
+                                    AttachmentType = EnumUtility.GetEnumByTitle<AttachmentTypeEnum>(type),
+                                    CreationDate = DateTime.Now,
+                                    FileAddress =
+                                        $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName + "." + fileUtil.FileExtention}",
+                                });
+                            }
                         }
                     }
 

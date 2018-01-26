@@ -33,9 +33,9 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.Contractor?.AsQueryable();
         }
 
-        public IQueryable<Contractor> GetById(int id)
+        public Contractor GetById(int id)
         {
-            return _context?.Contractor?.Where(x => x.Id == id);
+            return _context?.Contractor?.FirstOrDefault(x => x.Id == id);
         }
 
         public int Update(Contractor entity)

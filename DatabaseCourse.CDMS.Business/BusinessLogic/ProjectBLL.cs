@@ -15,6 +15,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #region Variables
         private CurrentUser _currentUser = null;
         private ProjectDA projectDA = new ProjectDA();
+        private ContractorBll _contractorBll = new ContractorBll();
         #endregion
 
         #region Ctor
@@ -29,9 +30,9 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         public int AddNewProject(ProjectInfo project)
         {
-                project.CreationDate = DateTime.Now;
-                project.LastModifiedDate = DateTime.Today;
-                return projectDA.Add(ConvertToDataAccessModel(project));
+            project.CreationDate = DateTime.Now;
+            project.LastModifiedDate = DateTime.Today;
+            return projectDA.Add(ConvertToDataAccessModel(project));
         }
         public int UpdateExistingProject(ProjectInfo project)
         {
@@ -86,6 +87,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         {
             return ConvertToBusinessModel(projectDA.GetById(projectId));
         }
+
 
         #endregion
 

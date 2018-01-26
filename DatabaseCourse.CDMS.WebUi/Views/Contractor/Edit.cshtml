@@ -1,0 +1,165 @@
+﻿@using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.CDMS.WebUi.Controllers
+@using DatabaseCourse.Common.Enums
+@using DatabaseCourse.Common.Utility.EnumUtility
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+    var Data = (ContractorInfo)ViewBag.ContractorData;
+}
+
+<div class="col-lg-12 col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @ThisApp.PageDesctiption
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form role="form">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="form-group">
+                                <label>نام </label>
+                                <input class="form-control" id="txtFirstName" type="text" value="@Html.Raw(Data?.FirstName??"")">
+                                <p class="text-danger" id="FirstName_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>نام خانوادگی</label>
+                                <input class="form-control" id="txtLastName" type="text" value="@Html.Raw(Data?.LastName??"")">
+                                <p class="text-danger" id="LastName_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>شماره ملی </label>
+                                <input class="form-control" id="txtNationalId" type="text" value="@Html.Raw(Data?.NationalId??"")">
+                                <p class="text-danger" id="NationalId_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>شماره بیمه </label>
+                                <input class="form-control" id="txtInsuranceNo" type="text" value="@Html.Raw(Data?.InsuranceNo??"")">
+                                <p class="text-danger" id="InsuranceNo_Error"></p>
+                            </div>
+
+                            <div class="form-group">
+                                <label>شماره تماس </label>
+                                <input class="form-control" id="txtContact" type="text" value="@Html.Raw(Data?.Contact??"")">
+                                <p class="text-danger" id="Contact_Error"></p>
+                            </div>
+                            <a class="btn btn-primary btn-block text-center pull-left" id="btnPressOk">اعمال تغییرات</a>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6">
+                            <p id="Server_Error">
+                                <ul id="Server_Error_List"></ul>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+                var FormObject = function() {
+                    this.FirstName = $('#txtFirstName').val();
+                    this.LastName = $('#txtLastName').val();
+                    this.NationalId = $('#txtNationalId').val();
+                    this.InsuranceNo = $('#txtInsuranceNo').val();
+                    this.Contact = $('#txtContact').val();
+
+                    this.ClearErrors = function() {
+                        $('#FirstName_Error').html("");
+                        $('#LastName_Error').html("");
+                        $('#NationalId_Error').html("");
+                        $('#InsuranceNo_Error').html("");
+                        $('#Contact_Error').html("");
+                    };
+
+                    this.CheckFirstName = function() {
+                        if (this.FirstName === "") {
+                            $('#FirstName_Error').html("لطفا نام را وارد کنید");
+                            return false;
+                        }
+                        return true;
+                    };
+                    this.ChecklastName = function() {
+                        if (this.txtLastName === "") {
+                            $('#LastName_Error').html("لطفا نام خانوادگی را وارد کنید");
+                            return false;
+                        }
+                        return true;
+                    };
+                    this.CheckNationalId = function() {
+                        if (this.txtNationalId === "") {
+                            $('#Title_Error').html("لطفا  کدملی را وارد کنید");
+                            return false;
+                        }
+                        return true;
+                    };
+                    this.CheckContact = function() {
+                        if (this.Contact === "") {
+                            $('#Contact_Error').html("لطفا شماره تماس را وارد کنید");
+                            return false;
+                        }
+                        return true;
+                    };
+
+                    this.Validate = function() {
+                        this.ClearErrors();
+                        var res = this.CheckFirstName() &&
+                            this.ChecklastName() &&
+                            this.CheckNationalId() &&
+                            this.CheckContact();
+                        return res;
+                    }
+                }
+
+
+                $("#btnPressOk").click(function() {
+                    var formObj = new FormObject();
+                    debugger;
+                    if (formObj.Validate()) {
+                        ShowLoading();
+                        $.ajax({
+                            url: "/Contractor/ContractorEdit",
+                            type: "POST",
+                            data: {
+                                fn:
+                                    @Html.Raw((Data== null)? EnumUtility.GetEnumValue(ContractorController.EditContractorFunctionEnum.Add)
+                                        : @EnumUtility.GetEnumValue(ContractorController.EditContractorFunctionEnum.Update)),
+                                contractorUiModel: {
+                                    FirstName: formObj.FirstName,
+                                    LastName: formObj.LastName,
+                                    NationalId: formObj.NationalId,
+                                    InsuranceNo: formObj.InsuranceNo,
+                                    Contact: formObj.Contact
+                                }
+                            },
+
+                            success: function (data) {
+                                if(data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
+                                {
+                                    window.location.assign("../Contractor/Index");
+                                }
+                                else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception)))
+                                {
+                                    HideLoading();
+                                    $('ul#Server_Error_List').empty();
+                                    var exlist = data.Description;
+                                    for (var i = 0; i < exlist.length ; i++) {
+                                        $('ul#Server_Error_List').append("<li>" + exlist[i].Message + "</li>");
+                                    }
+                                }
+                            },
+                            error: function (x, e, er) {
+                            }
+                        });
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</div>

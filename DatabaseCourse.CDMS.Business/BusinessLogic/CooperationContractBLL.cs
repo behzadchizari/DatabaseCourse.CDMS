@@ -1,4 +1,7 @@
-﻿using DatabaseCourse.CDMS.Business.BusinessModel;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
 
@@ -8,22 +11,31 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
     {
         #region Variables
 
-        private CurrentUser _currentUser = null;
+        private CooperationContractDA ContractDa = new CooperationContractDA();
 
         #endregion
 
         #region Ctor
 
-        public CooperationContractBll(CurrentUser currentUser)
-        {
-            _currentUser = currentUser;
-        }
-
         #endregion
 
         #region Methods
 
+        public List<CooperationContractInfo> GetCooperationContractInfosByProjectId(int id)
+        {
+            var res = ContractDa.GetAll().Where(x => x.ProjectId == id);
+            var result = new List<CooperationContractInfo>();
+            foreach (var item in res)
+            {
+                result.Add(ConvertToBusinessModel(item));
+            }
+            return result;
+        }
 
+        public int AddNewCooperationContract(CooperationContractInfo cooperationContractInfo)
+        {
+            return ContractDa.Add(ConvertToDataAccessModel(cooperationContractInfo));
+        }
         #endregion
 
         #region Helper

@@ -46,13 +46,33 @@
     </RoleList>
     <ParentId></ParentId>
   </Menu>
-  
+
   <Menu>
     <MenuId>4</MenuId>
     <MenuTitle>پروژه‌ها</MenuTitle>
     <MenuDescription>لیست پروژها</MenuDescription>
     <MenuUrl><![CDATA[Project]]></MenuUrl>
     <MenuIcon>tasks</MenuIcon>
+    <RoleList>
+      <Role>
+        <RoleName>SuperAdmin</RoleName>
+      </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
+      <Role>
+        <RoleName>CEO</RoleName>
+      </Role>
+    </RoleList>
+    <ParentId></ParentId>
+  </Menu>
+
+  <Menu>
+    <MenuId>5</MenuId>
+    <MenuTitle>پیمانکاران</MenuTitle>
+    <MenuDescription>لیست پیمانکاران</MenuDescription>
+    <MenuUrl><![CDATA[/Contractor/Index]]></MenuUrl>
+    <MenuIcon>user</MenuIcon>
     <RoleList>
       <Role>
         <RoleName>SuperAdmin</RoleName>

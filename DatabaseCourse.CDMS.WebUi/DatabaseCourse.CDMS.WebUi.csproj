@@ -274,6 +274,7 @@
     <Compile Include="Classes\AccessHelper.cs" />
     <Compile Include="Classes\AttachmentUiModel.cs" />
     <Compile Include="Classes\BaseController.cs" />
+    <Compile Include="Classes\ContractorUiModel.cs" />
     <Compile Include="Classes\DataTransfer.cs" />
     <Compile Include="Classes\MenuConfigReader.cs" />
     <Compile Include="Classes\SecutiryConfigReader.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="Classes\UiModel\SupervisorEngineerUiModel.cs" />
     <Compile Include="Classes\UiModel\UserUiModel.cs" />
     <Compile Include="Classes\UserConfigTransfer.cs" />
+    <Compile Include="Controllers\ContractorController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -319,6 +321,8 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\ProjectDetails.cshtml" />
+    <Content Include="Views\Contractor\Index.cshtml" />
+    <Content Include="Views\Contractor\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
