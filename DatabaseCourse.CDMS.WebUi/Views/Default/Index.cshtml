@@ -23,6 +23,65 @@
 @if (ThisApp.CurrentUser != null)
 {
     <div class="row">
+        <div class="col-lg-4 col-md-4 ">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="fa fa-user"></span>
+                    اطلاعات کاربری
+                </div>
+                <div class="panel-body">
+                    @{
+                        var currentUsser = ThisApp.CurrentUser;
+
+                        <table class="profile-info">
+                            <tr>
+                                <td>نام :</td>
+                                <td> @Html.Raw($"{currentUsser?.FirstName ?? ""} {currentUsser?.LastName ?? ""}")</td>
+                            </tr>
+                            <tr>
+                                <td>نام کاربری : </td>
+                                <td>@Html.Raw(currentUsser?.Username ?? "")</td>
+                            </tr>
+                            <tr>
+                                <td valign="top">نقش‌ کاربری : </td>
+                                <td>
+                                    <ul>
+                                        @foreach (var role in currentUsser?.UserRoles)
+                                        {
+                                            <li>@EnumUtility.GetEnumDescription(role)</li>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @{
+                                        var userBll = new UserBll(ThisApp.CurrentUser);
+                                        var lmu = userBll.GetUserInfoById(currentUsser?.LastModifyUser ?? 0);
+                                    }
+                                    <small style="font-size: 9px;">
+                                        <i>
+
+                                            @{var lmUser = "";
+                                                if (lmu?.Username != null)
+                                                {
+                                                    lmUser = $"کاربر {lmu?.Username} ";
+                                                }
+                                                else
+                                                {
+                                                    lmUser = "سیستم";
+                                                }}
+                                            @Html.Raw($"آخرین تغییرات در تاریخ {DateTimeUtility.ConvertToPersianCalender(currentUsser?.LastModifyDate ?? DateTime.MinValue)} " +
+                                                      $"توسط {lmUser}")
+                                        </i>
+                                    </small>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
         <div class="col-lg-8 col-md-8">
             <div class="col-lg-6 col-md-6">
                 <div class="panel panel-green">
@@ -66,65 +125,6 @@
                             <div class="clearfix"></div>
                         </div>
                     </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-4 ">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="fa fa-user"></span>
-                    اطلاعات کاربری
-                </div>
-                <div class="panel-body">
-                    @{
-                        var currentUsser = ThisApp.CurrentUser;
-
-                    <table class="profile-info">
-                        <tr>
-                            <td>نام :</td>
-                            <td> @Html.Raw($"{currentUsser?.FirstName ?? ""} {currentUsser?.LastName ?? ""}")</td>
-                        </tr>
-                        <tr>
-                            <td>نام کاربری : </td>
-                            <td>@Html.Raw(currentUsser?.Username ?? "")</td>
-                        </tr>
-                        <tr>
-                            <td valign="top">نقش‌ کاربری : </td>
-                            <td>
-                                <ul>
-                                    @foreach (var role in currentUsser?.UserRoles)
-                                        {
-                                        <li>@EnumUtility.GetEnumDescription(role)</li>
-                                        }
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                @{
-                                        var userBll = new UserBll(ThisApp.CurrentUser);
-                                        var lmu = userBll.GetUserInfoById(currentUsser?.LastModifyUser ?? 0);
-                                }
-                                <small style="font-size: 9px;">
-                                    <i>
-
-                                        @{var lmUser = "";
-                                                if (lmu?.Username != null)
-                                                {
-                                                    lmUser = $"کاربر {lmu?.Username} ";
-                                                }
-                                                else
-                                                {
-                                                    lmUser = "سیستم";
-                                                }}
-                                        @Html.Raw($"آخرین تغییرات در تاریخ {DateTimeUtility.ConvertToPersianCalender(currentUsser?.LastModifyDate ?? DateTime.MinValue)} " +
-                                                      $"توسط {lmUser}")
-                                    </i>
-                                </small>
-                            </td>
-                        </tr>
-                    </table>
-                    }
                 </div>
             </div>
         </div>
