@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseCourse.CDMS.Business.BusinessLogic;
+using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
+using DatabaseCourse.Common.Interface;
 
 namespace DatabaseCourse.CDMS.Business.BusinessModel
 {
@@ -19,8 +22,12 @@ namespace DatabaseCourse.CDMS.Business.BusinessModel
 
         public CooperationContractInfo CooperationContract
         {
-            //TODO
-            get { return null; }
+            get
+            {
+                var CooperationDa = new CooperationContractDA();
+                return CooperationContractBll.ConvertToBusinessModel(CooperationDa.GetById(CooperationContractId??0));
+            }
         }
+        
     }
 }

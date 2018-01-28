@@ -33,9 +33,9 @@ namespace DatabaseCourse.CDMS.DataAccess.DAL
             return _context?.CooperationContract?.AsQueryable();
         }
 
-        public IQueryable<CooperationContract> GetById(int id)
+        public CooperationContract GetById(int id)
         {
-            return _context?.CooperationContract?.Where(x => x.Id == id);
+            return _context?.CooperationContract?.FirstOrDefault(x => x.Id == id);
         }
 
         public int Update(CooperationContract entity)

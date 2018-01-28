@@ -21,6 +21,8 @@ namespace DatabaseCourse.Common.Enums
         AlreadyLogedIn= 35,
         [EnumDescription("نبود دسترسی")]
         AccessDenied = 40,
+        [EnumDescription("خطا ")]
+        Error = 50,
 
 
     }

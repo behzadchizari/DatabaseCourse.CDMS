@@ -1,6 +1,10 @@
-﻿using DatabaseCourse.CDMS.Business.BusinessModel;
+﻿using System;
+using System.Collections.Generic;
+using DatabaseCourse.CDMS.Business.BusinessModel;
+using DatabaseCourse.CDMS.DataAccess.DAL;
 using DatabaseCourse.CDMS.DataAccess.Model;
 using DatabaseCourse.Common.Classes;
+using DatabaseCourse.Common.Utility;
 
 namespace DatabaseCourse.CDMS.Business.BusinessLogic
 {
@@ -14,14 +18,43 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
 
         #region Ctor
 
-        public LeaveBll(CurrentUser currentUser)
-        {
-            _currentUser = currentUser;
-        }
-
         #endregion
 
         #region Methods
+
+        public List<LeaveInfo> GetByCooperationContractId(int cooperationContractId)
+        {
+            var list = new LeaveDA().GetByCooperationContractId(cooperationContractId);
+            var result = new List<LeaveInfo>();
+            foreach (var item in list)
+            {
+                result.Add(ConvertToBusinessModel(item));
+            }
+            return result;
+        }
+
+
+        public Dictionary<int, List<LeaveInfo>> GetGroupByMounth(List<LeaveInfo> leaveList)
+        {
+            var result = new Dictionary<int, List<LeaveInfo>>();
+            if (leaveList.Count > 0)
+            {
+                foreach (var item in leaveList)
+                {
+
+                    if (item.StartDateTime == null) continue;
+                    var pcDate = DateTimeUtility.GetDateInfoSeperated(DateTimeUtility.ConvertToPersianCalenderGetDate(item.StartDateTime??DateTime.Now));
+                    
+                    result[pcDate["month"]].Add(item);
+                }
+            }
+            else
+            {
+                return new Dictionary<int, List<LeaveInfo>>();
+            }
+            return result;
+        }
+
 
         #endregion
 

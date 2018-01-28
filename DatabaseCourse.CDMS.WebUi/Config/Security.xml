@@ -102,7 +102,7 @@
   </Page>
   <!-- Project -->
   <Page>
-    <PageName>پروژه‌ها</PageName>
+    <PageName>پروژه‌</PageName>
     <PageAddress><![CDATA[/Project/Index]]></PageAddress>
     <PageDescription>لیست پروژه‌ها</PageDescription>
     <PageHelp></PageHelp>
@@ -119,7 +119,7 @@
     </UserRoles>
   </Page>
   <Page>
-    <PageName>پروژه‌ها</PageName>
+    <PageName>پروژه‌</PageName>
     <PageAddress><![CDATA[/Project/Edit]]></PageAddress>
     <PageDescription>افزودن یا ویرایش پروژه</PageDescription>
     <PageHelp></PageHelp>
@@ -133,7 +133,7 @@
     </UserRoles>
   </Page>
   <Page>
-    <PageName>پروژه‌ها</PageName>
+    <PageName>پروژه‌</PageName>
     <PageAddress><![CDATA[/Project/ProjectEdit]]></PageAddress>
     <PageDescription>افزودن یا ویرایش پروژه</PageDescription>
     <PageHelp></PageHelp>
@@ -163,7 +163,7 @@
   <Page>
     <PageName>جزییات پروژه</PageName>
     <PageAddress><![CDATA[/Project/ProjectDetails]]></PageAddress>
-    <PageDescription></PageDescription>
+    <PageDescription>جزییات پروژه</PageDescription>
     <PageHelp></PageHelp>
     <UserRoles>
       <Role>
@@ -274,13 +274,13 @@
       </Role>
     </UserRoles>
   </Page>
-  
 
-  <!-- Bezad Test -->
+
+  <!-- Leave -->
   <Page>
-    <PageName>صفحه تست بهزاد</PageName>
-    <PageAddress><![CDATA[/BehzadTest/Index]]></PageAddress>
-    <PageDescription>صفحه تست</PageDescription>
+    <PageName>مرخصی</PageName>
+    <PageAddress><![CDATA[/Leave/Index]]></PageAddress>
+    <PageDescription>  لیست مرخصی های پیمانکار</PageDescription>
     <PageHelp></PageHelp>
     <UserRoles>
       <Role>
@@ -289,6 +289,25 @@
       <Role>
         <RoleName>CEO</RoleName>
       </Role>
+      <Role>
+        <RoleName>Supervisor</RoleName>
+      </Role>
     </UserRoles>
   </Page>
+
+<!-- Bezad Test -->
+<Page>
+  <PageName>صفحه تست بهزاد</PageName>
+  <PageAddress><![CDATA[/BehzadTest/Index]]></PageAddress>
+  <PageDescription>صفحه تست</PageDescription>
+  <PageHelp></PageHelp>
+  <UserRoles>
+    <Role>
+      <RoleName>SuperAdmin</RoleName>
+    </Role>
+    <Role>
+      <RoleName>CEO</RoleName>
+    </Role>
+  </UserRoles>
+</Page>
 </PageList>

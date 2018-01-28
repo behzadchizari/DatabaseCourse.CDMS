@@ -9,6 +9,18 @@ namespace DatabaseCourse.Common.Utility
 {
     public class DateTimeUtility
     {
+        public static Dictionary<string, int> GetDateInfoSeperated(string date)
+        {
+            var arr = date.Split('/');
+            var result = new Dictionary<string, int>();
+            result["day"] = Convert.ToInt32(arr[2]);
+            result["month"] = Convert.ToInt32(arr[1]);
+            result["year"] = Convert.ToInt32(arr[0]);
+
+            return result;
+        }
+
+
         public static string ConvertToPersianCalender(DateTime dateTime)
         {
             var pc = new PersianCalendar();
@@ -24,12 +36,13 @@ namespace DatabaseCourse.Common.Utility
                 throw;
             }
         }
-        public static string ConvertToPersianCalenderGetDate(DateTime dateTime)
+        public static string ConvertToPersianCalenderGetDate(DateTime? dateTime)
         {
             var pc = new PersianCalendar();
             try
             {
-                return $"{pc.GetYear(dateTime).ToString().PadLeft(4, '0')}/{pc.GetMonth(dateTime).ToString().PadLeft(2, '0')}/{pc.GetDayOfMonth(dateTime).ToString().PadLeft(2, '0')}";
+                if (dateTime == null) return "-";
+                return $"{pc.GetYear(dateTime ?? DateTime.Now).ToString().PadLeft(4, '0')}/{pc.GetMonth(dateTime ?? DateTime.Now).ToString().PadLeft(2, '0')}/{pc.GetDayOfMonth(dateTime ?? DateTime.Now).ToString().PadLeft(2, '0')}";
             }
             catch (Exception e)
             {

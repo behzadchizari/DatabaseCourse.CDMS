@@ -96,7 +96,8 @@
                                                 if (ThisApp.HasAccessToView("Contractor", "Edit"))
                                                 {
                                                     <td class="text-center no-print">
-                                                        <a href="../Contractor/Edit?id=@item.Id"><i class="fa fa-pencil"></i></a>
+                                                        <a href="../Contractor/Edit?id=@item.Id" title="ویرایش"><i class="fa fa-pencil"></i></a> |
+                                                        <a href="../Leave/Index?cid=@item.Id" title="مرخصی" style="color: #009945"><i class="fa fa-sign-in"></i></a> 
                                                     </td>
                                                 }
                                             }

@@ -1,8 +1,10 @@
 ﻿@using DatabaseCourse.CDMS.Business.BusinessLogic
 @using DatabaseCourse.CDMS.Business.BusinessModel
 @using DatabaseCourse.CDMS.WebUi.Classes
+@using DatabaseCourse.CDMS.WebUi.Controllers
 @using DatabaseCourse.Common.Enums
 @using DatabaseCourse.Common.Utility
+@using DatabaseCourse.Common.Utility.EnumUtility
 
 @{
     ViewBag.Title = "Index";
@@ -14,7 +16,7 @@
     {
         if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.Supervisor))
         {
-            projectDataList = projectBll.GetAllProjectsByUserId(ThisApp.CurrentUser.Id);
+            projectDataList = projectBll.GetAllProjectsByUserId(ThisApp.CurrentUser.Id).OrderBy(x=>x.EndingDate != null).ToList();
         }
         else
         {
@@ -67,32 +69,33 @@
                     {
                         <table class="table table-striped table-bordered table-hover text-center" id="table-filter">
                             <thead>
-                            <tr>
-                                <th class="text-center">ردیف</th>
-                                <th class="text-center">نام پروژه</th>
-                                <th class="text-center">نام مالک</th>
-                                <th class="text-center">نام کارفرما</th>
-                                <th class="text-center">پروانه ساخت</th>
-                                <th class="text-center">مهندس ناظر</th>
-                                <th class="text-center">تاریخ شروع</th>
-                                @{
-                                    if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
-                                    {
-                                        <th class="text-center no-print">عملگر</th>
+                                <tr>
+                                    <th class="text-center">ردیف</th>
+                                    <th class="text-center">نام پروژه</th>
+                                    <th class="text-center">نام مالک</th>
+                                    <th class="text-center">نام کارفرما</th>
+                                    <th class="text-center">پروانه ساخت</th>
+                                    <th class="text-center">مهندس ناظر</th>
+                                    <th class="text-center">تاریخ شروع</th>
+                                    <th class="text-center">تاریخ پایان</th>
+                                    @{
+                                        if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                        {
+                                            <th class="text-center no-print">عملگر</th>
+                                        }
+                                        else
+                                        {
+                                            <th class="text-center">سرپرست  مربوطه</th>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <th class="text-center">سرپرست  مربوطه</th>
-                                    }
-                                }
-                            </tr>
+                                </tr>
                             </thead>
                             <tbody>
-                            @{
-                                int counter = 0;
-                                foreach (var project in projectDataList)
-                                {
-                                    counter++;
+                                @{
+                                    int counter = 0;
+                                    foreach (var project in projectDataList)
+                                    {
+                                        counter++;
                                         <tr class="@Html.Raw(counter % 2 == 0 ? "odd" : "even")">
                                             <td class="text-center">@counter</td>
                                             <td class="text-center" title="@project.Title">
@@ -103,29 +106,79 @@
                                             <td class="text-center">@project.ProductionLicense</td>
                                             <td class="text-center">@project.SupervisorEngineer.FullName</td>
                                             <td class="text-center">@Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(project?.CreationDate ?? DateTime.MinValue))</td>
-                                           
-                                           @{
-                                               if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
-                                               {
-                                                   <td class="text-center no-print">
-                                                       <a href="../Project/Edit?id=@project.Id"><i class="fa fa-pencil"></i></a>
-                                                   </td>
-                                               }
-                                               else
-                                               {
-                                                   <td class="text-center">@project.User.FirstName @project.User.LastName</td>
-                                               }
-                                           }
+                                            @{
+                                                if (project?.EndingDate == null)
+                                                {
+                                                    <td class="text-center danger">
+                                                        -
+                                                    </td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center">
+                                                        @Html.Raw(DateTimeUtility.ConvertToPersianCalenderGetDate(project?.EndingDate ?? DateTime.MinValue))
+                                                    </td>
+
+                                                }
+                                            }
+
+                                            @{
+                                                if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                                {
+                                                    <td class="text-center no-print">
+                                                        <a href="../Project/Edit?id=@project.Id" title="ویرایش"><i class="fa fa-pencil"></i></a> |
+                                                        <a href="" class="FinishProject" id="FinishProject_@project.Id" title="اعلام پایان کار"><i class="fa fa-thumbs-o-up text-danger" ></i></a>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="text-center">@project.User.FirstName @project.User.LastName</td>
+                                                }
+                                            }
                                         </tr>
+                                                }
                                 }
-                            }
                             </tbody>
                         </table>
-                    }
+                                                }
                 </div>
             </div>
         </div>
         <!-- /.panel -->
     </div>
+    <script>
+        $(".FinishProject").click(function() {
+            ShowLoading();
+            var projArrt = $(this).attr('id').split('_');
+            var projId = projArrt[projArrt.length - 1];
+            debugger 
+            $.ajax({
+                url: "/Project/ProjectEdit",
+                type: "POST",
+                data: {
+                    fn: @Html.Raw(EnumUtility.GetEnumValue(ProjectController.EditProjectFunctionEnum.Finish)),
+                    projectUiModel: {
+                        Id: projId
+                    }
+                },
 
+                success: function (data) {
+                    if(data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Ok)))
+                    {
+                        window.location.reload();
+                    }
+                    else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Error)) || 
+                        data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception)))
+                    {
+                        alert("اعلام پایان کار با مشکل رویرو شد");
+                        HideLoading();
+                    }
+                },
+                error: function (x, e, er) {
+                }
+            });
+            HideLoading();
+        });
+    </script>
 </div>

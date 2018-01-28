@@ -27,7 +27,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             Null = 0,
             Add = 10,
             Delete = 20,
-            Edit = 30
+            Edit = 30,
+            Finish = 40
         }
 
         #endregion
@@ -46,7 +47,8 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             if (id != 0)
             {
                 var projectInfo = projectBll.GetByProjectId(id);
-                if (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) && (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id))
+                if (ThisApp.CurrentUser.UserRoles.Any(x => x != UserRoleEnum.SuperAdmin) &&
+                    (projectInfo == null || projectInfo.UserId != ThisApp.CurrentUser?.Id))
                 {
                     Session["ProjectEditResultMessage"] = "پروژه یافت نشد.";
                     return View("Index");
@@ -60,13 +62,13 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
         public JsonResult ProjectEdit(EditProjectFunctionEnum fn, ProjectUiModel projectUiModel)
         {
             Session["ProjectEditResultMessage"] = null;
-            var projectId = 0;
+            var projectId = projectUiModel.Id;
             var result = new JsonResult();
             try
             {
                 if (ThisApp.AccessDeniedType == AccessDeniedType.NoAccessToPage)
                 { result.Data = ThisApp.AccessDenied.Message ?? ThisApp.InnerAccessDenied.Message ?? ""; return result; }
-                if (fn != EditProjectFunctionEnum.Delete)
+                if (fn != EditProjectFunctionEnum.Delete && fn != EditProjectFunctionEnum.Finish)
                 {
                     int.TryParse(ThisApp.Session["ProjectId"]?.ToString(), out projectId);
                     //projectId = (!= null) ? (int)ThisApp.Session["ProjectId "] : 0;
@@ -179,6 +181,45 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                             }
                             break;
                         }
+
+                    case EditProjectFunctionEnum.Finish:
+                    {
+
+                            if (projectUiModel.Id != 0)
+                            {
+                                var cooper = new CooperationContractBll();
+                                var allcorrProj = cooper.GetCooperationContractInfosByProjectId(projectUiModel.Id);
+                                foreach (var item in allcorrProj)
+                                {
+                                    item.EndDate = DateTime.Now;
+                                    cooper.UpdateExsisting(item);
+                                }
+                                var projectUpadate = projectBll.UpdateExistingProject(new ProjectInfo()
+                                {
+                                    Id = projectUiModel.Id,
+                                    EndingDate = DateTime.Now
+                                });
+
+                                if (projectUpadate != 0)
+                                {
+                                    Session["ProjectEditResultMessage"] = $"پروژه { projectUiModel.Name} با موفقیت <span style=\"color: blue; \" > به پایان رسید </span>";
+                                    ThisApp.AddLogData($"به پایان رسانی پروژه {projectUiModel.Name} توسط {ThisApp.CurrentUser.Username}");
+                                    result.Data = new
+                                    {
+                                        Status = JsonResultStatus.Ok,
+                                    };
+                                }
+                            }
+                            else
+                            {
+                                result.Data = new
+                                {
+                                    Status = JsonResultStatus.Exception,
+                                    Description = new List<Exception>() { new Exception("به روز رسانی با شکست روبرو شد") }
+                                };
+                            }
+                            break;
+                        }
                 }
             }
             catch (Exception e)
@@ -232,8 +273,9 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                         // and optionally write the file to disk
                         if (fileUtil.IsExtentionAcception)
                         {
-                            var dir = ThisApp.BaseDirectory +
-                                      $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}";
+                            var pathFromRoot =
+                                $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}";
+                            var dir = ThisApp.BaseDirectory + pathFromRoot ;
                             if (!Directory.Exists(dir))
                                 Directory.CreateDirectory(dir);
                             var path = Path.Combine($"{dir}", fileContent.FileName);
@@ -242,7 +284,19 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
                                 stream.CopyTo(fileStream);
                             }
 
+                            if (pathFromRoot.Length > 50)
+                            {
+                                var msg =
+                                    $"اشکال در ذخیره سازی اطلاعات {Environment.NewLine} - ممکن است نام فایل شما بیش از اندازه بلند باشد {Environment.NewLine} - نام فایل نباشد بیش از {50 - pathFromRoot.Length} کاراکتر باشد";
+                                result.Data = new
+                                {
+                                    Status = (int)JsonResultStatus.Error,
+                                    Description = msg
 
+                                };
+                                return result;
+
+                            }
                             var att = attachmentBll.GetByProjectIdAndTypeAndPath(project.Id,
                                 category,
                                 type, $"{ThisApp.GetConfiguration("AttachmentDirectoryName", "Attachments")}\\{project.Title}\\{fileUtil.FileName + "." + fileUtil.FileExtention}");
@@ -269,6 +323,10 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             }
             catch (Exception e)
             {
+                result.Data = new
+                {
+                    Status = JsonResultStatus.Exception
+                };
             }
             return result;
         }

@@ -1,0 +1,56 @@
+﻿@using DatabaseCourse.CDMS.Business.BusinessLogic
+@using DatabaseCourse.CDMS.Business.BusinessModel
+@using DatabaseCourse.CDMS.WebUi.Classes
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    var cooperationList = (List<CooperationContractInfo>)ViewBag.CooperationData;
+    var leaveBll = new LeaveBll();
+    var leaveList = new List<LeaveInfo>();
+    foreach (var item in cooperationList)
+    {
+        leaveList.AddRange(leaveBll.GetByCooperationContractId(item.Id));
+    }
+    var DataDic = leaveBll.GetGroupByMounth(leaveList);
+}
+
+<div class="row">
+    <div class="col-lg-12" id="ResultSection">
+        @if (Session["LeaveEditResultMessage"] != null)
+        {
+            <div class="alert @Html.Raw(Session["LeaveEditResultMessage"].ToString().Contains("نیست") ? "alert-danger" : "alert-success")  alert-dismissable" id="ResultMessage">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                @Html.Raw(Session["LeaveEditResultMessage"].ToString())
+            </div>
+            Session["LeaveEditResultMessage"] = null;
+        }
+    </div>
+    
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @ThisApp.PageDesctiption ( <span style="font-weight: bold">@cooperationList[0].Contractor.FirstName @cooperationList[0].Contractor.LastName </span> )
+            </div> 
+            <div class="panel-body">
+                <div class="col-lg-3 col-md-3 no-print" style="padding: 10px 0">
+                    <input type="text" id="input-filter" class="form-control" onkeyup="FilterTable()" placeholder="جست و جو ..." style="margin: 10px 0;" />
+                </div>
+                <div class="col-lg-9 col-md-9 no-print" style="padding: 15px 0;">
+
+                    @{
+                        if (ThisApp.HasAccessToView("Leave", "Edit"))
+                        {
+                            <a href="~/Contractor/Edit" class="btn btn-default btn-success pull-left" style="padding: 10px"><i class="fa fa-plus"></i>  افزودن پیمانکار</a>
+                        }
+                    }
+                    <a class="btn btn-info no-print pull-left" id="btnPrint" onclick="window.print();" style="padding: 10px; margin: 0 5px;">
+                        <i class="fa fa-print" style="margin-left: 10px"></i>
+                        پرینت
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -290,6 +290,7 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\SupervisorEngineerController.cs" />
@@ -326,6 +327,7 @@
     <Content Include="Views\Project\ProjectDetails.cshtml" />
     <Content Include="Views\Contractor\Index.cshtml" />
     <Content Include="Views\Contractor\Edit.cshtml" />
+    <Content Include="Views\Leave\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

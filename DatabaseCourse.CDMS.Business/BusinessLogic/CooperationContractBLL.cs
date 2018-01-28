@@ -32,7 +32,20 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             }
             return result;
         }
-        
+
+
+        public List<CooperationContractInfo> GetCooperationContractInfosByContractorId(int id)
+        {
+            var res = ContractDa.GetAll().Where(x => x.ContractorId == id);
+            var result = new List<CooperationContractInfo>();
+            foreach (var item in res)
+            {
+                result.Add(ConvertToBusinessModel(item));
+            }
+            return result;
+        }
+
+
         public int AddNewCooperationContract(CooperationContractInfo cooperationContractInfo)
         {
             return ContractDa.Add(ConvertToDataAccessModel(cooperationContractInfo));
@@ -45,7 +58,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
         #endregion
 
         #region Helper
-        internal CooperationContract ConvertToDataAccessModel(CooperationContractInfo businessModel)
+        internal static CooperationContract ConvertToDataAccessModel(CooperationContractInfo businessModel)
         {
             if (businessModel == null) return null;
             return new CooperationContract()
@@ -59,7 +72,7 @@ namespace DatabaseCourse.CDMS.Business.BusinessLogic
             };
         }
 
-        internal CooperationContractInfo ConvertToBusinessModel(CooperationContract dataAccessModel)
+        internal static CooperationContractInfo ConvertToBusinessModel(CooperationContract dataAccessModel)
         {
             if (dataAccessModel == null) return null;
             return new CooperationContractInfo()
