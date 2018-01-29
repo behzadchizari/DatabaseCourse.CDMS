@@ -17,7 +17,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
             if (cid != 0)
             {
                 var cooBll = new CooperationContractBll();
-                var cooInfo = cooBll.GetCooperationContractInfosByContractorId(cid).Where(x=>x.EndDate == null).ToList();
+                var cooInfo = cooBll.GetCooperationContractInfosByContractorId(cid).ToList();
                 ViewBag.CooperationData = cooInfo;
                 if (!cooInfo.Any())
                 {

@@ -16,7 +16,12 @@
     {
         if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.Supervisor))
         {
-            projectDataList = projectBll.GetAllProjectsByUserId(ThisApp.CurrentUser.Id).OrderBy(x=>x.EndingDate != null).ToList();
+            projectDataList = projectBll.GetAllProjectsByUserId(ThisApp.CurrentUser.Id).OrderBy(x => x.EndingDate != null).ToList();
+        }
+        else if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.FinManager))
+        {
+
+            projectDataList = projectBll.GetAllProject().Where(x=>x.EndingDate == null).ToList();
         }
         else
         {
@@ -79,13 +84,16 @@
                                     <th class="text-center">تاریخ شروع</th>
                                     <th class="text-center">تاریخ پایان</th>
                                     @{
-                                        if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                        if (ThisApp.HasAccessToView("Project", "Edit"))
                                         {
-                                            <th class="text-center no-print">عملگر</th>
-                                        }
-                                        else
-                                        {
-                                            <th class="text-center">سرپرست  مربوطه</th>
+                                            if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                            {
+                                                <th class="text-center no-print">عملگر</th>
+                                            }
+                                            else
+                                            {
+                                                <th class="text-center">سرپرست  مربوطه</th>
+                                            }
                                         }
                                     }
                                 </tr>
@@ -121,19 +129,23 @@
                                                     </td>
 
                                                 }
+
                                             }
 
                                             @{
-                                                if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
-                                                {
-                                                    <td class="text-center no-print">
-                                                        <a href="../Project/Edit?id=@project.Id" title="ویرایش"><i class="fa fa-pencil"></i></a> |
-                                                        <a href="" class="FinishProject" id="FinishProject_@project.Id" title="اعلام پایان کار"><i class="fa fa-thumbs-o-up text-danger" ></i></a>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td class="text-center">@project.User.FirstName @project.User.LastName</td>
+                                                if (ThisApp.HasAccessToView("Project", "Edit"))
+                                        {
+                                                    if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
+                                                    {
+                                                        <td class="text-center no-print">
+                                                            <a href="../Project/Edit?id=@project.Id" title="ویرایش"><i class="fa fa-pencil"></i></a> |
+                                                            <a href="" class="FinishProject" id="FinishProject_@project.Id" title="اعلام پایان کار"><i class="fa fa-thumbs-o-up text-danger"></i></a>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="text-center">@project.User.FirstName @project.User.LastName</td>
+                                                    }
                                                 }
                                             }
                                         </tr>
@@ -152,7 +164,7 @@
             ShowLoading();
             var projArrt = $(this).attr('id').split('_');
             var projId = projArrt[projArrt.length - 1];
-            debugger 
+            debugger
             $.ajax({
                 url: "/Project/ProjectEdit",
                 type: "POST",
@@ -168,7 +180,7 @@
                     {
                         window.location.reload();
                     }
-                    else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Error)) || 
+                    else if (data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Error)) ||
                         data.Status === @Html.Raw(EnumUtility.GetEnumValue(JsonResultStatus.Exception)))
                     {
                         alert("اعلام پایان کار با مشکل رویرو شد");

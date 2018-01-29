@@ -63,6 +63,9 @@
       <Role>
         <RoleName>CEO</RoleName>
       </Role>
+      <Role>
+        <RoleName>FinManager</RoleName>
+      </Role>
     </RoleList>
     <ParentId></ParentId>
   </Menu>
