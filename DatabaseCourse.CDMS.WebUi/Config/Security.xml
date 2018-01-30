@@ -117,7 +117,7 @@
         <RoleName>Supervisor</RoleName>
       </Role>
       <Role>
-        <RoleName>FinManager</RoleName>
+        <RoleName>TechOfficer</RoleName>
       </Role>
     </UserRoles>
   </Page>
@@ -162,7 +162,7 @@
         <RoleName>Supervisor</RoleName>
       </Role>
       <Role>
-        <RoleName>FinManager</RoleName>
+        <RoleName>TechOfficer</RoleName>
       </Role>
     </UserRoles>
   </Page>
@@ -182,7 +182,7 @@
         <RoleName>CEO</RoleName>
       </Role>
       <Role>
-        <RoleName>FinManager</RoleName>
+        <RoleName>TechOfficer</RoleName>
       </Role>
     </UserRoles>
   </Page>
@@ -202,7 +202,7 @@
         <RoleName>Supervisor</RoleName>
       </Role>
       <Role>
-        <RoleName>FinManager</RoleName>
+        <RoleName>TechOfficer</RoleName>
       </Role>
     </UserRoles>
   </Page>

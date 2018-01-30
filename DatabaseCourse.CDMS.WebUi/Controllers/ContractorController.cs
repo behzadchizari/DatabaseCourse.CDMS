@@ -129,7 +129,7 @@ namespace DatabaseCourse.CDMS.WebUi.Controllers
 
                                 if (projectUpadate != 0)
                                 {
-                                    Session["ProjectEditResultMessage"] = $"پیمانکار  {contractorUiModel.FirstName} {contractorUiModel.LastName} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
+                                    Session["ContractorId"] = $"پیمانکار  {contractorUiModel.FirstName} {contractorUiModel.LastName} با موفقیت <span style=\"color: blue; \" > تغییر </span> یافت";
                                     ThisApp.AddLogData($"به روز رسانی پیمانکار {contractorUiModel.FirstName} {contractorUiModel.LastName} توسط {ThisApp.CurrentUser.Username}");
                                     result.Data = new
                                     {

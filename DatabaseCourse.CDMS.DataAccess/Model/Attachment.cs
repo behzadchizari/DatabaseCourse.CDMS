@@ -11,7 +11,7 @@ namespace DatabaseCourse.CDMS.DataAccess.Model
     { 
         public int Id { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string FileAddress { get; set; }
 
         [StringLength(50)]

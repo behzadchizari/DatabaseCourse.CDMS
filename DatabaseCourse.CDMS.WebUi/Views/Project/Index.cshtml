@@ -18,10 +18,10 @@
         {
             projectDataList = projectBll.GetAllProjectsByUserId(ThisApp.CurrentUser.Id).OrderBy(x => x.EndingDate != null).ToList();
         }
-        else if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.FinManager))
+        else if (ThisApp.CurrentUser.UserRoles.Any(x => x == UserRoleEnum.TechOfficer))
         {
 
-            projectDataList = projectBll.GetAllProject().Where(x=>x.EndingDate == null).ToList();
+            projectDataList = projectBll.GetAllProject().Where(x => x.EndingDate == null).ToList();
         }
         else
         {
@@ -134,13 +134,21 @@
 
                                             @{
                                                 if (ThisApp.HasAccessToView("Project", "Edit"))
-                                        {
+                                                {
                                                     if (ThisApp.CurrentUser != null && !ThisApp.CurrentUser.UserRoles.Any((x => x == UserRoleEnum.CEO)))
                                                     {
-                                                        <td class="text-center no-print">
-                                                            <a href="../Project/Edit?id=@project.Id" title="ویرایش"><i class="fa fa-pencil"></i></a> |
-                                                            <a href="" class="FinishProject" id="FinishProject_@project.Id" title="اعلام پایان کار"><i class="fa fa-thumbs-o-up text-danger"></i></a>
-                                                        </td>
+                                                        if (project.EndingDate != null)
+                                                        {
+                                                            <td>-</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="text-center no-print">
+                                                                <a href="../Project/Edit?id=@project.Id" title="ویرایش"><i class="fa fa-pencil"></i></a> |
+                                                                <a href="" class="FinishProject" id="FinishProject_@project.Id" title="اعلام پایان کار"><i class="fa fa-thumbs-o-up text-danger"></i></a>
+                                                            </td>
+                                                            
+                                                        }
                                                     }
                                                     else
                                                     {

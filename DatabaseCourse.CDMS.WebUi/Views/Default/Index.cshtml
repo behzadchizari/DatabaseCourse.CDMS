@@ -83,6 +83,9 @@
             </div>
         </div>
         <div class="col-lg-8 col-md-8">
+            @{
+                if (ThisApp.CurrentUser.UserRoles[0] != UserRoleEnum.TechOfficer)
+                {
             <div class="col-lg-6 col-md-6">
                 <div class="panel panel-green">
                     <div class="panel-heading">
@@ -105,6 +108,10 @@
                     </a>
                 </div>
             </div>
+                    
+                    
+                }
+            }
             <div class="col-lg-6 col-md-6">
                 <div class="panel panel-red">
                     <div class="panel-heading">

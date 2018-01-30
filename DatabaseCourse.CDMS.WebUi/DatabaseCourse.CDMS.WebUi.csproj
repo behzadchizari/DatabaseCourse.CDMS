@@ -290,6 +290,7 @@
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\LeaveController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -342,6 +343,7 @@
     <Folder Include="Models\" />
     <Folder Include="Views\Attachment\" />
     <Folder Include="Views\cooperationContract\" />
+    <Folder Include="Views\Expense\" />
     <Folder Include="Views\SupervisorEngineer\" />
   </ItemGroup>
   <ItemGroup>

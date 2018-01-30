@@ -57,8 +57,13 @@ namespace DatabaseCourse.CDMS.WebUi.Classes.UiModel
                         exData.Add(new Exception("پسوورد نمیتواند خالی باشد"));
                 }
 
-                if (UserRoles.Count <= 0)
-                    exData.Add(new Exception("هیچ نقشی برای کاربر انتخاب نشده"));
+                if (ThisApp.CurrentUser.Username == Username)
+                    UserRoles.AddRange(ThisApp.CurrentUser.UserRoles);
+                else
+                {
+                    if (UserRoles.Count <= 0)
+                        exData.Add(new Exception("هیچ نقشی برای کاربر انتخاب نشده"));
+                }
 
             }
             catch (Exception e)
